@@ -1,22 +1,31 @@
 class StartScreen {
+	/**
+	 * constructor: Init setup for the launch screen. This will add the buttons and
+	 * create the default values for everything.
+	 * 
+	 * @param void
+	 * 
+	 * @returns StartScreen
+	 */
 	constructor() {
 		if (startscreen_constructor) console.log("Creating StartScreen Object");
-		buttonList.push(new Buttons(0, windowHeight / 2.8, windowWidth / 5, windowHeight / 10, 0, "blue"));
-		buttonList[buttonList.length - 1].text = "Create Game";
-		buttonList[buttonList.length - 1].hoverColor = "yellow";
-		buttonList[buttonList.length - 1].id = "createGame"
+		/* 							X, Y 				 , W  			  , H 				 , gamestate, default color	*/
+		buttonList.push(new Buttons(0, windowHeight / 2.8, windowWidth / 5, windowHeight / 10, 0         , "blue"));
+		buttonList[buttonList.length - 1].text = "Create Game"; // Text to put in the button
+		buttonList[buttonList.length - 1].hoverColor = "yellow"; // What color to make the button on mouse hover
+		buttonList[buttonList.length - 1].id = "createGame"; // ID of the button
 
 		buttonList.push(new Buttons(0, windowHeight/4, windowWidth / 5, windowHeight / 10, 0, "red"));
-		buttonList[buttonList.length - 1].text = "Join game";
-		buttonList[buttonList.length - 1].hoverColor = "yellow";
-		buttonList[buttonList.length - 1].id = "joinGame"
+		buttonList[buttonList.length - 1].text = "Join game"; // Text to put in the button
+		buttonList[buttonList.length - 1].hoverColor = "yellow"; // What color to make the button on mouse hover
+		buttonList[buttonList.length - 1].id = "joinGame"; // ID of the button
 
-		this.TokenBoxText = "";
+		this.TokenBoxText = ""; // default token
 
-		this.usernameText = "username";
-		this.usernameTextTouched = false;
+		this.usernameText = "username"; // default username
+		this.usernameTextTouched = false; // checks to see if the box has been touched by the user yet
 
-		this.gameStateStartScreen = 0;
+		this.gameStateStartScreen = 0; // where in the start screen you are. @draw has a good comment on this.
 	}
 
 	/**
@@ -193,24 +202,44 @@ class StartScreen {
 	}
 	
 	/**
-	 * @todo
+	 * drawHighScoreButtonCheckMouse: Will tell whoever calls it if the mouse if over the highscore screen. 
+	 * 								  This will mostly be used when a user hovers over or clicks. 
+	 * 
+	 * @param void
+	 * 
+	 * @return Boolean
+	 * 		   true - mouse is over highscore
+	 * 		   false - mouse is NOT over highscore
+	 */
+	drawHighScoreButtonCheckMouse(){
+		this.LeftX = (windowWidth/1.038) + (windowWidth/16) / 2; // Left side of the box cords
+		this.RightX = (windowWidth/1.038) - (windowWidth/16) / 2; // Right side of the box cords
+		this.TopY = (windowHeight/1.05) - (windowHeight/14) / 2; // Top of the box cords 
+		this.BotY = (windowHeight/1.05) + (windowHeight/14) / 2; // Bot of the box cords
+		if ((mouseX >= this.RightX) && (mouseX <= this.LeftX)) { // Check if the mouse is within the X range. 
+			if ((mouseY >= this.TopY) && (mouseY <= this.BotY)) { // Check if the mouse is within the Y range. 
+				return true; // If the mouse is within the X bounds AND within the Y bound we know the mouse is in the box. Return true
+			}
+		}
+		return false; // Return false if either of these things dont hold.
+	}
+
+	/**
+	 * drawHighScoreButton: Draws the 3 bars at the bottom right to represent the high score
+	 * 
+	 * @param void
+	 * 
+	 * @returns void
 	 */
 	drawHighScoreButton() {
 		push(); // Push settings
-		this.LeftX = (windowWidth/1.038) + (windowWidth/16) / 2;
-		this.RightX = (windowWidth/1.038) - (windowWidth/16) / 2;
-		this.TopY = (windowHeight/1.05) - (windowHeight/14) / 2;
-		this.BotY = (windowHeight/1.05) + (windowHeight/14) / 2;
-		// console.log(mouseX + " : " + this.RightX);
-		let fillHighScore = "white";
-		if ((mouseX >= this.RightX) && (mouseX <= this.LeftX)) {
-			if ((mouseY >= this.TopY) && (mouseY <= this.BotY)) {
-				fillHighScore = "rgb(0,255,0)";
-			}
-		}
 		translate(0,0);
-		fill(fillHighScore)
-		rectMode(CORNER)
+		let fillHighScore = "white"; // default value is white
+		if(this.drawHighScoreButtonCheckMouse()){ // Checks if the mouse is over the highscore
+			fillHighScore = "rgb(0,255,0)"; // if the mouse is over, it will change the boxes to green
+		}
+		fill(fillHighScore) // fills with whatever color from above
+		rectMode(CORNER) // sets mode to CORNER, makes it easier to draw boxes
 		rect(windowWidth/1.065,windowHeight/1.02,windowWidth/70,-windowHeight/35, 4); //left 
 		rect(windowWidth/1.045,windowHeight/1.02,windowWidth/70,-windowHeight/20, 4); // middle
 		rect(windowWidth/1.025,windowHeight/1.02,windowWidth/70,-windowHeight/55, 4); // right
