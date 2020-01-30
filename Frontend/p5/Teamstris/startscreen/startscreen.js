@@ -18,18 +18,45 @@ class StartScreen {
 		this.gameStateStartScreen = 0;
 	}
 
+	/**
+	 * draw: This funcion will be ran at 60 frames a second and will call all the functions
+	 * 	     needed to draw the launch screen.
+	 */
 	draw() {
-		this.drawTitle();
-		this.drawUsernameBox();
+		this.drawTitle(); // Draws the title
+		this.animateTitle(); // Draws the T's dropping
+		this.drawHighScoreButton();
+		// this.titleVarible -= 4;
 		if (startscreen_draw) console.log("Drawing on Startscreen");
+		/**
+		 * This switch statment will tell us where we are on the launch screen i.e
+		 * 0 - username box field and join/create game buttons are active
+		 * 1 - token field and accept button fields are active
+		 */
 		switch (this.gameStateStartScreen) {
 			case 0:
+				this.drawUsernameBox(); // Draws the usernameBox
+				Buttonloop();
 				break;
 			case 1:
 				this.drawTokenBox();
 				break;
 		}
 	}
+
+	/**
+	 * animateTitle: Will check and add/subtract the locations of the T's falling when you
+	 * 				 go to the launch screen. Once the animation is done, this function will 
+	 * 				 return instantly.
+	 * 
+	 * @param void
+	 * 
+	 * @returns void
+	 */
+	animateTitle() {
+
+	}
+
 	/**
 	 * drawUsernameBox: This function will draw the username bot onto the screen 
 	 * 
@@ -50,7 +77,7 @@ class StartScreen {
 
 	/**
 	 * drawTitle: This function will draw the title (Teamtris) onto the 
-	 *            launch screen
+	 *            launch screen.
 	 * 
 	 * @param void
 	 * 
@@ -162,6 +189,13 @@ class StartScreen {
 			buttonList[FindButtonbyID("joinGame")].invalid = true;
 			buttonList[FindButtonbyID("createGame")].invalid = true;
 		}
+	}
+	
+	/**
+	 * @todo
+	 */
+	drawHighScoreButton() {
+
 	}
 
 	/**
