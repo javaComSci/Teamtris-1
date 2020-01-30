@@ -40,6 +40,7 @@ class StartScreen {
 		this.drawHighScoreButton();
 		// this.titleVarible -= 4;
 		if (startscreen_draw) console.log("Drawing on Startscreen");
+		Buttonloop();
 		/**
 		 * This switch statment will tell us where we are on the launch screen i.e
 		 * 0 - username box field and join/create game buttons are active
@@ -48,7 +49,6 @@ class StartScreen {
 		switch (this.gameStateStartScreen) {
 			case 0:
 				this.drawUsernameBox(); // Draws the usernameBox
-				Buttonloop();
 				break;
 			case 1:
 				this.drawTokenBox();
@@ -87,6 +87,9 @@ class StartScreen {
 		rect(0, windowHeight / 15, windowWidth / 3, windowHeight / 12, 15); // drawing my username textbox
 		textSize(windowWidth / 30);
 		fill(0, 0, 0, 100); // Set alpha to 100
+		if (this.usernameTextTouched) { // If they are touching it then make it black.
+			fill(0, 0, 0, 255); // Black with 100% alpha
+		}
 		text(this.usernameText, 0, windowHeight / 15); // draw username into text box. 
 		pop(); // restore my settings
 	}
@@ -138,6 +141,8 @@ class StartScreen {
 
 	drawTokenBox() {
 		push();
+		let ret = false;
+		translate(windowWidth / 2, windowHeight / 2)
 		fill(255);
 		rect(0, 0, windowWidth / 4, windowWidth / 4, 50)
 		fill(0)
@@ -151,6 +156,7 @@ class StartScreen {
 		if ((mouseX - (windowWidth / 2) >= (0 - (windowWidth / 8) / 2)) && (mouseX - (windowWidth / 2) <= (0 + (windowWidth / 8) / 2))) {
 			if ((mouseY - (windowHeight / 2) >= (windowHeight / 5.5 - (windowHeight / 15) / 2)) && (mouseY - (windowHeight / 2) <= (windowHeight / 5.5 + (windowHeight / 15) / 2))) {
 				fill(255)
+				ret = false;
 			}
 		}
 
@@ -159,51 +165,36 @@ class StartScreen {
 		if ((mouseX - (windowWidth / 2) >= (0 - (windowWidth / 8) / 2)) && (mouseX - (windowWidth / 2) <= (0 + (windowWidth / 8) / 2))) {
 			if ((mouseY - (windowHeight / 2) >= (windowHeight / 5.5 - (windowHeight / 15) / 2)) && (mouseY - (windowHeight / 2) <= (windowHeight / 5.5 + (windowHeight / 15) / 2))) {
 				fill(0)
+				ret = true;
 			}
 		}
 		textSize(30)
 		text("Accept", 0, windowHeight / 5.5)
 		pop();
+		return ret;
 	}
 
 	mouseClickedStart() {
-		if (this.checkTokenBox == true) {
-			if ((mouseX - (windowWidth / 2) >= (0 - (windowWidth / 8) / 2)) && (mouseX - (windowWidth / 2) <= (0 + (windowWidth / 8) / 2))) {
-				if ((mouseY - (windowHeight / 2) >= (windowHeight / 5.5 - (windowHeight / 15) / 2)) && (mouseY - (windowHeight / 2) <= (windowHeight / 5.5 + (windowHeight / 15) / 2))) {
-					var data = JSON.stringify({
-						"lobbyID": this.TokenBoxText,
-						"name": "notbob",
-						"playerID": "123"
-					})
-					socket.send(JSON.stringify({
-						"type": "0",
-						"data": data
-					}))
-					socket.onmessage = function (event) {
-						console.log(event.data);
-						if (event.data == "bad") {
-							this.TokenBoxText = "";
-						} else {
-							gameState = 1;
-						}
-					};
+		switch (this.gameStateStartScreen) { // Switch statment to tell us what we are looking at
+			case 0:
+				if (ClickedLoop() == "joinGame") {
+					this.gameStateStartScreen = 1;
+					buttonList[FindButtonbyID("joinGame")].invalid = true;
+					buttonList[FindButtonbyID("createGame")].invalid = true;
+				} else if (ClickedLoop() == "createGame") {
+					gameState = 1;
+				} else if(this.drawHighScoreButtonCheckMouse() == true) { // if they click highscore
+					gameState = 3; //send to score screen.
 				}
-			}
-		}
-		if (startscreen_mouseClickedStart) console.log("CLICKED HERE");
-		let buttonID = ClickedLoop();
-		if (startscreen_mouseClickedStart) console.log("buttonID: " + buttonID);
-		if (buttonID == "createGame") {
-			if (startscreen_mouseClickedStart) console.log("Create Game Clicked");
-			owner = true;
-			mLobbyScreen.setup();
-			gameState = 1;
-		} else if (buttonID == "joinGame") {
-			if (startscreen_mouseClickedStart) console.log("Join Game Clicked");
-			owner = false;
-			this.checkTokenBox = true;
-			buttonList[FindButtonbyID("joinGame")].invalid = true;
-			buttonList[FindButtonbyID("createGame")].invalid = true;
+				break;
+			case 1:
+				if(this.drawTokenBox() == true){ // Checks to see if you clicked on the accept button
+					/** Need to check token @todo */
+					gameState = 1; // Sets gamestate to 1, aka lobby, if you got the right token
+				} else if(this.drawHighScoreButtonCheckMouse() == true) { // if they click highscore
+					gameState = 3; //send to score screen.
+				}
+				break; // run
 		}
 	}
 
@@ -284,19 +275,19 @@ class StartScreen {
 				}
 				break; // run.
 			case 1: // This is when the token box is open, we need to accept input then.
+				if (keyCode == 8) { // "pressed delete"
+					/* Remove the last char from the username field */
+					this.TokenBoxText = this.TokenBoxText.substring(0, this.TokenBoxText.length - 1);
+				} else if (keyCode == 27) { // pressed esc
+					this.gameStateStartScreen = 0; // go back to the username field active
+					buttonList[FindButtonbyID("joinGame")].invalid = false; // reactivate buttons
+					buttonList[FindButtonbyID("createGame")].invalid = false; // reactivate buttons
+				} else if (this.TokenBoxText.length < 4) { // make sure the length of the string doesnt get too long
+					if ((keyCode >= 65 && keyCode <= 90) || keyCode == 32) { // checks to see if its a letter or a space
+						this.TokenBoxText += String.fromCharCode(keyCode); // add the pressed key to the username
+					}
+				}
 				break;
 		}
-		// if (this.checkTokenBox) {
-		// 	if (this.TokenBoxText.length < 4 && keyCode != BACKSPACE && keyCode != ENTER) {
-		// 		this.TokenBoxText += String.fromCharCode(keyCode);
-		// 	}
-		// 	if (keyCode == BACKSPACE) {
-		// 		this.TokenBoxText = "";
-		// 	}
-		// 	// if(keyCode == ENTER){
-		// 	//   this.checkTokenBox = true;
-		// 	//   this.mouseClickedStart();
-		// 	// }
-		// }
 	}
 }
