@@ -10,12 +10,12 @@ class StartScreen {
 	constructor() {
 		if (startscreen_constructor) console.log("Creating StartScreen Object");
 		/* 							X, Y 				 , W  			  , H 				 , gamestate, default color	*/
-		buttonList.push(new Buttons(0, windowHeight / 2.8, windowWidth / 5, windowHeight / 10, 0         , "blue"));
+		buttonList.push(new Buttons(0, windowHeight / 2.8, windowWidth / 5, windowHeight / 10, 0, "blue"));
 		buttonList[buttonList.length - 1].text = "Create Game"; // Text to put in the button
 		buttonList[buttonList.length - 1].hoverColor = "yellow"; // What color to make the button on mouse hover
 		buttonList[buttonList.length - 1].id = "createGame"; // ID of the button
 
-		buttonList.push(new Buttons(0, windowHeight/4, windowWidth / 5, windowHeight / 10, 0, "red"));
+		buttonList.push(new Buttons(0, windowHeight / 4, windowWidth / 5, windowHeight / 10, 0, "red"));
 		buttonList[buttonList.length - 1].text = "Join game"; // Text to put in the button
 		buttonList[buttonList.length - 1].hoverColor = "yellow"; // What color to make the button on mouse hover
 		buttonList[buttonList.length - 1].id = "joinGame"; // ID of the button
@@ -26,6 +26,8 @@ class StartScreen {
 		this.usernameTextTouched = false; // checks to see if the box has been touched by the user yet
 
 		this.gameStateStartScreen = 0; // where in the start screen you are. @draw has a good comment on this.
+
+		this.titleAnimation = [300, 500, 400, 700]
 	}
 
 	/**
@@ -64,7 +66,11 @@ class StartScreen {
 	 * @returns void
 	 */
 	animateTitle() {
-
+		for (let i = 0; i < this.titleAnimation.length; i++) {
+			if (this.titleAnimation[i] > 0) {
+				this.titleAnimation[i] -= 10;
+			}
+		}
 	}
 
 	/**
@@ -111,22 +117,22 @@ class StartScreen {
 		 * These recs are for the First T
 		 */
 		let yStart; // Bottom box of the T's
-		rect(-windowWidth / 4.3, yStart = windowHeight / 2.6, squareSize, squareSize) // first T, top blue
-		rect(-windowWidth / 4.3, yStart - (spaceBetweenSquares), squareSize, squareSize) // first T, bot blue
+		rect(-windowWidth / 4.3, (yStart = windowHeight / 2.6) - this.titleAnimation[0], squareSize, squareSize) // first T, top blue
+		rect(-windowWidth / 4.3, (yStart - (spaceBetweenSquares)) - this.titleAnimation[0], squareSize, squareSize) // first T, bot blue
 		fill(255, 0, 0) // fill red
-		rect(-windowWidth / 4.3, yStart - (2 * spaceBetweenSquares), squareSize, squareSize) // first T, top red middle
-		rect(-windowWidth / 4.3 - spaceBetweenSquares, yStart - (2 * spaceBetweenSquares), squareSize, squareSize) // first T, top red right
-		rect(-windowWidth / 4.3 + spaceBetweenSquares, yStart - (2 * spaceBetweenSquares), squareSize, squareSize) // first T, top red left
+		rect(-windowWidth / 4.3, yStart - (2 * spaceBetweenSquares) - this.titleAnimation[1], squareSize, squareSize) // first T, top red middle
+		rect(-windowWidth / 4.3 - spaceBetweenSquares, yStart - (2 * spaceBetweenSquares) - this.titleAnimation[1], squareSize, squareSize) // first T, top red right
+		rect(-windowWidth / 4.3 + spaceBetweenSquares, yStart - (2 * spaceBetweenSquares) - this.titleAnimation[1], squareSize, squareSize) // first T, top red left
 		/**
 		 * These recs are for the second T
 		 */
 		fill(0, 0, 255) // fill blue
-		rect(windowWidth / 8, yStart, squareSize, squareSize) // second T, bot blue
-		rect(windowWidth / 8, yStart - (spaceBetweenSquares), squareSize, squareSize) // first T, top blue
+		rect(windowWidth / 8, yStart - this.titleAnimation[2], squareSize, squareSize) // second T, bot blue
+		rect(windowWidth / 8, yStart - (spaceBetweenSquares) - this.titleAnimation[3], squareSize, squareSize) // first T, top blue
 		fill(255, 0, 0) // fill red
-		rect(windowWidth / 8, yStart - (2 * spaceBetweenSquares), squareSize, squareSize) // second T, top red middle
-		rect(windowWidth / 8 - spaceBetweenSquares, yStart - (2 * spaceBetweenSquares), squareSize, squareSize) // second T, top red left
-		rect(windowWidth / 8 + spaceBetweenSquares, yStart - (2 * spaceBetweenSquares), squareSize, squareSize) // second T, top red right
+		rect(windowWidth / 8, yStart - (2 * spaceBetweenSquares) - this.titleAnimation[3], squareSize, squareSize) // second T, top red middle
+		rect(windowWidth / 8 - spaceBetweenSquares, yStart - (2 * spaceBetweenSquares) - this.titleAnimation[3], squareSize, squareSize) // second T, top red left
+		rect(windowWidth / 8 + spaceBetweenSquares, yStart - (2 * spaceBetweenSquares) - this.titleAnimation[3], squareSize, squareSize) // second T, top red right
 		pop(); // reset settings
 	}
 
@@ -200,7 +206,7 @@ class StartScreen {
 			buttonList[FindButtonbyID("createGame")].invalid = true;
 		}
 	}
-	
+
 	/**
 	 * drawHighScoreButtonCheckMouse: Will tell whoever calls it if the mouse if over the highscore screen. 
 	 * 								  This will mostly be used when a user hovers over or clicks. 
@@ -211,11 +217,11 @@ class StartScreen {
 	 * 		   true - mouse is over highscore
 	 * 		   false - mouse is NOT over highscore
 	 */
-	drawHighScoreButtonCheckMouse(){
-		this.LeftX = (windowWidth/1.038) + (windowWidth/16) / 2; // Left side of the box cords
-		this.RightX = (windowWidth/1.038) - (windowWidth/16) / 2; // Right side of the box cords
-		this.TopY = (windowHeight/1.05) - (windowHeight/14) / 2; // Top of the box cords 
-		this.BotY = (windowHeight/1.05) + (windowHeight/14) / 2; // Bot of the box cords
+	drawHighScoreButtonCheckMouse() {
+		this.LeftX = (windowWidth / 1.038) + (windowWidth / 16) / 2; // Left side of the box cords
+		this.RightX = (windowWidth / 1.038) - (windowWidth / 16) / 2; // Right side of the box cords
+		this.TopY = (windowHeight / 1.05) - (windowHeight / 14) / 2; // Top of the box cords 
+		this.BotY = (windowHeight / 1.05) + (windowHeight / 14) / 2; // Bot of the box cords
 		if ((mouseX >= this.RightX) && (mouseX <= this.LeftX)) { // Check if the mouse is within the X range. 
 			if ((mouseY >= this.TopY) && (mouseY <= this.BotY)) { // Check if the mouse is within the Y range. 
 				return true; // If the mouse is within the X bounds AND within the Y bound we know the mouse is in the box. Return true
@@ -233,16 +239,16 @@ class StartScreen {
 	 */
 	drawHighScoreButton() {
 		push(); // Push settings
-		translate(0,0);
+		translate(0, 0);
 		let fillHighScore = "white"; // default value is white
-		if(this.drawHighScoreButtonCheckMouse()){ // Checks if the mouse is over the highscore
+		if (this.drawHighScoreButtonCheckMouse()) { // Checks if the mouse is over the highscore
 			fillHighScore = "rgb(0,255,0)"; // if the mouse is over, it will change the boxes to green
 		}
 		fill(fillHighScore) // fills with whatever color from above
 		rectMode(CORNER) // sets mode to CORNER, makes it easier to draw boxes
-		rect(windowWidth/1.065,windowHeight/1.02,windowWidth/70,-windowHeight/35, 4); //left 
-		rect(windowWidth/1.045,windowHeight/1.02,windowWidth/70,-windowHeight/20, 4); // middle
-		rect(windowWidth/1.025,windowHeight/1.02,windowWidth/70,-windowHeight/55, 4); // right
+		rect(windowWidth / 1.065, windowHeight / 1.02, windowWidth / 70, -windowHeight / 35, 4); //left 
+		rect(windowWidth / 1.045, windowHeight / 1.02, windowWidth / 70, -windowHeight / 20, 4); // middle
+		rect(windowWidth / 1.025, windowHeight / 1.02, windowWidth / 70, -windowHeight / 55, 4); // right
 		pop(); // Restore my settings
 	}
 
