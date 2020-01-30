@@ -5,6 +5,7 @@ class StartScreen {
 		buttonList[buttonList.length - 1].text = "Create Game";
 		buttonList[buttonList.length - 1].hoverColor = "yellow";
 		buttonList[buttonList.length - 1].id = "createGame"
+
 		buttonList.push(new Buttons(0, windowHeight/4, windowWidth / 5, windowHeight / 10, 0, "red"));
 		buttonList[buttonList.length - 1].text = "Join game";
 		buttonList[buttonList.length - 1].hoverColor = "yellow";
@@ -196,8 +197,19 @@ class StartScreen {
 	 */
 	drawHighScoreButton() {
 		push(); // Push settings
+		this.LeftX = (windowWidth/1.038) + (windowWidth/16) / 2;
+		this.RightX = (windowWidth/1.038) - (windowWidth/16) / 2;
+		this.TopY = (windowHeight/1.05) - (windowHeight/14) / 2;
+		this.BotY = (windowHeight/1.05) + (windowHeight/14) / 2;
+		// console.log(mouseX + " : " + this.RightX);
+		let fillHighScore = "white";
+		if ((mouseX >= this.RightX) && (mouseX <= this.LeftX)) {
+			if ((mouseY >= this.TopY) && (mouseY <= this.BotY)) {
+				fillHighScore = "rgb(0,255,0)";
+			}
+		}
 		translate(0,0);
-		fill(255);
+		fill(fillHighScore)
 		rectMode(CORNER)
 		rect(windowWidth/1.065,windowHeight/1.02,windowWidth/70,-windowHeight/35, 4); //left 
 		rect(windowWidth/1.045,windowHeight/1.02,windowWidth/70,-windowHeight/20, 4); // middle
