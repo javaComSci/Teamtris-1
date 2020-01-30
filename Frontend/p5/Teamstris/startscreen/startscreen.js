@@ -195,7 +195,14 @@ class StartScreen {
 	 * @todo
 	 */
 	drawHighScoreButton() {
-
+		push(); // Push settings
+		translate(0,0);
+		fill(255);
+		rectMode(CORNER)
+		rect(windowWidth/1.065,windowHeight/1.02,windowWidth/70,-windowHeight/35, 4); //left 
+		rect(windowWidth/1.045,windowHeight/1.02,windowWidth/70,-windowHeight/20, 4); // middle
+		rect(windowWidth/1.025,windowHeight/1.02,windowWidth/70,-windowHeight/55, 4); // right
+		pop(); // Restore my settings
 	}
 
 	/**
@@ -210,12 +217,7 @@ class StartScreen {
 		console.log("keyCode: " + keyCode);
 		switch (this.gameStateStartScreen) {
 			case 0: // If we are on the username text box
-				if (keyCode == 13) { //pressed "enter"
-					/**
-					 * Need to send player into lobby with the correct things.
-					 */
-					console.log("PRESSED ENTER")
-				} else if (keyCode == 8) { // "pressed delete"
+				if (keyCode == 8) { // "pressed delete"
 					if (this.usernameTextTouched == false) { //check to see if username is still default
 						this.usernameText = ""; // set it to an empty string
 						this.usernameTextTouched = true; // set the usernametouched to true 
