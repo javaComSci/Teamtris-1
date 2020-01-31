@@ -178,20 +178,30 @@ class StartScreen {
 		switch (this.gameStateStartScreen) { // Switch statment to tell us what we are looking at
 			case 0:
 				if (ClickedLoop() == "joinGame") {
-					this.gameStateStartScreen = 1;
-					buttonList[FindButtonbyID("joinGame")].invalid = true;
-					buttonList[FindButtonbyID("createGame")].invalid = true;
+					/* Check to see if they trying to go into game with a bad username */
+					if (!this.usernameTextTouched || this.usernameText == "") {
+						console.log("BAD"); /** highlight something red @todo */
+					} else {
+						this.gameStateStartScreen = 1;
+						buttonList[FindButtonbyID("joinGame")].invalid = true;
+						buttonList[FindButtonbyID("createGame")].invalid = true;
+					}
 				} else if (ClickedLoop() == "createGame") {
-					gameState = 1;
-				} else if(this.drawHighScoreButtonCheckMouse() == true) { // if they click highscore
+					/* Check to see if they trying to go into game with a bad username */
+					if (!this.usernameTextTouched || this.usernameText == "") {
+						console.log("BAD"); /** highlight something red @todo */
+					} else {
+						gameState = 1; // Switch to lobby screen
+					}
+				} else if (this.drawHighScoreButtonCheckMouse() == true) { // if they click highscore
 					gameState = 3; //send to score screen.
 				}
 				break;
 			case 1:
-				if(this.drawTokenBox() == true){ // Checks to see if you clicked on the accept button
+				if (this.drawTokenBox() == true) { // Checks to see if you clicked on the accept button
 					/** Need to check token @todo */
 					gameState = 1; // Sets gamestate to 1, aka lobby, if you got the right token
-				} else if(this.drawHighScoreButtonCheckMouse() == true) { // if they click highscore
+				} else if (this.drawHighScoreButtonCheckMouse() == true) { // if they click highscore
 					gameState = 3; //send to score screen.
 				}
 				break; // run
