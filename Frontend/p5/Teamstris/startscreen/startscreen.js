@@ -191,6 +191,8 @@ class StartScreen {
 					if (!this.usernameTextTouched || this.usernameText == "") {
 						console.log("BAD"); /** highlight something red @todo */
 					} else {
+						/* Creating my lobbyscreen object */
+  						mLobbyScreen = new LobbyScreen(new Player(this.usernameText, Math.floor(Math.random() * 100), true));
 						gameState = 1; // Switch to lobby screen
 					}
 				} else if (this.drawHighScoreButtonCheckMouse() == true) { // if they click highscore
