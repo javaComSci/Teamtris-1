@@ -27,7 +27,7 @@ class StartScreen {
 
 		this.gameStateStartScreen = 0; // where in the start screen you are. @draw has a good comment on this.
 
-		this.titleAnimation = [300, 500, 400, 700]
+		this.titleAnimation = [300, 500, 400, 700] //drops the peices 
 	}
 
 	/**
