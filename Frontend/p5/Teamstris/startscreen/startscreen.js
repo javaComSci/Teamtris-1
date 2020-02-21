@@ -196,7 +196,9 @@ class StartScreen {
 						gameState = 1; // Switch to lobby screen
 					}
 				} else if (this.drawHighScoreButtonCheckMouse() == true) { // if they click highscore
+					this.gameStateStartScreen = -1;
 					gameState = 3; //send to score screen.
+				} else {
 				}
 				break;
 			case 1:
