@@ -303,3 +303,5 @@ class StartScreen {
 		}
 	}
 }
+
+module.exports = [StartScreen];
