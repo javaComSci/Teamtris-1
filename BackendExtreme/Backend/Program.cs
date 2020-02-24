@@ -67,7 +67,7 @@ namespace Teamtris
             //     while (true) { Thread.Sleep(5000); wssv.WebSocketServices.Broadcast(JsonConvert.SerializeObject(game)); }
             // });
 
-            thread.Start();
+            // thread.Start();
             Console.ReadKey(true);
             wssv.Stop();
         }
