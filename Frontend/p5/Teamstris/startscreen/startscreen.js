@@ -306,5 +306,5 @@ class StartScreen {
 		}
 	}
 }
-
+/* This export is used for testing*/
 module.exports = [StartScreen];
