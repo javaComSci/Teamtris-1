@@ -62,10 +62,24 @@ namespace Teamtris
 
             Console.WriteLine("Starting to check for sockets");
             // create thread to broadcast message every x milliseconds
-            // Thread thread = new Thread(() =>
-            // {
-            //     while (true) { Thread.Sleep(5000); wssv.WebSocketServices.Broadcast(JsonConvert.SerializeObject(game)); }
-            // });
+            Thread thread = new Thread(() =>
+            {
+                while (true)
+                {
+                    Thread.Sleep(5000);
+                    foreach (string lobbyID in lobbies.Keys)
+                    {
+                        Lobby lobby = lobbies[lobbyID];
+                        if (lobby.lobbyState == LobbyState.PLAYING)
+                        {
+                            for (int j = 0; j < lobby.players.Count; j++)
+                            {
+                                lobby.players[j].webSocket.Send(JsonConvert.SerializeObject(game));
+                            }
+                        }
+                    }
+                }
+            });
 
             // thread.Start();
             Console.ReadKey(true);
