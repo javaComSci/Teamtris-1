@@ -1,3 +1,4 @@
+
 class StartScreen {
 	/**
 	 * constructor: Init setup for the launch screen. This will add the buttons and
@@ -204,7 +205,18 @@ class StartScreen {
 			case 1:
 				if (this.drawTokenBox() == true) { // Checks to see if you clicked on the accept button
 					/** Need to check token @todo */
-					gameState = 1; // Sets gamestate to 1, aka lobby, if you got the right token
+					var randomID = Math.floor(Math.random() * 100);
+					var data = JSON.stringify({"lobbyID":this.TokenBoxText,"name": this.usernameText,"playerID": randomID})
+					socket.send(JSON.stringify({"type": "0", "data": data}))
+					socket.onmessage = (event) => {
+						if(event.data == "bad"){
+							this.TokenBoxText = "";
+						}else {
+							mLobbyScreen = new LobbyScreen(new Player(this.usernameText, randomID, false));
+							mLobbyScreen.team.lobbyToken = this.TokenBoxText;
+							gameState = 1;
+						}
+					}
 				} else if (this.drawHighScoreButtonCheckMouse() == true) { // if they click highscore
 					gameState = 3; //send to score screen.
 				}
@@ -305,5 +317,5 @@ class StartScreen {
 		}
 	}
 }
-
+/* This export is used for testing*/
 module.exports = [StartScreen];
