@@ -1,3 +1,4 @@
+
 class StartScreen {
 	/**
 	 * constructor: Init setup for the launch screen. This will add the buttons and
