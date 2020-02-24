@@ -62,10 +62,10 @@ namespace Teamtris
 
             Console.WriteLine("Starting to check for sockets");
             // create thread to broadcast message every x milliseconds
-            Thread thread = new Thread(() =>
-            {
-                while (true) { Thread.Sleep(5000); wssv.WebSocketServices.Broadcast(JsonConvert.SerializeObject(game)); }
-            });
+            // Thread thread = new Thread(() =>
+            // {
+            //     while (true) { Thread.Sleep(5000); wssv.WebSocketServices.Broadcast(JsonConvert.SerializeObject(game)); }
+            // });
 
             thread.Start();
             Console.ReadKey(true);
