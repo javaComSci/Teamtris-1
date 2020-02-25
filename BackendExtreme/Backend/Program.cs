@@ -29,8 +29,8 @@ namespace Teamtris
             game.board.board = new int[,]{
                 {0, 0, 0, 0, 0, 0},
                 {0, 0, 1, 0, 0, 0},
-                {0, 0, 1, 1, 1, 1},
-                {0, 1, 1, 1, 1, 1},
+                {0, 1, 1, 0, 0, 1},
+                {0, 1, 1, 0, 0, 1},
                 {0, 1, 1, 1, 1, 1},
                 {0, 1, 1, 1, 1, 1}
             };
@@ -47,6 +47,12 @@ namespace Teamtris
                 new int[] {0, 0, 0, 0},
             };
             int[][] b2 = new int[][] {
+                new int[] {1, 1, 0, 0},
+                new int[] {1, 1, 0, 0},
+                new int[] {0, 0, 0, 0},
+                new int[] {0, 0, 0, 0},
+            };
+            int[][] b3 = new int[][] {
                 new int[] {1, 0, 0, 0},
                 new int[] {0, 0, 0, 0},
                 new int[] {0, 0, 0, 0},
