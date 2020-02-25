@@ -29,9 +29,9 @@ namespace Teamtris
             game.board.board = new int[,]{
                 {0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0},
-                {1, 0, 0, 1, 0, 1},
-                {1, 0, 0, 1, 1, 1},
+                {0, 0, 1, 0, 0, 1},
+                {0, 0, 1, 0, 0, 1},
+                {0, 0, 1, 1, 1, 1},
                 {1, 0, 1, 1, 1, 1}
             };
             // int[][] data = new int[][] {
@@ -41,9 +41,9 @@ namespace Teamtris
             //     new int[] {0, 1, 0, 0}, 
             // };
             int[][] data = new int[][] {
-                new int[] {0, 0, 1, 0},
-                new int[] {0, 0, 1, 0},
-                new int[] {0, 0, 1, 0},
+                new int[] {1, 1, 0, 0},
+                new int[] {1, 1, 0, 0},
+                new int[] {0, 0, 0, 0},
                 new int[] {0, 0, 0, 0},
             };
             Block block = new Block(data, 1);
@@ -56,32 +56,11 @@ namespace Teamtris
             var wssv = new WebSocketServer("ws://0.0.0.0:5202");
             wssv.Start();
             wssv.AddWebSocketService<LobbyManager>("/lobby", () => new LobbyManager(lobbies));
-
+            wssv.AddWebSocketService<Play>("/play", () => new Play(lobbies));
+            GameManager gameManager = new GameManager(lobbies);
             Console.WriteLine("Starting to check for sockets");
-            // create thread to broadcast message every x milliseconds
-            Thread thread = new Thread(() =>
-            {
-                while (true)
-                {
-                    Thread.Sleep(5000);
-                    foreach (string lobbyID in lobbies.Keys)
-                    {
-                        Lobby lobby = lobbies[lobbyID];
-                        if (lobby.lobbyState == LobbyState.PLAYING)
-                        {
-                            // update board
-
-                            // send game state to all players in lobby
-                            for (int j = 0; j < lobby.players.Count; j++)
-                            {
-                                lobby.players[j].webSocket.Send(JsonConvert.SerializeObject(game));
-                            }
-                        }
-                    }
-                }
-            });
-
-            thread.Start();
+            // start game broadcasting service
+            gameManager.startGame();
             Console.ReadKey(true);
             wssv.Stop();
         }
