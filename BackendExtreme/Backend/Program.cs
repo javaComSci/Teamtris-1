@@ -44,7 +44,7 @@ namespace Teamtris
                 new int[] {0, 0, 1, 0},
                 new int[] {0, 0, 1, 0},
                 new int[] {0, 0, 1, 0},
-                new int[] {0, 0, 1, 0},
+                new int[] {0, 0, 0, 0},
             };
             Block block = new Block(data, 1);
             List<Block> blocks = new List<Block>();
