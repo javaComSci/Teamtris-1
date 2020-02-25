@@ -11,17 +11,24 @@ class StartScreen {
 	constructor() {
 		if (startscreen_constructor) console.log("Creating StartScreen Object");
 		/* 							X, Y 				 , W  			  , H 				 , gamestate, default color	*/
-		buttonList.push(new Buttons(0, windowHeight / 2.8, windowWidth / 5, windowHeight / 10, 0, "blue"));
+		buttonList.push(new Buttons(0, windowHeight / 3.2, windowWidth / 5, windowHeight / 10, 0, "blue"));
 		buttonList[buttonList.length - 1].text = "Create Game"; // Text to put in the button
 		buttonList[buttonList.length - 1].hoverColor = "yellow"; // What color to make the button on mouse hover
 		buttonList[buttonList.length - 1].id = "createGame"; // ID of the button
 
-		buttonList.push(new Buttons(0, windowHeight / 4, windowWidth / 5, windowHeight / 10, 0, "red"));
+		buttonList.push(new Buttons(0, windowHeight / 5, windowWidth / 5, windowHeight / 10, 0, "red"));
 		buttonList[buttonList.length - 1].text = "Join game"; // Text to put in the button
 		buttonList[buttonList.length - 1].hoverColor = "yellow"; // What color to make the button on mouse hover
 		buttonList[buttonList.length - 1].id = "joinGame"; // ID of the button
 
+		buttonList.push(new Buttons(0, windowHeight / 2.354, windowWidth / 5, windowHeight / 10, 0, "green"));
+		buttonList[buttonList.length - 1].text = "Find Game"; // Text to put in the button
+		buttonList[buttonList.length - 1].hoverColor = "yellow"; // What color to make the button on mouse hover
+		buttonList[buttonList.length - 1].id = "findgame"; // ID of the button
+
 		this.TokenBoxText = ""; // default token
+
+		this.usernameBoxStroke = false; // true: highlight box red. false: go back to normal
 
 		this.usernameText = "username"; // default username
 		this.usernameTextTouched = false; // checks to see if the box has been touched by the user yet
@@ -85,7 +92,13 @@ class StartScreen {
 		push(); // Push my settings
 		translate(windowWidth / 2, windowHeight / 2); // translate cord plane to center of screen
 		fill(255); // setting my color to white
+		if(this.usernameBoxStroke == true) {
+			stroke("red"); // change to red
+			strokeWeight(4); // make it thicker
+		}
 		rect(0, windowHeight / 15, windowWidth / 3, windowHeight / 12, 15); // drawing my username textbox
+		stroke("black"); // reset my old stroke color
+		strokeWeight(0); //reset my old strokeweight
 		textSize(windowWidth / 30);
 		fill(0, 0, 0, 100); // Set alpha to 100
 		if (this.usernameTextTouched) { // If they are touching it then make it black.
@@ -181,7 +194,7 @@ class StartScreen {
 				if (ClickedLoop() == "joinGame") {
 					/* Check to see if they trying to go into game with a bad username */
 					if (!this.usernameTextTouched || this.usernameText == "") {
-						console.log("BAD"); /** highlight something red @todo */
+						this.usernameBoxStroke = true;
 					} else {
 						this.gameStateStartScreen = 1;
 						buttonList[FindButtonbyID("joinGame")].invalid = true;
@@ -190,7 +203,7 @@ class StartScreen {
 				} else if (ClickedLoop() == "createGame") {
 					/* Check to see if they trying to go into game with a bad username */
 					if (!this.usernameTextTouched || this.usernameText == "") {
-						console.log("BAD"); /** highlight something red @todo */
+						this.usernameBoxStroke = true;
 					} else {
 						/* Creating my lobbyscreen object */
   						mLobbyScreen = new LobbyScreen(new Player(this.usernameText, Math.floor(Math.random() * 100), true));
@@ -199,7 +212,12 @@ class StartScreen {
 				} else if (this.drawHighScoreButtonCheckMouse() == true) { // if they click highscore
 					this.gameStateStartScreen = -1;
 					gameState = 3; //send to score screen.
-				} else {
+				} else if(ClickedLoop() == "findgame"){
+					if (!this.usernameTextTouched || this.usernameText == "") {
+						this.usernameBoxStroke = true;
+					} else {
+						/* Place user into a Q */
+					}
 				}
 				break;
 			case 1:
@@ -278,7 +296,6 @@ class StartScreen {
 	 * @returns void
 	 */
 	keyPressedStart() {
-		console.log("keyCode: " + keyCode);
 		switch (this.gameStateStartScreen) {
 			case 0: // If we are on the username text box
 				if (keyCode == 8) { // "pressed delete"
