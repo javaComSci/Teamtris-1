@@ -1,3 +1,4 @@
+
 class StartScreen {
 	/**
 	 * constructor: Init setup for the launch screen. This will add the buttons and
@@ -21,6 +22,8 @@ class StartScreen {
 		buttonList[buttonList.length - 1].id = "joinGame"; // ID of the button
 
 		this.TokenBoxText = ""; // default token
+
+		this.usernameBoxStroke = false; // true: highlight box red. false: go back to normal
 
 		this.usernameText = "username"; // default username
 		this.usernameTextTouched = false; // checks to see if the box has been touched by the user yet
@@ -84,7 +87,13 @@ class StartScreen {
 		push(); // Push my settings
 		translate(windowWidth / 2, windowHeight / 2); // translate cord plane to center of screen
 		fill(255); // setting my color to white
+		if(this.usernameBoxStroke == true) {
+			stroke("red"); // change to red
+			strokeWeight(4); // make it thicker
+		}
 		rect(0, windowHeight / 15, windowWidth / 3, windowHeight / 12, 15); // drawing my username textbox
+		stroke("black"); // reset my old stroke color
+		strokeWeight(0); //reset my old strokeweight
 		textSize(windowWidth / 30);
 		fill(0, 0, 0, 100); // Set alpha to 100
 		if (this.usernameTextTouched) { // If they are touching it then make it black.
@@ -180,7 +189,7 @@ class StartScreen {
 				if (ClickedLoop() == "joinGame") {
 					/* Check to see if they trying to go into game with a bad username */
 					if (!this.usernameTextTouched || this.usernameText == "") {
-						console.log("BAD"); /** highlight something red @todo */
+						this.usernameBoxStroke = true;
 					} else {
 						this.gameStateStartScreen = 1;
 						buttonList[FindButtonbyID("joinGame")].invalid = true;
@@ -189,7 +198,7 @@ class StartScreen {
 				} else if (ClickedLoop() == "createGame") {
 					/* Check to see if they trying to go into game with a bad username */
 					if (!this.usernameTextTouched || this.usernameText == "") {
-						console.log("BAD"); /** highlight something red @todo */
+						this.usernameBoxStroke = true;
 					} else {
 						/* Creating my lobbyscreen object */
   						mLobbyScreen = new LobbyScreen(new Player(this.usernameText, Math.floor(Math.random() * 100), true));
@@ -204,7 +213,18 @@ class StartScreen {
 			case 1:
 				if (this.drawTokenBox() == true) { // Checks to see if you clicked on the accept button
 					/** Need to check token @todo */
-					gameState = 1; // Sets gamestate to 1, aka lobby, if you got the right token
+					var randomID = Math.floor(Math.random() * 100);
+					var data = JSON.stringify({"lobbyID":this.TokenBoxText,"name": this.usernameText,"playerID": randomID})
+					socket.send(JSON.stringify({"type": "0", "data": data}))
+					socket.onmessage = (event) => {
+						if(event.data == "bad"){
+							this.TokenBoxText = "";
+						}else {
+							mLobbyScreen = new LobbyScreen(new Player(this.usernameText, randomID, false));
+							mLobbyScreen.team.lobbyToken = this.TokenBoxText;
+							gameState = 1;
+						}
+					}
 				} else if (this.drawHighScoreButtonCheckMouse() == true) { // if they click highscore
 					gameState = 3; //send to score screen.
 				}
@@ -305,5 +325,5 @@ class StartScreen {
 		}
 	}
 }
-
+/* This export is used for testing*/
 module.exports = [StartScreen];
