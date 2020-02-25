@@ -30,8 +30,8 @@ namespace Teamtris
                 {0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0},
                 {0, 0, 0, 0, 0, 0},
-                {1, 0, 0, 1, 0, 1},
-                {1, 0, 0, 1, 1, 1},
+                {0, 0, 0, 0, 0, 1},
+                {0, 0, 0, 0, 0, 1},
                 {1, 0, 1, 1, 1, 1}
             };
             // int[][] data = new int[][] {
@@ -41,10 +41,10 @@ namespace Teamtris
             //     new int[] {0, 1, 0, 0}, 
             // };
             int[][] data = new int[][] {
-                new int[] {0, 0, 1, 0},
-                new int[] {0, 0, 1, 0},
-                new int[] {0, 0, 1, 0},
                 new int[] {0, 0, 0, 0},
+                new int[] {0, 1, 0, 0},
+                new int[] {0, 1, 0, 0},
+                new int[] {0, 1, 1, 0},
             };
             Block block = new Block(data, 1);
             List<Block> blocks = new List<Block>();
