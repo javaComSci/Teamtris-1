@@ -6,6 +6,12 @@ var socket;
  */
 var mLobbyScreen;
 var mStartScreen;
+
+var magIcon;
+function preload() {
+  // magIcon = loadImage('assets/magIcon.png');
+}
+
 function setup() {
   /* Create our canvas with the max windowWidth and windowHeight */
   createCanvas(windowWidth, windowHeight)

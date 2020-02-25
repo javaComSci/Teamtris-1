@@ -28,6 +28,8 @@ class StartScreen {
 
 		this.TokenBoxText = ""; // default token
 
+		this.isSearchingForGame = false;
+
 		this.usernameBoxStroke = false; // true: highlight box red. false: go back to normal
 
 		this.usernameText = "username"; // default username
@@ -62,6 +64,29 @@ class StartScreen {
 				this.drawTokenBox();
 				break;
 		}
+		if(this.isSearchingForGame){
+			this.SearchIconAnimation();
+		}
+	}
+
+	/**
+	 * SearchIconAnimation: This function will display the searchin animation 
+	 * 
+	 * @param void
+	 * 
+	 * @returns void
+	 * 
+	 */
+	SearchIconAnimation() {
+		push(); // push my settings
+		translate(windowWidth/2, windowHeight/2); // translate cord plane to middle
+		// fill(0) // fill white
+		// stroke(255);
+		// strokeWeight(2);
+		// circle(0,0,windowWidth/20,windowWidth/20); // draw a circle in the middle of the sceen
+		// image(magIcon, -windowWidth/10, 0, windowWidth/4, windowWidth/4);
+		console.log("HERERE4");
+		pop(); // pop my settings
 	}
 
 	/**
@@ -217,6 +242,7 @@ class StartScreen {
 						this.usernameBoxStroke = true;
 					} else {
 						/* Place user into a Q */
+						this.isSearchingForGame = true;
 					}
 				}
 				break;
@@ -294,6 +320,7 @@ class StartScreen {
 	 * @param void
 	 * 
 	 * @returns void
+	 * 
 	 */
 	keyPressedStart() {
 		switch (this.gameStateStartScreen) {

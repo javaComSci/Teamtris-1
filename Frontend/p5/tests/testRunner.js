@@ -17,7 +17,7 @@ var mStartScreen;
 
 global.gameState = 0;
 
-var lol = true;
+var lol = false;
 var numTests = 1;
 
 /* p5 stuff */
@@ -37,6 +37,8 @@ global.text = function () { }
 global.rect = function () { }
 global.rectMode = function () { }
 global.cursor = function () { }
+global.stroke = function () { }
+global.strokeWeight = function () { }
 
 /* Debug vars */
 global.startscreen_constructor       = false;
