@@ -57,9 +57,6 @@ namespace Teamtris
             wssv.Start();
             wssv.AddWebSocketService<LobbyManager>("/lobby", () => new LobbyManager(lobbies));
 
-            // Gonna need something like this for when a player clicks "Create token"
-            // wssv.AddWebSocketService<Play>("/creategame", () => new Game(game));
-
             Console.WriteLine("Starting to check for sockets");
             // create thread to broadcast message every x milliseconds
             Thread thread = new Thread(() =>
@@ -72,6 +69,9 @@ namespace Teamtris
                         Lobby lobby = lobbies[lobbyID];
                         if (lobby.lobbyState == LobbyState.PLAYING)
                         {
+                            // update board
+
+                            // send game state to all players in lobby
                             for (int j = 0; j < lobby.players.Count; j++)
                             {
                                 lobby.players[j].webSocket.Send(JsonConvert.SerializeObject(game));
@@ -81,7 +81,7 @@ namespace Teamtris
                 }
             });
 
-            // thread.Start();
+            thread.Start();
             Console.ReadKey(true);
             wssv.Stop();
         }
