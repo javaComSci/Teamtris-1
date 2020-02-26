@@ -104,7 +104,7 @@ class GameArray {
         return this.CollisionType.OtherPlayer
     }
 
-    RotateShape(ID) {
+    async RotateShape(ID) {
         var Shape = this.ShapeArray[ID-1]
 
         // returns in the form [new squares, blueprint, dimensions]
@@ -126,7 +126,7 @@ class GameArray {
     }
 
     // move the shape in the provided direction if it is valid
-    MoveShape(ID, left, right, down) {
+    async MoveShape(ID, left, right, down) {
         var Shape = this.ShapeArray[ID-1]
         var ColType = this.IsValidMovement(Shape,left,right,down)
         if (ColType == this.CollisionType.NoCollision) {
@@ -145,8 +145,7 @@ class GameArray {
     }
 
     // move every shape on the game board in the provided direction if valid
-    MoveAllShapes(left, right, down) {
-
+    async MoveAllShapes(left, right, down) {
         for (var s = 0; s < this.ShapeArray.length; s++) {
             // check collision type
             var ColType = this.IsValidMovement(this.ShapeArray[s],left,right,down)

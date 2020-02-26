@@ -1,11 +1,9 @@
-var playerNumber = 3;
-
 class GameScreen {
   constructor(xOffset=0, yOffset=0, CustomWindowWidth=windowWidth, CustomWindowHeight=windowHeight) {
     if(gamescreen_constructor) console.log("Creating GameScreen Object");
 
     // number of players in the game (real and bot inclusive)
-    this.NumPlayers = 2
+    this.NumPlayers = 1
 
     // ID of the current player
     this.PlayerID = 1
@@ -37,7 +35,7 @@ class GameScreen {
     this.PreviousTime = 0
 
     // number of milliseconds between every update
-    this.GameSpeed = 250
+    this.GameSpeed = 10000
 
     // Array of taken squares that will be used to calculate collision. Max one shape per player
     // this.ShapeArray = new Array(this.NumPlayers)
