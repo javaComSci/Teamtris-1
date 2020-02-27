@@ -200,9 +200,7 @@ class GameArray {
             }
         }
 
-        console.log(team.lobbyID)
-        var data = JSON.stringify({"lobbyID":(team.lobbyToken).toLowerCase(),"playerID":ID,"shapeIndices": boardIndices, "move": "rotate"})
-        socket.send(JSON.stringify({"type": "6", "data": data}))
+        this.SendAction(ID, boardIndices, "rotate")
 
         Shape.UpdateAfterRotate(newSquares, narr[1], narr[2])
         this.PlaceShape(Shape)
@@ -354,6 +352,20 @@ class GameArray {
     ForceChangeShape(ID, ShapeBlueprint, rowOffset, columnOffset, randomOffset) {
         this.ShapeArray[ID-1] = this.InstantiateShape(ID, ShapeBlueprint, rowOffset, columnOffset, randomOffset)
         this.PlaceShape(this.ShapeArray[ID-1])
+    }
+
+    /** 
+     * @description Sends a user action to the server
+     * 
+     * @param ID - ID of a shape object
+     * @param boardIndices - Indices in the game array that the shape will take after performing the action
+     * @param action - action the shape is taking
+     * 
+     * @return void
+     */
+    SendAction(ID, boardIndices, action) {
+        var data = JSON.stringify({"lobbyID":(team.lobbyToken).toLowerCase(),"playerID":ID,"shapeIndices": boardIndices, "move": action})
+        socket.send(JSON.stringify({"type": "6", "data": data}))
     }
 }
 
