@@ -49,8 +49,8 @@ public class GameManager
                         if (lobby.players[j].currentBlock == null)
                         {
                             // spawn block
-                            lobby.players[j].currentBlock = new Block(data, 5);
-                            lobby.players[j].currentBlockPosition = new Tuple<int, int>(5, 5);
+                            // lobby.players[j].currentBlock = new Block(data, 5);
+                            // lobby.players[j].currentBlockPosition = new Tuple<int, int>(5, 5);
                         }
                         else
                         {
@@ -60,7 +60,7 @@ public class GameManager
                                 // set player's current block to null
                             }
                             // block falls 1 space
-                            lobby.players[j].currentBlockPosition = new Tuple<int, int>(lobby.players[j].currentBlockPosition.Item1 - 1, lobby.players[j].currentBlockPosition.Item2);
+                            // lobby.players[j].currentBlockPosition = new Tuple<int, int>(lobby.players[j].currentBlockPosition.Item1 - 1, lobby.players[j].currentBlockPosition.Item2);
                         }
                     }
                     // send game state to all players in lobby
