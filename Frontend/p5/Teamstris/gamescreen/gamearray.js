@@ -16,8 +16,8 @@ class GameArray {
 
         this.NumPlayers = NumPlayers
         this.ShapeArray = new Array(this.NumPlayers)
-        this.ShapeArray[0] = this.InstantiateShape(1,null,0,0, false)
-        this.ShapeArray[1] = this.InstantiateShape(2,null,0,5,false)
+        this.ShapeArray[0] = this.InstantiateShape(1,null,0,3, false)
+        this.ShapeArray[1] = this.InstantiateShape(2,null,0,9,false)
         this.PlaceShape(this.ShapeArray[1])
 
         // allows easy determination of whenv to freeze an object
@@ -181,7 +181,7 @@ class GameArray {
      * 
      * @return void
      */
-    async RotateShape(ID) {
+    async RotateShape(ID, reply=true) {
         var Shape = this.ShapeArray[ID-1]
 
         // returns in the form [new squares, blueprint, dimensions]
@@ -200,8 +200,11 @@ class GameArray {
             }
         }
 
-        this.SendAction(ID, boardIndices, "rotate")
-
+        // reply to the server if it was a player-made move
+        if (reply) {
+            this.SendAction(ID, boardIndices, "rotate")
+        }
+        
         Shape.UpdateAfterRotate(newSquares, narr[1], narr[2])
         this.PlaceShape(Shape)
     }
@@ -227,6 +230,21 @@ class GameArray {
     }
 
     /** 
+     * @description Forces the shape to move in the specified direction, does not send movement back to
+     * the server
+     * 
+     * @param ID - ID of a shape object
+     * @param left - integer representing how far left the shape should move
+     * @param right - integer representing how far right the shape should move
+     * @param down - integer representing how far down the shape should move
+     * 
+     * @return void
+     */
+    async ForceMoveShape(ID, left, right, down) {
+        this.ShapeArray[ID-1].MoveShape(this.arr, left, right, down, false)
+    }
+
+    /** 
      * @description Check to see if a shape should be frozen and removed from the owner's control.
      * It will replace the shape with a new one if the current shape is frozen
      * 
@@ -239,7 +257,7 @@ class GameArray {
     CheckFreeze(Shape, down, ColType) {
         if (down == 1 && (ColType == this.CollisionType.OutOfBounds || ColType == this.CollisionType.FrozenObject)) {
             Shape.Freeze()
-            this.ShapeArray[Shape.ID - 1] = this.InstantiateShape(Shape.ID,null,0,0,true)
+            this.ShapeArray[Shape.ID - 1] = this.InstantiateShape(Shape.ID,null,0,Shape.ID*5,false)
         }
     }
 

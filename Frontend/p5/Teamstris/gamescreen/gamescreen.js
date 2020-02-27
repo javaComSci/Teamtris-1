@@ -6,7 +6,7 @@ class GameScreen {
     if(gamescreen_constructor) console.log("Creating GameScreen Object");
 
     // number of players in the game (real and bot inclusive)
-    this.NumPlayers = 1
+    this.NumPlayers = 2
 
     // ID of the current player
     this.PlayerID = 1
@@ -64,14 +64,14 @@ class GameScreen {
 
       var e = JSON.parse(event.data);
       if (e.move == "left") {
-        this.GameArray.MoveShape(e.playerID,1,0,0)
+        this.GameArray.MoveShape(e.playerID,1,0,0,false)
       } else if (e.move == "right") {
-        this.GameArray.MoveShape(e.playerID,0,1,0)
+        this.GameArray.MoveShape(e.playerID,0,1,0,false)
       } else if (e.move == "down") {
-        this.GameArray.MoveShape(e.playerID,0,0,1)
+        this.GameArray.MoveShape(e.playerID,0,0,1,false)
       } else if (e.move == "rotate") {
-        this.GameArray.RotateShape(e.playerID)
-        this.GameArray.MoveShape(e.playerID,0,0,0)
+        this.GameArray.RotateShape(e.playerID,false)
+        this.GameArray.MoveShape(e.playerID,0,0,0,false)
       }
       console.log(e);
       
