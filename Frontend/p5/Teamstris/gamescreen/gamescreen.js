@@ -6,7 +6,7 @@ class GameScreen {
     if(gamescreen_constructor) console.log("Creating GameScreen Object");
 
     // number of players in the game (real and bot inclusive)
-    this.NumPlayers = 2
+    this.NumPlayers = 4
 
     // ID of the current player
     this.PlayerID = 1
