@@ -9,14 +9,13 @@ class GameArray {
         }
 
         this.SquareEdgeLength = SquareEdgeLength
-        this.InstantiateSquares(this.SquareEdgeLength)
+        this.InstantiateSquares()
 
         this.NumPlayers = NumPlayers
         this.ShapeArray = new Array(this.NumPlayers)
-        this.ShapeArray[0] = this.InstantiateShape(1,0,0)
-        this.ShapeArray[1] = this.InstantiateShape(2,0,5)
-        this.PlaceShape(this.ShapeArray[0])
-        this.PlaceShape(this.ShapeArray[1])
+        this.ShapeArray[0] = this.InstantiateShape(1,null,0,0, false)
+        //this.ShapeArray[1] = this.InstantiateShape(2,0,5)
+        //this.PlaceShape(this.ShapeArray[1])
 
         // allows easy determination of whenv to freeze an object
         this.CollisionType = {
@@ -29,11 +28,15 @@ class GameArray {
         //console.log(this.CollisionType)
     }//end constructor
 
+    ResetGameBoard() {
+        this.InstantiateSquares()
+    }
+
     // Set every indice within the game array to be a square object
-    InstantiateSquares(SquareEdgeLength) {
+    InstantiateSquares() {
         for (var i = 0; i < this.row_count; i++) {
             for (var j = 0; j < this.column_count; j++) {
-                this.arr[i][j] = new Square(SquareEdgeLength)
+                this.arr[i][j] = new Square(this.SquareEdgeLength)
                 this.arr[i][j].SetPosition(i,j)
             }
         }
@@ -122,7 +125,7 @@ class GameArray {
         }
 
         Shape.UpdateAfterRotate(newSquares, narr[1], narr[2])
-        this.PlaceShape(Shape) 
+        this.PlaceShape(Shape)
     }
 
     // move the shape in the provided direction if it is valid
@@ -140,7 +143,7 @@ class GameArray {
     CheckFreeze(Shape, down, ColType) {
         if (down == 1 && (ColType == this.CollisionType.OutOfBounds || ColType == this.CollisionType.FrozenObject)) {
             Shape.Freeze()
-            this.ShapeArray[Shape.ID - 1] = this.InstantiateShape(Shape.ID,0,0,true)
+            this.ShapeArray[Shape.ID - 1] = this.InstantiateShape(Shape.ID,null,0,0,true)
         }
     }
 
@@ -159,8 +162,13 @@ class GameArray {
     }
 
     // Create shape on the gamearray. Spawnlocation denotes the top left, x-axis, offset.
-    InstantiateShape(owner, RowOffset=0, ColOffset=0, RandomOffset=false) {
-        var NewShape = new Shape(owner)
+    InstantiateShape(owner, ShapeBlueprint=null, RowOffset=0, ColOffset=0, RandomOffset=false) {
+        var NewShape;
+        if (ShapeBlueprint == null) {
+            NewShape = new Shape(owner)
+        } else {
+            NewShape = new Shape(owner, ShapeBlueprint)
+        }
 
         // set a random column offset
         if (RandomOffset) {
@@ -182,7 +190,7 @@ class GameArray {
 
                 // if this spot is not empty, then we cannot spawn a square here
                 if (!this.arr[iOffset][jOffset].IsEmpty()) {
-                    console.log("GAME OVER")
+                    //console.log("GAME OVER")
                 } else {
                 // Always place the shape as if it were in a bounding box
                 //this.PlaceSquare(iOffset,jOffset,NewShape.ID,NewShape.Color)
@@ -204,4 +212,12 @@ class GameArray {
         }
         pop();
     }
+
+    ForceChangeShape(ID, ShapeBlueprint, rowOffset, columnOffset, randomOffset) {
+        this.ShapeArray[ID-1] = this.InstantiateShape(ID, ShapeBlueprint, rowOffset, columnOffset, randomOffset)
+        this.PlaceShape(this.ShapeArray[ID-1])
+    }
 }
+
+/* This export is used for testing*/
+module.exports = [GameArray]

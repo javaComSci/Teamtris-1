@@ -12,7 +12,7 @@ class GameScreen {
     this.BoardSquareSize = [20,5+5*this.NumPlayers]
 
     // length of the edge of each of the squares on the game board
-    this.SquareEdgeLength = min(CustomWindowHeight / this.BoardSquareSize[0], CustomWindowWidth / this.BoardSquareSize[1])
+    this.SquareEdgeLength = Math.min(CustomWindowHeight / this.BoardSquareSize[0], CustomWindowWidth / this.BoardSquareSize[1])
 
     // scales the length of the edges to the desired ratio of the screen.
     this.SquareScalingFactor = 0.8
@@ -35,7 +35,7 @@ class GameScreen {
     this.PreviousTime = 0
 
     // number of milliseconds between every update
-    this.GameSpeed = 10000
+    this.GameSpeed = 1000
 
     // Array of taken squares that will be used to calculate collision. Max one shape per player
     // this.ShapeArray = new Array(this.NumPlayers)
@@ -160,9 +160,11 @@ class GameScreen {
       this.GameArray.MoveShape(this.PlayerID,0,1,0)
     } else if (realKeyCode === DOWN_ARROW) {
       this.GameArray.MoveShape(this.PlayerID,0,0,1)
-    } else if (realKeyCode === 65) { //space
+    } else if (realKeyCode === 65) { //a
       this.GameArray.RotateShape(this.PlayerID)
       this.GameArray.MoveShape(this.PlayerID,0,0,0)
     }
   }
 }
+/* This export is used for testing*/
+module.exports = [GameScreen]
