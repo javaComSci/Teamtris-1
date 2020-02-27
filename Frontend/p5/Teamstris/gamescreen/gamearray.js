@@ -17,8 +17,8 @@ class GameArray {
         this.NumPlayers = NumPlayers
         this.ShapeArray = new Array(this.NumPlayers)
         this.ShapeArray[0] = this.InstantiateShape(1,null,0,0, false)
-        //this.ShapeArray[1] = this.InstantiateShape(2,null,0,5,false)
-        //this.PlaceShape(this.ShapeArray[1])
+        this.ShapeArray[1] = this.InstantiateShape(2,null,0,5,false)
+        this.PlaceShape(this.ShapeArray[1])
 
         // allows easy determination of whenv to freeze an object
         this.CollisionType = {
