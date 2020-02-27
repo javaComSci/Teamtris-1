@@ -63,7 +63,6 @@ class GameScreen {
     socket.onmessage = (event) => {
 
       var e = JSON.parse(event.data);
-      console.log("HERE WE GOOOOOOOOOOO ");
       console.log(e);
       // if(e.board != undefined ){
       //     team = this.team;
