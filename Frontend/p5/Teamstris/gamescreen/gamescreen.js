@@ -66,7 +66,7 @@ class GameScreen {
       if (e.playerID == this.playerID) {
         return
       }
-      
+
       if (e.move == "left") {
         this.GameArray.ForceMoveShape(e.playerID,1,0,0)
       } else if (e.move == "right") {
