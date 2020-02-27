@@ -275,7 +275,7 @@ class GameArray {
             // check collision type
             var ColType = this.IsValidMovement(this.ShapeArray[s],left,right,down)
             if (ColType == this.CollisionType.NoCollision) {
-                this.ShapeArray[s].MoveShape(this.arr,left,right,down)
+                this.ShapeArray[s].MoveShape(this.arr,left,right,down,false)
             } else {
                 // if shape cannot move, decide if it is removed from owners control
                 this.CheckFreeze(this.ShapeArray[s],down, ColType)
