@@ -1,11 +1,12 @@
-var playerNumber = 3;
-
+/** 
+  * @classDesc Controls all necessary information about the gamescreen
+  */
 class GameScreen {
   constructor(xOffset=0, yOffset=0, CustomWindowWidth=windowWidth, CustomWindowHeight=windowHeight) {
     if(gamescreen_constructor) console.log("Creating GameScreen Object");
 
     // number of players in the game (real and bot inclusive)
-    this.NumPlayers = 2
+    this.NumPlayers = 1
 
     // ID of the current player
     this.PlayerID = 1
@@ -14,7 +15,7 @@ class GameScreen {
     this.BoardSquareSize = [20,5+5*this.NumPlayers]
 
     // length of the edge of each of the squares on the game board
-    this.SquareEdgeLength = min(CustomWindowHeight / this.BoardSquareSize[0], CustomWindowWidth / this.BoardSquareSize[1])
+    this.SquareEdgeLength = Math.min(CustomWindowHeight / this.BoardSquareSize[0], CustomWindowWidth / this.BoardSquareSize[1])
 
     // scales the length of the edges to the desired ratio of the screen.
     this.SquareScalingFactor = 0.8
@@ -37,17 +38,14 @@ class GameScreen {
     this.PreviousTime = 0
 
     // number of milliseconds between every update
-    this.GameSpeed = 250
-
-    // Array of taken squares that will be used to calculate collision. Max one shape per player
-    // this.ShapeArray = new Array(this.NumPlayers)
-    // this.ShapeArray[0] = this.GameArray.InstantiateShape(this.PlayerID)
-    // this.ShapeArray[1] = this.GameArray.InstantiateShape(2,0,5)
-    // this.GameArray.PlaceShape(this.ShapeArray[0])
-    // this.GameArray.PlaceShape(this.ShapeArray[1])
-    
+    this.GameSpeed = 1000
   }
 
+  /** 
+    * @description Called 60 times a second to draw the gamescreen
+    * 
+    * @return void
+    */
   draw() {
     if(gamescreen_draw) console.log("Drawing on GameScreen");
     this.TimeStepUpdate() // perform a timestep update if necessary
@@ -55,50 +53,11 @@ class GameScreen {
     
   }
 
-  // // Sets the initial positions of each square in the grid
-  // InstantiateSquares() {
-  //   //draw each square of the game board
-  //   for (var i = 0; i < this.BoardSquareSize[0]; i++) {
-  //     for (var j = 0; j < this.BoardSquareSize[1]; j++) {
-  //       this.GameArray[i][j] = new Square(this.SquareEdgeLength)
-  //       this.GameArray[i][j].SetPosition(i,j)
-  //     }
-  //   }
-  // }
-
-  // // Create shape on the gamescrean. Spawnlocation denotes the top left, x-axis, offset.
-  // InstantiateShape(SpawnLocation=0, owner=this.PlayerID) {
-  //   var NewShape = new Shape(owner)
-
-  //   // ensure the shape can be placed along the x-axis given the width of the board and the shape's starting point
-  //   if (SpawnLocation + NewShape.ShapeDimensions[2] > this.BoardSquareSize[1]) {
-  //     console.log("Invalid shape at specified offset. Out of bounds.")
-  //     return
-  //   }
-
-  //   for (var i = 0; i < 4; i++) {
-  //     for (var j = 0; j < 4; j++) {
-  //       // if the blueprint has a square at this location, we attempt to place it
-  //       if (NewShape.ShapeBlueprint[i][j] == 1) {
-  //         var iOffset = i-NewShape.ShapeDimensions[0]
-  //         var jOffset = j-NewShape.ShapeDimensions[1]+SpawnLocation
-
-  //         // if this spot is not empty, then we cannot spawn a square here
-  //         if (!this.GameArray.IsEmpty(iOffset,jOffset)) {
-  //           console.log("GAME OVER")
-  //         } else {
-  //           // Always place the shape as if it were in a bounding box
-  //           //this.PlaceSquare(iOffset,jOffset,NewShape.ID,NewShape.Color)
-  //           NewShape.AddSquare(this.GameArray.GetSquare(iOffset,jOffset))
-  //         }
-  //       }
-  //     }
-  //   }
-  //   console.log(NewShape)
-  //   return NewShape
-  // }
-
-  // Sets a flag to perform a timestep update
+  /** 
+    * @description returns true if it is time to perform a timestep update, moving each shape down 1.
+    * 
+    * @return boolean
+    */
   CheckTimeStepUpdate() {
     var TruncUpdate = int(millis() / this.GameSpeed) // every milliseconds % this.GameSpeed the timestep update
     if (this.PreviousTime != TruncUpdate) {
@@ -110,7 +69,11 @@ class GameScreen {
     }
   }
 
-  // updates all necessary objects on the game board
+  /** 
+    * @description Updates all necessary objects on the game board
+    * 
+    * @return void
+    */
   TimeStepUpdate() {
     if (this.CheckTimeStepUpdate()) {
       for (var i = 0; i < 1; i++) {
@@ -119,42 +82,11 @@ class GameScreen {
     } //endif
   }
 
-  // SetSquare(i,j,ID,Color) {
-  //   this.GameArray[i][j].ChangeOwner(ID,Color)
-  // }
-
-  // GetSquare(i,j) {
-  //   return this.GameArray[i][j]
-  // }
-
-
-  // PlaceShape(Shape) {
-  //   for (var i = 0; i < Shape.Squares.length; i++) {
-  //     var s = Shape.Squares[i]
-  //     this.GameArray[s.i][s.j].ChangeOwner(s.ID,s.Color)
-  //   }
-  // }
-
-  // return true if the provided coordinates have no occupancy
-  // IsEmpty(i,j) {
-  //   if (this.GameArray.GetSquare(i,j).ID == 0) {
-  //     return true
-  //   }
-  // }
-
-  // draws the game grid based on this.GameArray
-  // DrawGameGrid() {
-  //   push();
-  //   translate(this.GridTranslation[0], this.GridTranslation[1])
-  //   stroke(this.DefaultGridStroke)
-  //   for (var i = 0; i < this.BoardSquareSize[0]; i++) {
-  //     for (var j = 0; j < this.BoardSquareSize[1]; j++) {
-  //       this.GameArray.GetSquare(i,j).Draw()
-  //     }
-  //   }
-  //   pop();
-  // }
-
+  /** 
+    * @description Handles user inputs for keyboard inputs
+    * 
+    * @return void
+    */
   keyPressedGame(realKeyCode=keyCode){
     if (realKeyCode === LEFT_ARROW) {
       this.GameArray.MoveShape(this.PlayerID,1,0,0)
@@ -162,9 +94,11 @@ class GameScreen {
       this.GameArray.MoveShape(this.PlayerID,0,1,0)
     } else if (realKeyCode === DOWN_ARROW) {
       this.GameArray.MoveShape(this.PlayerID,0,0,1)
-    } else if (realKeyCode === 65) { //space
+    } else if (realKeyCode === 65) { //a
       this.GameArray.RotateShape(this.PlayerID)
       this.GameArray.MoveShape(this.PlayerID,0,0,0)
     }
   }
 }
+/* This export is used for testing*/
+module.exports = [GameScreen]

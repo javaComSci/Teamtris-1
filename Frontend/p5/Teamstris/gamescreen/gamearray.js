@@ -1,3 +1,6 @@
+/** 
+  * @classDesc Represents the game itself, controls shape movement/resets/collision/coloring
+  */
 class GameArray {
     constructor(rows, columns, SquareEdgeLength, NumPlayers) {
         // array object to represent the game, filled with squares
@@ -9,14 +12,13 @@ class GameArray {
         }
 
         this.SquareEdgeLength = SquareEdgeLength
-        this.InstantiateSquares(this.SquareEdgeLength)
+        this.InstantiateSquares()
 
         this.NumPlayers = NumPlayers
         this.ShapeArray = new Array(this.NumPlayers)
-        this.ShapeArray[0] = this.InstantiateShape(1,0,0)
-        this.ShapeArray[1] = this.InstantiateShape(2,0,5)
-        this.PlaceShape(this.ShapeArray[0])
-        this.PlaceShape(this.ShapeArray[1])
+        this.ShapeArray[0] = this.InstantiateShape(1,null,0,0, false)
+        //this.ShapeArray[1] = this.InstantiateShape(2,null,0,5,false)
+        //this.PlaceShape(this.ShapeArray[1])
 
         // allows easy determination of whenv to freeze an object
         this.CollisionType = {
@@ -29,32 +31,75 @@ class GameArray {
         //console.log(this.CollisionType)
     }//end constructor
 
-    // Set every indice within the game array to be a square object
-    InstantiateSquares(SquareEdgeLength) {
+    /** 
+     * @description Simply calls InstantiateSqures
+     * 
+     * @return void
+     */
+    ResetGameBoard() {
+        this.InstantiateSquares()
+    }
+
+    /** 
+     * @description Replaces all squares on the board with empty squares, initializes position of squares
+     * 
+     * @return void
+     */
+    InstantiateSquares() {
         for (var i = 0; i < this.row_count; i++) {
             for (var j = 0; j < this.column_count; j++) {
-                this.arr[i][j] = new Square(SquareEdgeLength)
+                this.arr[i][j] = new Square(this.SquareEdgeLength)
                 this.arr[i][j].SetPosition(i,j)
             }
         }
     }
 
-    // get the square at the provided indices
+    /** 
+     * @description returns the square at the provided indices
+     * 
+     * @param i - row index
+     * @param j - col index
+     * 
+     * @return Square
+     */
     GetSquare(i,j) {
         return this.arr[i][j]
     }
 
-    // set the square at the provided indices
+    /** 
+     * @description sets the square at the provided indices to be a specific ID and color
+     * 
+     * @param i - row index
+     * @param j - col index
+     * @param ID - ID to be set to the square
+     * @param Color - color the square will be displayed as
+     * 
+     * @return void
+     */
     SetSquare(i,j,ID,Color) {
         this.arr[i][j].ChangeOwner(ID,Color)
     }
 
-    // returns true if the ID of the square is 0
+    /** 
+     * @description returns true if the ID of the square at the provided indices is 0
+     * 
+     * @param i - row index
+     * @param j - col index
+     * 
+     * @return boolean
+     */
     IsEmpty(i,j) {
         return this.arr[i][j].ID == 0
     }
 
-    // for every square pointed to by the provided shape, set that square to be owned by the shape
+    /** 
+     * @description For every square the provided shape points to, change those squares to be under
+     * the ownership of the shape
+     * 
+     * @param Shape - A Shape object
+     * 
+     * @return void
+     */
     PlaceShape(Shape) {
         Shape.RemoveShape()
         for (var i = 0; i < Shape.Squares.length; i++) {
@@ -63,14 +108,30 @@ class GameArray {
         }
     }
 
-    // remove the provided shape from the game board
+    /** 
+     * @description Sets all squares pointed to by this shape to be empty
+     * 
+     * @param Shape - A Shape object
+     * 
+     * @return void
+     */
     RemoveShape(Shape) {
         for (var i = 0; i < Shape.Squares.length; i++) {
             var s = Shape.Squares[i]
             this.arr[s.i][s.j].SetEmpty()
         }
     }
-    // check to see if the square can move in the provided direction
+
+    /** 
+     * @description Check to see if the provided shape can move in the provided directions
+     * 
+     * @param Shape - A Shape object
+     * @param left - integer representing how far left the shape should move
+     * @param right - integer representing how far right the shape should move
+     * @param down - integer representing how far down the shape should move
+     * 
+     * @return CollisionType (Type of collision, defined in constructor)
+     */
     IsValidMovement(Shape, left, right, down) {
         var sqs = Shape.Squares
         for (var s = 0; s < sqs.length; s++) {
@@ -85,7 +146,15 @@ class GameArray {
         return this.CollisionType.NoCollision
     }
 
-    // you can move to a square if it is empty or contains your own squares
+    /** 
+     * @description Checks to see if the square at the provided indices can be moved to
+     * 
+     * @param ID - ID of the shape attempting to move
+     * @param i - row index
+     * @param j - col index
+     * 
+     * @return CollisionType (Type of collision, defined in constructor)
+     */
     IsValidSquare(ID,i,j) {
         // check out of bounds
         if (i < 0 || i >= this.row_count || j < 0 || j >= this.column_count) {
@@ -104,7 +173,15 @@ class GameArray {
         return this.CollisionType.OtherPlayer
     }
 
-    RotateShape(ID) {
+    /** 
+     * @description Rotates the shape with the provided ID 90 degrees clockwise, does nothing if
+     * the shape cannot be rotated
+     * 
+     * @param ID - ID of the shape attempting to move
+     * 
+     * @return void
+     */
+    async RotateShape(ID) {
         var Shape = this.ShapeArray[ID-1]
 
         // returns in the form [new squares, blueprint, dimensions]
@@ -122,11 +199,20 @@ class GameArray {
         }
 
         Shape.UpdateAfterRotate(newSquares, narr[1], narr[2])
-        this.PlaceShape(Shape) 
+        this.PlaceShape(Shape)
     }
 
-    // move the shape in the provided direction if it is valid
-    MoveShape(ID, left, right, down) {
+    /** 
+     * @description Attempts to move the shape at the provided index in the provided directions
+     * 
+     * @param ID - ID of a shape object
+     * @param left - integer representing how far left the shape should move
+     * @param right - integer representing how far right the shape should move
+     * @param down - integer representing how far down the shape should move
+     * 
+     * @return void
+     */
+    async MoveShape(ID, left, right, down) {
         var Shape = this.ShapeArray[ID-1]
         var ColType = this.IsValidMovement(Shape,left,right,down)
         if (ColType == this.CollisionType.NoCollision) {
@@ -136,17 +222,33 @@ class GameArray {
         }
     }
 
-    // freezes the object if necessary
+    /** 
+     * @description Check to see if a shape should be frozen and removed from the owner's control.
+     * It will replace the shape with a new one if the current shape is frozen
+     * 
+     * @param Shape - A Shape object
+     * @param down - integer representing how far down the shape should move
+     * @param ColType - Collision type of the objects current collision
+     * 
+     * @return void
+     */
     CheckFreeze(Shape, down, ColType) {
         if (down == 1 && (ColType == this.CollisionType.OutOfBounds || ColType == this.CollisionType.FrozenObject)) {
             Shape.Freeze()
-            this.ShapeArray[Shape.ID - 1] = this.InstantiateShape(Shape.ID,0,0,true)
+            this.ShapeArray[Shape.ID - 1] = this.InstantiateShape(Shape.ID,null,0,0,true)
         }
     }
 
-    // move every shape on the game board in the provided direction if valid
-    MoveAllShapes(left, right, down) {
-
+    /** 
+     * @description Move every shape on the game board in the specified directions
+     * 
+     * @param left - integer representing how far left the shape should move
+     * @param right - integer representing how far right the shape should move
+     * @param down - integer representing how far down the shape should move
+     * 
+     * @return void
+     */
+    async MoveAllShapes(left, right, down) {
         for (var s = 0; s < this.ShapeArray.length; s++) {
             // check collision type
             var ColType = this.IsValidMovement(this.ShapeArray[s],left,right,down)
@@ -159,9 +261,24 @@ class GameArray {
         }
     }
 
-    // Create shape on the gamearray. Spawnlocation denotes the top left, x-axis, offset.
-    InstantiateShape(owner, RowOffset=0, ColOffset=0, RandomOffset=false) {
-        var NewShape = new Shape(owner)
+    /** 
+     * @description Creates a shape object
+     * 
+     * @param ID - ID of a shape object
+     * @param ShapeBlueprint - Square 2D array with 0 values for empty spots and 1s where the shape occurs
+     * @param RowOffset - integer representing how far down the shape should spawn
+     * @param ColOffset - integer representing how far across the shape should spawn
+     * @param RandomOffset - boolean, if set to true, the shape will start at a random column offset
+     * 
+     * @return Shape
+     */
+    InstantiateShape(ID, ShapeBlueprint=null, RowOffset=0, ColOffset=0, RandomOffset=false) {
+        var NewShape;
+        if (ShapeBlueprint == null) {
+            NewShape = new Shape(ID)
+        } else {
+            NewShape = new Shape(ID, ShapeBlueprint)
+        }
 
         // set a random column offset
         if (RandomOffset) {
@@ -183,7 +300,7 @@ class GameArray {
 
                 // if this spot is not empty, then we cannot spawn a square here
                 if (!this.arr[iOffset][jOffset].IsEmpty()) {
-                    console.log("GAME OVER")
+                    //console.log("GAME OVER")
                 } else {
                 // Always place the shape as if it were in a bounding box
                 //this.PlaceSquare(iOffset,jOffset,NewShape.ID,NewShape.Color)
@@ -194,10 +311,18 @@ class GameArray {
         }
         return NewShape
     }
-
-    Draw(row_translation, col_translation) {
+    
+    /** 
+     * @description Called 60 times a second and draws the gameArray
+     * 
+     * @param RowTranslation - How many rows the drawing should be translated down
+     * @param ColTranslation - How many columns the drawing should be translated down
+     * 
+     * @return void
+     */
+    Draw(RowTranslation, ColTranslation) {
         push();
-        translate(row_translation, col_translation)
+        translate(RowTranslation, ColTranslation)
         for (var i = 0; i < this.row_count; i++) {
             for (var j = 0; j < this.column_count; j++) {
                 this.arr[i][j].Draw()
@@ -205,4 +330,23 @@ class GameArray {
         }
         pop();
     }
+
+    /** 
+     * @description Forces the shape of player with id 'ID' to be replaced with a new shape. Usefull for testing
+     * 
+     * @param ID - ID of a shape object
+     * @param ShapeBlueprint - Square 2D array with 0 values for empty spots and 1s where the shape occurs
+     * @param RowOffset - integer representing how far down the shape should spawn
+     * @param ColOffset - integer representing how far across the shape should spawn
+     * @param RandomOffset - boolean, if set to true, the shape will start at a random column offset
+     * 
+     * @return void
+     */
+    ForceChangeShape(ID, ShapeBlueprint, rowOffset, columnOffset, randomOffset) {
+        this.ShapeArray[ID-1] = this.InstantiateShape(ID, ShapeBlueprint, rowOffset, columnOffset, randomOffset)
+        this.PlaceShape(this.ShapeArray[ID-1])
+    }
 }
+
+/* This export is used for testing*/
+module.exports = [GameArray]
