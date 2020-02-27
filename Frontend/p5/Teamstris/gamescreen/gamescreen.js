@@ -54,6 +54,33 @@ class GameScreen {
   }
 
   /** 
+    * @description Sets the socket for listening in the game screen.
+    * 
+    * @return void
+    */
+  SetupSocket() {
+    /* Going to handle all the connections from the backend */
+    socket.onmessage = (event) => {
+
+      var e = JSON.parse(event.data);
+      console.log("HERE WE GOOOOOOOOOOO ");
+      console.log(e);
+      // if(e.board != undefined ){
+      //     team = this.team;
+      //     gameState = 2;
+      //     return;
+      // }
+      // if(e.players != undefined) {
+      //     console.log("players:");
+      //     console.log(e.players[e.players.length-1].name);
+      //     var newPlayer = new Player();
+      // } else if(e.lobbyID !== undefined) { 
+      //     this.team.lobbyToken = e.lobbyID.toUpperCase();
+      // }
+    };
+  }
+
+  /** 
     * @description returns true if it is time to perform a timestep update, moving each shape down 1.
     * 
     * @return boolean

@@ -189,14 +189,20 @@ class GameArray {
 
         // for all the new provided indices, check to ensure that they can be used
         var newSquares = []
+        var boardIndices = []
         for (var i = 0; i < narr[0].length; i++) {
             if (this.IsValidSquare(Shape.ID,narr[0][i][0],narr[0][i][1]) == this.CollisionType.NoCollision) {
+                boardIndices.push([narr[0][i][0],narr[0][i][1]])
                 newSquares.push(this.arr[narr[0][i][0]][narr[0][i][1]])
             } else {
                 // couldn't rotate the shape, so just return
                 return
             }
         }
+
+        console.log(team.lobbyID)
+        var data = JSON.stringify({"lobbyID":(team.lobbyToken).toLowerCase(),"playerID":ID,"shapeIndices": boardIndices, "move": "rotate"})
+        socket.send(JSON.stringify({"type": "6", "data": data}))
 
         Shape.UpdateAfterRotate(newSquares, narr[1], narr[2])
         this.PlaceShape(Shape)
@@ -323,6 +329,9 @@ class GameArray {
     Draw(RowTranslation, ColTranslation) {
         push();
         translate(RowTranslation, ColTranslation)
+        // fill("red")
+        // stroke(this.DefaultGridStroke)
+        // line(0, 0, this.row_count*this.SquareEdgeLength, 0)
         for (var i = 0; i < this.row_count; i++) {
             for (var j = 0; j < this.column_count; j++) {
                 this.arr[i][j].Draw()
