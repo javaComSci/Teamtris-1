@@ -54,6 +54,31 @@ class GameScreen {
   }
 
   /** 
+    * @description Sets the socket for listening in the game screen.
+    * 
+    * @return void
+    */
+  SetupSocket() {
+    /* Going to handle all the connections from the backend */
+    socket.onmessage = (event) => {
+
+      var e = JSON.parse(event.data);
+      if (e.move == "left") {
+        this.GameArray.MoveShape(e.playerID,1,0,0)
+      } else if (e.move == "right") {
+        this.GameArray.MoveShape(e.playerID,0,1,0)
+      } else if (e.move == "down") {
+        this.GameArray.MoveShape(e.playerID,0,0,1)
+      } else if (e.move == "rotate") {
+        this.GameArray.RotateShape(e.playerID)
+        this.GameArray.MoveShape(e.playerID,0,0,0)
+      }
+      console.log(e);
+      
+    };
+  }
+
+  /** 
     * @description returns true if it is time to perform a timestep update, moving each shape down 1.
     * 
     * @return boolean

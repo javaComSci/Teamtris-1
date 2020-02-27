@@ -17,8 +17,8 @@ class GameArray {
         this.NumPlayers = NumPlayers
         this.ShapeArray = new Array(this.NumPlayers)
         this.ShapeArray[0] = this.InstantiateShape(1,null,0,0, false)
-        //this.ShapeArray[1] = this.InstantiateShape(2,null,0,5,false)
-        //this.PlaceShape(this.ShapeArray[1])
+        this.ShapeArray[1] = this.InstantiateShape(2,null,0,5,false)
+        this.PlaceShape(this.ShapeArray[1])
 
         // allows easy determination of whenv to freeze an object
         this.CollisionType = {
@@ -189,14 +189,18 @@ class GameArray {
 
         // for all the new provided indices, check to ensure that they can be used
         var newSquares = []
+        var boardIndices = []
         for (var i = 0; i < narr[0].length; i++) {
             if (this.IsValidSquare(Shape.ID,narr[0][i][0],narr[0][i][1]) == this.CollisionType.NoCollision) {
+                boardIndices.push([narr[0][i][0],narr[0][i][1]])
                 newSquares.push(this.arr[narr[0][i][0]][narr[0][i][1]])
             } else {
                 // couldn't rotate the shape, so just return
                 return
             }
         }
+
+        this.SendAction(ID, boardIndices, "rotate")
 
         Shape.UpdateAfterRotate(newSquares, narr[1], narr[2])
         this.PlaceShape(Shape)
@@ -323,6 +327,9 @@ class GameArray {
     Draw(RowTranslation, ColTranslation) {
         push();
         translate(RowTranslation, ColTranslation)
+        // fill("red")
+        // stroke(this.DefaultGridStroke)
+        // line(0, 0, this.row_count*this.SquareEdgeLength, 0)
         for (var i = 0; i < this.row_count; i++) {
             for (var j = 0; j < this.column_count; j++) {
                 this.arr[i][j].Draw()
@@ -345,6 +352,20 @@ class GameArray {
     ForceChangeShape(ID, ShapeBlueprint, rowOffset, columnOffset, randomOffset) {
         this.ShapeArray[ID-1] = this.InstantiateShape(ID, ShapeBlueprint, rowOffset, columnOffset, randomOffset)
         this.PlaceShape(this.ShapeArray[ID-1])
+    }
+
+    /** 
+     * @description Sends a user action to the server
+     * 
+     * @param ID - ID of a shape object
+     * @param boardIndices - Indices in the game array that the shape will take after performing the action
+     * @param action - action the shape is taking
+     * 
+     * @return void
+     */
+    SendAction(ID, boardIndices, action) {
+        var data = JSON.stringify({"lobbyID":(team.lobbyToken).toLowerCase(),"playerID":ID,"shapeIndices": boardIndices, "move": action})
+        socket.send(JSON.stringify({"type": "6", "data": data}))
     }
 }
 
