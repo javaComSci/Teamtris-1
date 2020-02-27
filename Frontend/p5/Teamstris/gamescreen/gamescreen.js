@@ -63,19 +63,18 @@ class GameScreen {
     socket.onmessage = (event) => {
 
       var e = JSON.parse(event.data);
+      if (e.move == "left") {
+        this.GameArray.MoveShape(e.playerID,1,0,0)
+      } else if (e.move == "right") {
+        this.GameArray.MoveShape(e.playerID,0,1,0)
+      } else if (e.move == "down") {
+        this.GameArray.MoveShape(e.playerID,0,0,1)
+      } else if (e.move == "rotate") {
+        this.GameArray.RotateShape(e.playerID)
+        this.GameArray.MoveShape(e.playerID,0,0,0)
+      }
       console.log(e);
-      // if(e.board != undefined ){
-      //     team = this.team;
-      //     gameState = 2;
-      //     return;
-      // }
-      // if(e.players != undefined) {
-      //     console.log("players:");
-      //     console.log(e.players[e.players.length-1].name);
-      //     var newPlayer = new Player();
-      // } else if(e.lobbyID !== undefined) { 
-      //     this.team.lobbyToken = e.lobbyID.toUpperCase();
-      // }
+      
     };
   }
 
