@@ -64,14 +64,14 @@ class GameScreen {
 
       var e = JSON.parse(event.data);
       if (e.move == "left") {
-        this.GameArray.MoveShape(e.playerID,1,0,0,false)
+        this.GameArray.ForceMoveShape(e.playerID,1,0,0)
       } else if (e.move == "right") {
-        this.GameArray.MoveShape(e.playerID,0,1,0,false)
+        this.GameArray.ForceMoveShape(e.playerID,0,1,0)
       } else if (e.move == "down") {
-        this.GameArray.MoveShape(e.playerID,0,0,1,false)
+        this.GameArray.ForceMoveShape(e.playerID,0,0,1)
       } else if (e.move == "rotate") {
         this.GameArray.RotateShape(e.playerID,false)
-        this.GameArray.MoveShape(e.playerID,0,0,0,false)
+        this.GameArray.ForceMoveShape(e.playerID,0,0,0)
       }
       console.log(e);
       

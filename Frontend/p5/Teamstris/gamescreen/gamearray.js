@@ -231,7 +231,7 @@ class GameArray {
 
     /** 
      * @description Forces the shape to move in the specified direction, does not send movement back to
-     * the server
+     * the server, and does not check collision
      * 
      * @param ID - ID of a shape object
      * @param left - integer representing how far left the shape should move
