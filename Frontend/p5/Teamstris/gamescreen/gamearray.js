@@ -347,14 +347,21 @@ class GameArray {
     Draw(RowTranslation, ColTranslation) {
         push();
         translate(RowTranslation, ColTranslation)
-        // fill("red")
-        // stroke(this.DefaultGridStroke)
-        // line(0, 0, this.row_count*this.SquareEdgeLength, 0)
+        rectMode(CORNER)
         for (var i = 0; i < this.row_count; i++) {
             for (var j = 0; j < this.column_count; j++) {
                 this.arr[i][j].Draw()
             }
         }
+
+        // draw bounding rectangle
+        var strokeW = 10
+        noFill();
+        stroke("pink")
+        strokeWeight(strokeW)
+        rect(0-strokeW/2, 0-strokeW/2, this.SquareEdgeLength*this.column_count+strokeW, this.SquareEdgeLength*this.row_count+strokeW,10)
+
+        
         pop();
     }
 
