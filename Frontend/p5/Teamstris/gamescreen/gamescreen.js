@@ -6,12 +6,13 @@ class GameScreen {
     xOffset = 0,
     yOffset = 0,
     CustomWindowWidth = windowWidth,
-    CustomWindowHeight = windowHeight
+    CustomWindowHeight = windowHeight,
+    PlayerCount=1
   ) {
     if (gamescreen_constructor) console.log("Creating GameScreen Object");
 
     // number of players in the game (real and bot inclusive)
-    this.NumPlayers = 4;
+    this.NumPlayers = PlayerCount;
 
     // ID of the current player
     this.PlayerID = 1;
@@ -80,7 +81,7 @@ class GameScreen {
     /* Going to handle all the connections from the backend */
     socket.onmessage = event => {
       var e = JSON.parse(event.data);
-      console.log(e);
+      //console.log(e);
       if (e.type == 8) {
         if (e.move == "left") {
           this.GameArray.ForceMoveShape(e.playerID, 1, 0, 0);

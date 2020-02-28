@@ -72,10 +72,22 @@ public class GameManager
                 {
                     foreach (Bot bot in lobby.bots)
                     {
-                        List<Tuple<int, int>> bob = bot.GetMove(lobby.board, blocks);
-                        foreach (Tuple<int, int> tup in bob)
+                        Console.WriteLine("making bot move");
+                        try
                         {
-                            lobby.board.board[tup.Item1, tup.Item2] = 1;
+                            List<Tuple<int, int>> bob = bot.GetMove(lobby.game.board, blocks);
+                            if (bob == null)
+                            {
+                                Console.WriteLine("no place to place piece");
+                            }
+                            foreach (Tuple<int, int> tup in bob)
+                            {
+                                lobby.game.board.board[tup.Item1, tup.Item2] = 1;
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine("bot error");
                         }
                     }
                     // update board
@@ -89,7 +101,7 @@ public class GameManager
                         }
                         else
                         {
-                            if (checkCollision(lobby.players[j], lobby.board))
+                            if (checkCollision(lobby.players[j], lobby.game.board))
                             {
                                 // place block
                                 // set player's current block to null

@@ -91,9 +91,9 @@ public class SingleBot : Bot {
         // Console.WriteLine("WIDTH OF PIECE " + widthOfPiece);
 
         // get the shifted over piece
-        Console.WriteLine();
-        Console.WriteLine("SHIFTED OVER PIECE");
-        botInfoPrinter.PrintMultiDimArr(shiftedOverPiece);
+        // Console.WriteLine();
+        // Console.WriteLine("SHIFTED OVER PIECE");
+        // botInfoPrinter.PrintMultiDimArr(shiftedOverPiece);
 
         int[] bottomBlocks = block.GetBottomBlocks(shiftedOverPiece);
         // Console.WriteLine("BOTTOM ");
@@ -112,8 +112,8 @@ public class SingleBot : Bot {
                 // modified board that is getting filled by these dots
                 int[,] modifiedBoardWithOnlyPieces = new int[board.height,board.width];
 
-                for(int i = 0; i < board.width; i++){
-                    for(int j = 0; j < board.height; j++){
+                for(int i = 0; i < board.height; i++){
+                    for(int j = 0; j < board.width; j++){
                         modifiedBoardWithOnlyPieces[i,j] = board.board[i,j];
                     }
                 }
@@ -142,21 +142,21 @@ public class SingleBot : Bot {
                     // Console.Write("\n\n\nAAAHH" + board.maxHeights[startingCol + shiftedDotCol] + " " + shiftedForBoardRow);
                     // make sure that the shifted piece is not below the possibile pieces already there
                     if(board.height - board.maxHeights[startingCol + shiftedDotCol] <=  shiftedForBoardRow) {
-                        Console.WriteLine("INCOMPATIBLE PIECE WITH MAX HEIGHTS");
+                        // Console.WriteLine("INCOMPATIBLE PIECE WITH MAX HEIGHTS");
                         compatibleBoard = null;
                         break;
                     }
 
                     // check whether the 2 heights are more than height of the board, if yes, then should not continue with the piece in this or any of the following rows
                     if(shiftedForBoardRow < 0 || shiftedForBoardRow >= board.height) {
-                        Console.WriteLine("INCOMPATIBLE PIECE BECAUSE OUT OF BOUNDS WITH INFO " + (board.height - startingRow - 1) + " " + (4 - shiftedDotRow - 1));
+                        // Console.WriteLine("INCOMPATIBLE PIECE BECAUSE OUT OF BOUNDS WITH INFO " + (board.height - startingRow - 1) + " " + (4 - shiftedDotRow - 1));
                         compatibleBoard = null;
                         break;
                     } 
 
                     // check if the dot is overriding an exising dot
                     if(board.board[shiftedForBoardRow, shiftedForBoardCol] == 1) {
-                        Console.WriteLine("INCOMPATIBLE PIECE BECAUSE OVERRIDING DOTS");
+                        // Console.WriteLine("INCOMPATIBLE PIECE BECAUSE OVERRIDING DOTS");
                         compatibleBoard = null;
                         break;
                     }
@@ -230,6 +230,11 @@ public class SingleBot : Bot {
             List<Block> blocks - contains the list of all the blocks to try to fit in this location
      */
     public override List<Tuple<int, int>> GetMove(Board board, List<Block> blocks, bool allRotations = false) {
+        Console.WriteLine("BOARD");
+        botInfoPrinter.PrintMultiDimArr(board.board);
+        Console.WriteLine("PIECE");
+        botInfoPrinter.PrintJaggedArr(blocks[0].data);
+
         // get the max height of each column of the baord 
         board.FindMaxHeights();
 
@@ -341,7 +346,7 @@ public class SingleBot : Bot {
                 // placement of this block that is the best of the current block
                 bestPiecePlacementOfCurrentBlock= compatiblePiecesForCurrentPieceAfterPiece1[0].Item2;
             } else if(bestPieceOfNextNextBlock != null && bestPieceOfNextNextBlock.Item4 > 0) {
-                Console.WriteLine("I AM A NEXT NEXT SHAPE\n\n\n\n");
+                // Console.WriteLine("I AM A NEXT NEXT SHAPE\n\n\n\n");
 
                 // check 2 shapes from the current shape
 
@@ -386,10 +391,8 @@ public class SingleBot : Bot {
             }
         } 
 
-        Console.WriteLine("BEST PIECE FOR BOARD");
-        botInfoPrinter.PrintPositions(bestPiecePlacementOfCurrentBlock);
-        Console.WriteLine("BOARD");
-        botInfoPrinter.PrintMultiDimArr(board.board);
+        // Console.WriteLine("BEST PIECE FOR BOARD");
+        // botInfoPrinter.PrintPositions(bestPiecePlacementOfCurrentBlock);
         Console.WriteLine("BOARD WITH PIECE");
         botInfoPrinter.PrintBoardWithPiece(board.board, bestPiecePlacementOfCurrentBlock);
 
