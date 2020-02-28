@@ -112,8 +112,8 @@ public class SingleBot : Bot {
                 // modified board that is getting filled by these dots
                 int[,] modifiedBoardWithOnlyPieces = new int[board.height,board.width];
 
-                for(int i = 0; i < board.width; i++){
-                    for(int j = 0; j < board.height; j++){
+                for(int i = 0; i < board.height; i++){
+                    for(int j = 0; j < board.width; j++){
                         modifiedBoardWithOnlyPieces[i,j] = board.board[i,j];
                     }
                 }
