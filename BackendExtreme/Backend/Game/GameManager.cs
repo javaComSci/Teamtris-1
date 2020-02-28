@@ -72,10 +72,11 @@ public class GameManager
                 {
                     foreach (Bot bot in lobby.bots)
                     {
-                        List<Tuple<int, int>> bob = bot.GetMove(lobby.board, blocks);
+                        Console.WriteLine("making bot move");
+                        List<Tuple<int, int>> bob = bot.GetMove(lobby.game.board, blocks);
                         foreach (Tuple<int, int> tup in bob)
                         {
-                            lobby.board.board[tup.Item1, tup.Item2] = 1;
+                            lobby.game.board.board[tup.Item1, tup.Item2] = 1;
                         }
                     }
                     // update board
@@ -89,7 +90,7 @@ public class GameManager
                         }
                         else
                         {
-                            if (checkCollision(lobby.players[j], lobby.board))
+                            if (checkCollision(lobby.players[j], lobby.game.board))
                             {
                                 // place block
                                 // set player's current block to null
