@@ -9,11 +9,38 @@ public class GameManager
 {
     Dictionary<string, Lobby> lobbies;
     private Thread thread;
+    private List<Block> blocks;
     private int[][] data;
     public GameManager(Dictionary<string, Lobby> lobbies)
     {
         this.lobbies = lobbies;
         thread = new Thread(stateUpdate);
+        int[][] b1 = new int[][] {
+                new int[] {1, 1, 0, 0},
+                new int[] {1, 1, 0, 0},
+                new int[] {0, 0, 0, 0},
+                new int[] {0, 0, 0, 0},
+            };
+        int[][] b2 = new int[][] {
+                new int[] {1, 1, 0, 0},
+                new int[] {1, 1, 0, 0},
+                new int[] {0, 0, 0, 0},
+                new int[] {0, 0, 0, 0},
+            };
+        int[][] b3 = new int[][] {
+                new int[] {0, 0, 0, 0},
+                new int[] {1, 0, 0, 0},
+                new int[] {0, 0, 0, 0},
+                new int[] {0, 0, 0, 0},
+            };
+
+        Block block1 = new Block(b1, 1);
+        Block block2 = new Block(b2, 1);
+        Block block3 = new Block(b3, 1);
+
+        blocks = new List<Block>();
+
+        blocks.Add(block1);
         data = new int[][] {
                 new int[] {0, 0, 1, 0},
                 new int[] {0, 0, 1, 0},
@@ -43,6 +70,14 @@ public class GameManager
                 Lobby lobby = lobbies[lobbyID];
                 if (lobby.lobbyState == LobbyState.PLAYING)
                 {
+                    foreach (Bot bot in lobby.bots)
+                    {
+                        List<Tuple<int, int>> bob = bot.GetMove(lobby.board, blocks);
+                        foreach (Tuple<int, int> tup in bob)
+                        {
+                            lobby.board.board[tup.Item1, tup.Item2] = 1;
+                        }
+                    }
                     // update board
                     for (int j = 0; j < lobby.players.Count; j++)
                     {
