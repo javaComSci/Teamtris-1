@@ -260,7 +260,6 @@ class GameArray {
         if (down == 1 && (ColType == this.CollisionType.OutOfBounds || ColType == this.CollisionType.FrozenObject)) {
             Shape.Freeze()
             this.ShapeArray[Shape.ID - 1] = this.InstantiateShape(Shape.ID,null,0,Shape.ID*5,false)
-            console.log(this.ShapeArray[Shape.ID-1])
         }
     }
 

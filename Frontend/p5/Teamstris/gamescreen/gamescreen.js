@@ -81,7 +81,7 @@ class GameScreen {
     /* Going to handle all the connections from the backend */
     socket.onmessage = event => {
       var e = JSON.parse(event.data);
-      console.log(e);
+      //console.log(e);
       if (e.type == 8) {
         if (e.move == "left") {
           this.GameArray.ForceMoveShape(e.playerID, 1, 0, 0);
