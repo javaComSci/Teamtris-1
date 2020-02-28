@@ -6,12 +6,13 @@ class GameScreen {
     xOffset = 0,
     yOffset = 0,
     CustomWindowWidth = windowWidth,
-    CustomWindowHeight = windowHeight
+    CustomWindowHeight = windowHeight,
+    PlayerCount=1
   ) {
     if (gamescreen_constructor) console.log("Creating GameScreen Object");
 
     // number of players in the game (real and bot inclusive)
-    this.NumPlayers = 4;
+    this.NumPlayers = PlayerCount;
 
     // ID of the current player
     this.PlayerID = 1;
