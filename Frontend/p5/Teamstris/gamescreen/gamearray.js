@@ -17,7 +17,7 @@ class GameArray {
         this.NumPlayers = NumPlayers
         this.ShapeArray = new Array(this.NumPlayers)
         this.ShapeArray[0] = this.InstantiateShape(1,null,0,5, false)
-        //this.ShapeArray[1] = this.InstantiateShape(2,null,0,10,false)
+        // this.ShapeArray[1] = this.InstantiateShape(2,null,0,10,false)
         // this.ShapeArray[2] = this.InstantiateShape(3,null,0,15,false)
         // this.ShapeArray[3] = this.InstantiateShape(4,null,0,20,false)
         //this.PlaceShape(this.ShapeArray[1])
@@ -392,12 +392,7 @@ class GameArray {
      * @return void
      */
     SendAction(ID, boardIndices, action) {
-        if (typeof team.lobbyToken != String) {
-            var curr_token = "";
-        } else {
-            var curr_token = team.lobbyToken.toLowerCase()
-        }
-        var data = JSON.stringify({"lobbyID":curr_token,"playerID":ID,"shapeIndices": boardIndices, "move": action})
+        var data = JSON.stringify({"lobbyID":team.lobbyToken.toLowerCase(),"playerID":ID,"shapeIndices": boardIndices, "move": action})
         socket.send(JSON.stringify({"type": "6", "data": data}))
     }
 }
