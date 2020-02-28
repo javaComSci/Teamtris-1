@@ -1,133 +1,148 @@
-/** 
-  * @classDesc Controls all necessary information about the gamescreen
-  */
+/**
+ * @classDesc Controls all necessary information about the gamescreen
+ */
 class GameScreen {
-  constructor(xOffset=0, yOffset=0, CustomWindowWidth=windowWidth, CustomWindowHeight=windowHeight) {
-    if(gamescreen_constructor) console.log("Creating GameScreen Object");
+  constructor(
+    xOffset = 0,
+    yOffset = 0,
+    CustomWindowWidth = windowWidth,
+    CustomWindowHeight = windowHeight
+  ) {
+    if (gamescreen_constructor) console.log("Creating GameScreen Object");
 
     // number of players in the game (real and bot inclusive)
-    this.NumPlayers = 4
+    this.NumPlayers = 4;
 
     // ID of the current player
-    this.PlayerID = 1
+    this.PlayerID = 1;
 
     // size of the game board, determined by this.NumPlayers.
-    this.BoardSquareSize = [20,5+5*this.NumPlayers]
+    this.BoardSquareSize = [20, 5 + 5 * this.NumPlayers];
 
     // length of the edge of each of the squares on the game board
-    this.SquareEdgeLength = Math.min(CustomWindowHeight / this.BoardSquareSize[0], CustomWindowWidth / this.BoardSquareSize[1])
+    this.SquareEdgeLength = Math.min(
+      CustomWindowHeight / this.BoardSquareSize[0],
+      CustomWindowWidth / this.BoardSquareSize[1]
+    );
 
     // scales the length of the edges to the desired ratio of the screen.
-    this.SquareScalingFactor = 0.8
-    this.SquareEdgeLength = this.SquareEdgeLength * this.SquareScalingFactor
+    this.SquareScalingFactor = 0.8;
+    this.SquareEdgeLength = this.SquareEdgeLength * this.SquareScalingFactor;
 
     // base of the edge length of each square, we center the grid.
-    this.WidthTranslation = (CustomWindowWidth - this.SquareEdgeLength * this.BoardSquareSize[1]) / 2
-    this.HeightTranslation = (CustomWindowHeight - this.SquareEdgeLength * this.BoardSquareSize[0]) / 2
-    this.GridTranslation = [xOffset + this.WidthTranslation,yOffset + this.HeightTranslation]
+    this.WidthTranslation =
+      (CustomWindowWidth - this.SquareEdgeLength * this.BoardSquareSize[1]) / 2;
+    this.HeightTranslation =
+      (CustomWindowHeight - this.SquareEdgeLength * this.BoardSquareSize[0]) /
+      2;
+    this.GridTranslation = [
+      xOffset + this.WidthTranslation,
+      yOffset + this.HeightTranslation
+    ];
 
     // Default grid stroke of all shapes in the grid (width of edge)
-    this.DefaultGridStroke = 8
+    this.DefaultGridStroke = 8;
 
     // Instantiate all squares
     //this.InstantiateSquares()
-    this.GameArray = new GameArray(this.BoardSquareSize[0], this.BoardSquareSize[1], this.SquareEdgeLength, this.NumPlayers)
+    this.GameArray = new GameArray(
+      this.BoardSquareSize[0],
+      this.BoardSquareSize[1],
+      this.SquareEdgeLength,
+      this.NumPlayers
+    );
     //this.GameArray.InstantiateSquares(this.SquareEdgeLength)
 
     // variables used for updating the game grid
-    this.PreviousTime = 0
+    this.PreviousTime = 0;
 
     // number of milliseconds between every update
-    this.GameSpeed = 1000
+    this.GameSpeed = 1000;
   }
 
-  /** 
-    * @description Called 60 times a second to draw the gamescreen
-    * 
-    * @return void
-    */
+  /**
+   * @description Called 60 times a second to draw the gamescreen
+   *
+   * @return void
+   */
   draw() {
-    if(gamescreen_draw) console.log("Drawing on GameScreen");
-    this.TimeStepUpdate() // perform a timestep update if necessary
-    this.GameArray.Draw(this.GridTranslation[0], this.GridTranslation[1])
-    
+    if (gamescreen_draw) console.log("Drawing on GameScreen");
+    this.TimeStepUpdate(); // perform a timestep update if necessary
+    this.GameArray.Draw(this.GridTranslation[0], this.GridTranslation[1]);
   }
 
-  /** 
-    * @description Sets the socket for listening in the game screen.
-    * 
-    * @return void
-    */
+  /**
+   * @description Sets the socket for listening in the game screen.
+   *
+   * @return void
+   */
   SetupSocket() {
     /* Going to handle all the connections from the backend */
-    socket.onmessage = (event) => {
-
+    socket.onmessage = event => {
       var e = JSON.parse(event.data);
-      if (e.playerID == this.playerID) {
-        return
-      }
-
-      if (e.move == "left") {
-        this.GameArray.ForceMoveShape(e.playerID,1,0,0)
-      } else if (e.move == "right") {
-        this.GameArray.ForceMoveShape(e.playerID,0,1,0)
-      } else if (e.move == "down") {
-        this.GameArray.ForceMoveShape(e.playerID,0,0,1)
-      } else if (e.move == "rotate") {
-        this.GameArray.RotateShape(e.playerID,false)
-        this.GameArray.ForceMoveShape(e.playerID,0,0,0)
-      }
       console.log(e);
-      
+      if (e.type == 8) {
+        if (e.move == "left") {
+          this.GameArray.ForceMoveShape(e.playerID, 1, 0, 0);
+        } else if (e.move == "right") {
+          this.GameArray.ForceMoveShape(e.playerID, 0, 1, 0);
+        } else if (e.move == "down") {
+          this.GameArray.ForceMoveShape(e.playerID, 0, 0, 1);
+        } else if (e.move == "rotate") {
+          this.GameArray.RotateShape(e.playerID, false);
+          this.GameArray.ForceMoveShape(e.playerID, 0, 0, 0);
+        }
+      }
     };
   }
 
-  /** 
-    * @description returns true if it is time to perform a timestep update, moving each shape down 1.
-    * 
-    * @return boolean
-    */
+  /**
+   * @description returns true if it is time to perform a timestep update, moving each shape down 1.
+   *
+   * @return boolean
+   */
   CheckTimeStepUpdate() {
-    var TruncUpdate = int(millis() / this.GameSpeed) // every milliseconds % this.GameSpeed the timestep update
+    var TruncUpdate = int(millis() / this.GameSpeed); // every milliseconds % this.GameSpeed the timestep update
     if (this.PreviousTime != TruncUpdate) {
-      if(gamescreen_updateflag) console.log("Updating Game")
-      this.PreviousTime = TruncUpdate
-      return true
+      if (gamescreen_updateflag) console.log("Updating Game");
+      this.PreviousTime = TruncUpdate;
+      return true;
     } else {
-      return false
+      return false;
     }
   }
 
-  /** 
-    * @description Updates all necessary objects on the game board
-    * 
-    * @return void
-    */
+  /**
+   * @description Updates all necessary objects on the game board
+   *
+   * @return void
+   */
   TimeStepUpdate() {
     if (this.CheckTimeStepUpdate()) {
       for (var i = 0; i < 1; i++) {
-        this.GameArray.MoveAllShapes(0,0,1)
-      }//endfor
+        this.GameArray.MoveAllShapes(0, 0, 1);
+      } //endfor
     } //endif
   }
 
-  /** 
-    * @description Handles user inputs for keyboard inputs
-    * 
-    * @return void
-    */
-  keyPressedGame(realKeyCode=keyCode){
+  /**
+   * @description Handles user inputs for keyboard inputs
+   *
+   * @return void
+   */
+  keyPressedGame(realKeyCode = keyCode) {
     if (realKeyCode === LEFT_ARROW) {
-      this.GameArray.MoveShape(this.PlayerID,1,0,0)
+      this.GameArray.MoveShape(this.PlayerID, 1, 0, 0);
     } else if (realKeyCode === RIGHT_ARROW) {
-      this.GameArray.MoveShape(this.PlayerID,0,1,0)
+      this.GameArray.MoveShape(this.PlayerID, 0, 1, 0);
     } else if (realKeyCode === DOWN_ARROW) {
-      this.GameArray.MoveShape(this.PlayerID,0,0,1)
-    } else if (realKeyCode === 65) { //a
-      this.GameArray.RotateShape(this.PlayerID)
-      this.GameArray.MoveShape(this.PlayerID,0,0,0)
+      this.GameArray.MoveShape(this.PlayerID, 0, 0, 1);
+    } else if (realKeyCode === 65) {
+      //a
+      this.GameArray.RotateShape(this.PlayerID);
+      this.GameArray.MoveShape(this.PlayerID, 0, 0, 0);
     }
   }
 }
 /* This export is used for testing*/
-module.exports = [GameScreen]
+module.exports = [GameScreen];
