@@ -73,10 +73,21 @@ public class GameManager
                     foreach (Bot bot in lobby.bots)
                     {
                         Console.WriteLine("making bot move");
-                        List<Tuple<int, int>> bob = bot.GetMove(lobby.game.board, blocks);
-                        foreach (Tuple<int, int> tup in bob)
+                        try
                         {
-                            lobby.game.board.board[tup.Item1, tup.Item2] = 1;
+                            List<Tuple<int, int>> bob = bot.GetMove(lobby.game.board, blocks);
+                            if (bob == null)
+                            {
+                                Console.WriteLine("no place to place piece");
+                            }
+                            foreach (Tuple<int, int> tup in bob)
+                            {
+                                lobby.game.board.board[tup.Item1, tup.Item2] = 1;
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            Console.WriteLine("bot error");
                         }
                     }
                     // update board
