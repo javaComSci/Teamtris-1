@@ -15,7 +15,7 @@ class GameScreen {
     this.NumPlayers = PlayerCount;
 
     // ID of the current player
-    this.PlayerID = 1;
+    this.PlayerID = 2;
 
     // size of the game board, determined by this.NumPlayers.
     this.BoardSquareSize = [20, 5 + 5 * this.NumPlayers];

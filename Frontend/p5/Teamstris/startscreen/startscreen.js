@@ -1,13 +1,41 @@
+// #frontpage test |
+// @author Steven Dellamore |
+// @date Feb 28th 2020 |
+// @version 1.0.0 |
+// @company TeamTris |
+// @title StartScreen Class Documentation |
+// @location West Lafayette, IN |
+// @email dellamoresteven@gmail.com |
+// @office CS407 |
 
+
+// #class StartScreen |
+// @author Steven Dellamore |
+// @language javascript | 
+// @desc Startscreen will build the startscreen and
+// create all the buttons needed for the user to 
+// get into a game with their friends. The mouseClicks
+// and the keyboard imports all all forwarded to this class
+// when gamestate == 0 |
 class StartScreen {
-	/**
-	 * constructor: Init setup for the launch screen. This will add the buttons and
-	 * create the default values for everything.
-	 * 
-	 * @param void
-	 * 
-	 * @returns StartScreen
-	 */
+
+    // #function StartScreen::constructor |
+    // @author Steven Dellamore |
+	// @desc The constructor gets called when making a 
+	// startscreen object. It will init all the values 
+	// and set up the socket listener for the server to 
+	// send things too. Here are the init values of the class
+	// variables: 
+	// @link{StartScreenContorVars} 
+	// These varibles will be updated throughout the life of 
+	// start screen. @inline{this.TokenBoxText} will init 
+	// the token box to nothing, since the user has yet to do anyhting. 
+	// the @inline{this.usernameBoxStroke} will be set to false so the program knows if
+	// the user as tried to sumbit. @inline{this.titleAnimation = [300, 500, 400, 700];} 
+	// is the starting position of the title, and will fall every X frames. |
+    // @header constructor() | 
+	// @param void : constructor takes no params |
+	// @returns StartScreen : An object of start class class | 
 	constructor() {
 		if (startscreen_constructor) console.log("Creating StartScreen Object");
 		/* 							X, Y 				 , W  			  , H 				 , gamestate, default color	*/
@@ -15,28 +43,34 @@ class StartScreen {
 		buttonList[buttonList.length - 1].text = "Create Game"; // Text to put in the button
 		buttonList[buttonList.length - 1].hoverColor = "yellow"; // What color to make the button on mouse hover
 		buttonList[buttonList.length - 1].id = "createGame"; // ID of the button
-
 		buttonList.push(new Buttons(0, windowHeight / 4, windowWidth / 5, windowHeight / 10, 0, "red"));
 		buttonList[buttonList.length - 1].text = "Join game"; // Text to put in the button
 		buttonList[buttonList.length - 1].hoverColor = "yellow"; // What color to make the button on mouse hover
 		buttonList[buttonList.length - 1].id = "joinGame"; // ID of the button
 
-		this.TokenBoxText = ""; // default token
-
-		this.usernameBoxStroke = false; // true: highlight box red. false: go back to normal
-
-		this.usernameText = "username"; // default username
-		this.usernameTextTouched = false; // checks to see if the box has been touched by the user yet
-
-		this.gameStateStartScreen = 0; // where in the start screen you are. @draw has a good comment on this.
-
-		this.titleAnimation = [300, 500, 400, 700] //drops the peices 
+		// #code StartScreenContorVars javascript
+		this.TokenBoxText = ""; 
+		this.usernameBoxStroke = false; 
+		this.usernameText = "username"; 
+		this.usernameTextTouched = false; 
+		this.gameStateStartScreen = 0;  
+		this.titleAnimation = [300, 500, 400, 700];
+		// |
 	}
 
-	/**
-	 * draw: This funcion will be ran at 60 frames a second and will call all the functions
-	 * 	     needed to draw the launch screen.
-	 */
+	// #function StartScreen::draw |
+    // @author Steven Dellamore |
+	// @desc This funcion will be ran at 60 frames a 
+	// second and will call all the functions needed 
+	// to draw the launch screen. The draw function will call
+	// the title functions, the highscore functions, and call
+	// the join and create button rendering/hitboxes with @inline{Buttonloop()}.
+	// Depending on what @inline{this.gameStateStartScreen} is evaluated to. 
+	// @link{drawVar} @inline{0 = this.drawUsernameBox}, 
+	// @inline{1 = this.drawTokenBox} |
+    // @header draw() | 
+	// @param void : draw takes no arugments |
+	// @returns void : something should go ehre | 
 	draw() {
 		this.drawTitle(); // Draws the title
 		this.animateTitle(); // Draws the T's dropping
@@ -49,40 +83,48 @@ class StartScreen {
 		 * 0 - username box field and join/create game buttons are active
 		 * 1 - token field and accept button fields are active
 		 */
+		// #code drawVar javascript
 		switch (this.gameStateStartScreen) {
 			case 0:
-				this.drawUsernameBox(); // Draws the usernameBox
+				this.drawUsernameBox(); 
 				break;
 			case 1:
 				this.drawTokenBox();
 				break;
 		}
+		// |
 	}
 
-	/**
-	 * animateTitle: Will check and add/subtract the locations of the T's falling when you
-	 * 				 go to the launch screen. Once the animation is done, this function will 
-	 * 				 return instantly.
-	 * 
-	 * @param void
-	 * 
-	 * @returns void
-	 */
+	// #function StartScreen::animateTitle |
+    // @author Steven Dellamore |
+	// @desc Will check and add/subtract the locations 
+	// of the T's falling when you go to the launch screen. 
+	// @link{animatetitleVar}
+	// Once @inline{this.titleAnimation[i]}, where @inline{i}
+	// is between @inline{[0,4]}, is negative, the array index 
+	// will no longer be decremented.  |
+    // @header animateTitle() | 
+	// @param void : animateTitle takes no arugments |
+	// @returns void | 
 	animateTitle() {
 		for (let i = 0; i < this.titleAnimation.length; i++) {
+			// #code animatetitleVar javascript
 			if (this.titleAnimation[i] > 0) {
 				this.titleAnimation[i] -= 10;
 			}
+			// |
 		}
 	}
 
-	/**
-	 * drawUsernameBox: This function will draw the username bot onto the screen 
-	 * 
-	 * @param void
-	 * 
-	 * @returns void
-	 */
+	// #function StartScreen::drawUsernameBox |
+    // @author Steven Dellamore |
+	// @desc This function will draw the white username box onto the screen 
+	// displaying the @inline{this.usernameText} in the center. This function
+	// will also use @inline{this.usernameBoxStroke} to display the red outline 
+	// around the username box. |
+    // @header drawUsernameBox() | 
+	// @param void : drawUsernameBox takes no arugments |
+	// @returns void | 
 	drawUsernameBox() {
 		push(); // Push my settings
 		translate(windowWidth / 2, windowHeight / 2); // translate cord plane to center of screen
@@ -103,17 +145,19 @@ class StartScreen {
 		pop(); // restore my settings
 	}
 
-	/**
-	 * drawTitle: This function will draw the title (Teamtris) onto the 
-	 *            launch screen.
-	 * 
-	 * @param void
-	 * 
-	 * @returns void
-	 * 
-	 * @BUG Somehow the first square is sometimes below or above the other letters.
-	 * This is only a problem with significantly different screen sizes
-	 */
+	// #function StartScreen::drawTitle |
+    // @author Steven Dellamore |
+	// @desc This function will draw the title (Teamtris) onto the 
+	// launch screen. Also, the function will be responable for 
+	// displaying the current falling location of the two T's falling
+	// at the start of the screen. We make rects based on the current 
+	// location of @inline{this.titleAnimation}.
+	// @link{drawTitleVar1} 
+	// The important thing to note is to see the y val of the rect is 
+	// being changed by 10 every frame in @inline{function animateTitle()}. |
+    // @header drawTitle() | 
+	// @param void : drawTitle takes no arugments |
+	// @returns void | 
 	drawTitle() {
 		push(); // Push my settings
 		let eamPosY; // the words 'eam' y position 
@@ -128,13 +172,27 @@ class StartScreen {
 		/**
 		 * These recs are for the First T
 		 */
-		let yStart; // Bottom box of the T's
-		rect(-windowWidth / 4.3, (yStart = windowHeight / 2.6) - this.titleAnimation[0], squareSize, squareSize) // first T, top blue
-		rect(-windowWidth / 4.3, (yStart - (spaceBetweenSquares)) - this.titleAnimation[0], squareSize, squareSize) // first T, bot blue
+		// #code drawTitleVar1 javascript
+		let yStart;
+		rect(-windowWidth / 4.3, (yStart = windowHeight / 2.6) - 
+				this.titleAnimation[0], squareSize, squareSize) 
+
+		rect(-windowWidth / 4.3, (yStart - (spaceBetweenSquares)) - 
+				this.titleAnimation[0], squareSize, squareSize) 
+
 		fill(255, 0, 0) // fill red
-		rect(-windowWidth / 4.3, yStart - (2 * spaceBetweenSquares) - this.titleAnimation[1], squareSize, squareSize) // first T, top red middle
-		rect(-windowWidth / 4.3 - spaceBetweenSquares, yStart - (2 * spaceBetweenSquares) - this.titleAnimation[1], squareSize, squareSize) // first T, top red right
-		rect(-windowWidth / 4.3 + spaceBetweenSquares, yStart - (2 * spaceBetweenSquares) - this.titleAnimation[1], squareSize, squareSize) // first T, top red left
+
+		rect(-windowWidth / 4.3, yStart - (2 * spaceBetweenSquares) - 
+				this.titleAnimation[1], squareSize, squareSize)
+
+		rect(-windowWidth / 4.3 - spaceBetweenSquares, 
+				yStart - (2 * spaceBetweenSquares) - this.titleAnimation[1], 
+						squareSize, squareSize)
+
+		rect(-windowWidth / 4.3 + spaceBetweenSquares, 
+				yStart - (2 * spaceBetweenSquares) - this.titleAnimation[1], 
+						squareSize, squareSize)
+		// |
 		/**
 		 * These recs are for the second T
 		 */
@@ -148,6 +206,15 @@ class StartScreen {
 		pop(); // reset settings
 	}
 
+	// #function StartScreen::drawTokenBox |
+    // @author Steven Dellamore |
+	// @desc This function will draw the token box once the 
+	// user clicks "join game". It will display the token box
+	// and the accept button. Unlike other buttons, all mouse clicks
+	// are handled. |
+    // @header drawTokenBox() | 
+	// @param void : drawTokenBox takes no arugments |
+	// @returns void | 
 	drawTokenBox() {
 		push();
 		let ret = false;
@@ -183,6 +250,24 @@ class StartScreen {
 		return ret;
 	}
 
+	// #function StartScreen::mouseClickedStart |
+    // @author Steven Dellamore |
+	// @desc This function is being called whenever @inline{gamestate = 0}
+	// AND the user clicks their mouse. First, we will check 
+	// what @inline{this.gameStateStartScreen} is. If its 
+	// @inline{0}, we will check the @inline{function ClickedLoop()}
+	// to see if the user is clicking on the join game, create game, or 
+	// highscore score buttons. If the user clicks on a the create game button
+	// with a valid username we are going to send them into the lobbyscreen. 
+	// @link{mouseClickedLobbyScreenGo}
+	// We need to create a new Player, and set their ownership value to 0. We
+	// see its constructor defined here:
+	// @link{PlayerContor}
+	// We then pass this object into the lobbyscreen and switch the @inline{gameState = 1}
+	// to move us |
+    // @header mouseClickedStart() | 
+	// @param void : mouseClickedStart takes no arugments |
+	// @returns void | 
 	mouseClickedStart() {
 		switch (this.gameStateStartScreen) { // Switch statment to tell us what we are looking at
 			case 0:
@@ -200,9 +285,14 @@ class StartScreen {
 					if (!this.usernameTextTouched || this.usernameText == "") {
 						this.usernameBoxStroke = true;
 					} else {
-						/* Creating my lobbyscreen object */
-  						mLobbyScreen = new LobbyScreen(new Player(this.usernameText, Math.floor(Math.random() * 100), true));
+						// #code mouseClickedLobbyScreenGo javascript
+						// Creating my lobbyscreen object
+						mLobbyScreen = new LobbyScreen(
+							new Player(
+								this.usernameText, Math.floor(Math.random() * 100), true));
+
 						gameState = 1; // Switch to lobby screen
+						// |
 					}
 				} else if (this.drawHighScoreButtonCheckMouse() == true) { // if they click highscore
 					this.gameStateStartScreen = -1;
@@ -232,16 +322,14 @@ class StartScreen {
 		}
 	}
 
-	/**
-	 * drawHighScoreButtonCheckMouse: Will tell whoever calls it if the mouse if over the highscore screen. 
-	 * 								  This will mostly be used when a user hovers over or clicks. 
-	 * 
-	 * @param void
-	 * 
-	 * @return Boolean
-	 * 		   true - mouse is over highscore
-	 * 		   false - mouse is NOT over highscore
-	 */
+	// #function StartScreen::drawHighScoreButtonCheckMouse |
+    // @author Steven Dellamore |
+	// @desc This function is being called whenever the user clicks with 
+	// gamestate of the startscreen == 0. This function checks if the mouse 
+	// is over the highscore button and returns true if it is, false if its not. |
+    // @header drawHighScoreButtonCheckMouse() | 
+	// @param void : drawHighScoreButtonCheckMouse takes no arugments |
+	// @returns bool : true => If mouse is over score button false => If mouse is not over score button | 
 	drawHighScoreButtonCheckMouse() {
 		this.LeftX = (windowWidth / 1.038) + (windowWidth / 16) / 2; // Left side of the box cords
 		this.RightX = (windowWidth / 1.038) - (windowWidth / 16) / 2; // Right side of the box cords
@@ -255,13 +343,14 @@ class StartScreen {
 		return false; // Return false if either of these things dont hold.
 	}
 
-	/**
-	 * drawHighScoreButton: Draws the 3 bars at the bottom right to represent the high score
-	 * 
-	 * @param void
-	 * 
-	 * @returns void
-	 */
+	// #function StartScreen::drawHighScoreButton |
+    // @author Steven Dellamore |
+	// @desc This function will draw the three bars in the bottom 
+	// left of the screen. It will also check if the mouse is over
+	// the button and highlight according. |
+    // @header drawHighScoreButton() | 
+	// @param void : drawHighScoreButton takes no arugments |
+	// @returns void |
 	drawHighScoreButton() {
 		push(); // Push settings
 		translate(0, 0);
@@ -277,14 +366,14 @@ class StartScreen {
 		pop(); // Restore my settings
 	}
 
-	/**
-	 * keyPressedStart: This function will be called whenever the user clicked on a button on the start screen. 
-	 * 					@link{general/keyPressed.js} is where this function will be called. 
-	 * 
-	 * @param void
-	 * 
-	 * @returns void
-	 */
+	// #function StartScreen::keyPressedStart |
+    // @author Steven Dellamore |
+	// @desc This function will be called whenever the user clicked 
+	// on a button on the start screen. general/keyPressed.js
+	// is where this function will be called. |
+    // @header keyPressedStart() | 
+	// @param void : keyPressedStart takes no arugments |
+	// @returns void |
 	keyPressedStart() {
 		console.log("keyCode: " + keyCode);
 		switch (this.gameStateStartScreen) {
