@@ -17,7 +17,7 @@ class GameArray {
         this.NumPlayers = NumPlayers
         this.ShapeArray = new Array(this.NumPlayers)
         this.ShapeArray[0] = this.InstantiateShape(1,null,0,5, false)
-        this.ShapeArray[1] = this.InstantiateShape(2,null,0,10,false)
+        //this.ShapeArray[1] = this.InstantiateShape(2,null,0,10,false)
         // this.ShapeArray[2] = this.InstantiateShape(3,null,0,15,false)
         // this.ShapeArray[3] = this.InstantiateShape(4,null,0,20,false)
         //this.PlaceShape(this.ShapeArray[1])
@@ -121,6 +121,19 @@ class GameArray {
         for (var i = 0; i < Shape.Squares.length; i++) {
             var s = Shape.Squares[i]
             this.arr[s.i][s.j].SetEmpty()
+        }
+    }
+
+    /** 
+     * @description Sets all provided squares to empty
+     * 
+     * @param Shape - An array of squares
+     * 
+     * @return void
+     */
+    RemoveSquares(Squares) {
+        for (var s = 0; s < Squares.length; s++) {
+            Squares[s].setEmpty()
         }
     }
 
@@ -258,9 +271,64 @@ class GameArray {
      */
     CheckFreeze(Shape, down, ColType) {
         if (down == 1 && (ColType == this.CollisionType.OutOfBounds || ColType == this.CollisionType.FrozenObject)) {
-            Shape.Freeze()
+            var r = Shape.Freeze() // r is a set of rows to be checked
             this.ShapeArray[Shape.ID - 1] = this.InstantiateShape(Shape.ID,null,0,Shape.ID*5,false)
+            for (var row of Array.from(r.values())) {
+                this.CheckAndRemoveRow(row)
+            }
+        }   
+    }
+
+    /** 
+     * @description Checks to see if a row should be removed, calls RemoveRow if true
+     * 
+     * @param row - A row in the game array
+     * 
+     * @return void
+     */
+    CheckAndRemoveRow(row) {
+        for (var j = 0; j < this.column_count; j++) {
+            if (this.GetSquare(row,j).IsEmpty()) {
+                return
+            }
         }
+        this.RemoveRow(row) // remove the row
+        this.ShiftRows(row) // shift all rows down as necessary
+    }
+
+    /** 
+     * @description Removes the provided row from the game board
+     * 
+     * @param row - A row in the game array
+     * 
+     * @return void
+     */
+    RemoveRow(row) {
+        for (var j = 0; j < this.column_count; j++) {
+            this.GetSquare(row,j).SetEmpty()
+        }
+    }
+
+    /** 
+     * @description Shifts all rows above the current row down one if they contain a frozen square
+     * 
+     * @param row - A row in the game array
+     * 
+     * @return void
+     */
+    ShiftRows(row=this.row_count-1) {
+        var SquaresList = []
+
+        for (var i = row; i >= 0; i--) {
+            for (var j = 0; j < this.column_count; j++) {
+                if (this.GetSquare(i,j).IsFrozen()) {
+                    SquaresList.push(this.GetSquare(i,j))
+                } else {
+                    continue
+                }
+            }
+        }
+        this.ShiftSquares(SquaresList,0,0,1)
     }
 
     /** 
@@ -380,6 +448,23 @@ class GameArray {
         this.ShapeArray[ID-1].RemoveShape()
         this.ShapeArray[ID-1] = this.InstantiateShape(ID, ShapeBlueprint, rowOffset, columnOffset, randomOffset)
         this.PlaceShape(this.ShapeArray[ID-1])
+    }
+
+    /** 
+     * @description Shifts all provided squares in the provided directions and sets them to frozen
+     * 
+     * @param Squares - A list of Squares
+     * @param left - integer representing how far left the shape should move
+     * @param right - integer representing how far right the shape should move
+     * @param down - integer representing how far down the shape should move
+     * 
+     * @return void
+     */
+    ShiftSquares(Squares, left, right, down) {
+        for (var s = 0; s < Squares.length; s++) {
+            Squares[s].SetEmpty();
+            this.GetSquare(Squares[s].i+down, Squares[s].j-left+right).SetFrozen();
+        }
     }
 
     /** 
