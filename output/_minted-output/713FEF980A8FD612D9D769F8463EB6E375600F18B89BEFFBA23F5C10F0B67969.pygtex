@@ -1,0 +1,16 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{switch} \PYG{p}{(}\PYG{n+nx}{gameState}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+  \PYG{k}{case} \PYG{l+m+mi}{0}\PYG{o}{:}
+    \PYG{n+nx}{mStartScreen}\PYG{p}{.}\PYG{n+nx}{keyPressedStart}\PYG{p}{();}
+    \PYG{k}{break}\PYG{p}{;}
+  \PYG{k}{case} \PYG{l+m+mi}{1}\PYG{o}{:}
+    \PYG{n+nx}{mLobbyScreen}\PYG{p}{.}\PYG{n+nx}{keyPressedLobby}\PYG{p}{();}
+    \PYG{k}{break}\PYG{p}{;}
+  \PYG{k}{case} \PYG{l+m+mi}{2}\PYG{o}{:}
+    \PYG{n+nx}{mGameScreen}\PYG{p}{.}\PYG{n+nx}{keyPressedGame}\PYG{p}{();}
+    \PYG{k}{break}\PYG{p}{;}
+  \PYG{k}{case} \PYG{l+m+mi}{3}\PYG{o}{:}
+    \PYG{c+c1}{// mScoreScreen.keyPressedScore();}
+    \PYG{k}{break}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

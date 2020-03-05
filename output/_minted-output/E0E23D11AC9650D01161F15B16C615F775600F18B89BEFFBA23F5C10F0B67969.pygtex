@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n+nx}{constructor}\PYG{p}{(}\PYG{n+nx}{username}\PYG{p}{,} \PYG{n+nx}{id}\PYG{p}{,} \PYG{n+nx}{owner}\PYG{p}{)\PYGZob{}}
+    \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{username} \PYG{o}{=} \PYG{n+nx}{username}\PYG{p}{;}
+    \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{id} \PYG{o}{=} \PYG{n+nx}{id}\PYG{p}{;}
+    \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{owner} \PYG{o}{=} \PYG{n+nx}{owner}\PYG{p}{;}
+    \PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{playerNum}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

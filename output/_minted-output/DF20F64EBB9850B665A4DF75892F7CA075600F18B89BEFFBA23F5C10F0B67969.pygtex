@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kd}{let} \PYG{n+nx}{fillHighScore} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}white\PYGZdq{}}\PYG{p}{;} \PYG{c+c1}{// default value is white}
+\PYG{c+cm}{/* Checks if the mouse is over the highscore */}
+\PYG{k}{if} \PYG{p}{(}\PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{drawHighScoreButtonCheckMouse}\PYG{p}{())} \PYG{p}{\PYGZob{}}
+	\PYG{c+cm}{/* if the mouse is over, it will change the boxes to green */}
+	\PYG{n+nx}{fillHighScore} \PYG{o}{=} \PYG{l+s+s2}{\PYGZdq{}rgb(0,255,0)\PYGZdq{}}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

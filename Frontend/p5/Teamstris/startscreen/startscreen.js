@@ -1,41 +1,46 @@
-// #frontpage test |
-// @author Steven Dellamore |
-// @date Feb 28th 2020 |
-// @version 1.0.0 |
-// @company TeamTris |
-// @title StartScreen Class Documentation |
-// @location West Lafayette, IN |
-// @email dellamoresteven@gmail.com |
-// @office CS407 |
+/**
+ * #frontpage test |
+ * @author Steven Dellamore \\ Indhu Ramanathan \\ Richard Hansen \\ Columbus Holt |
+ * @date March 5th 2020 |
+ * @version 1.0.0 |
+ * @company TeamTris |
+ * @title TeamTris Code Documentation |
+ * @location West Lafayette, IN |
+ * @email dellamoresteven@gmail.com |
+ * @office CS407 |
+ */
 
-
-// #class StartScreen |
-// @author Steven Dellamore |
-// @language javascript | 
-// @desc Startscreen will build the startscreen and
-// create all the buttons needed for the user to 
-// get into a game with their friends. The mouseClicks
-// and the keyboard imports all all forwarded to this class
-// when gamestate == 0 |
+/**
+ * #class StartScreen |
+ * @author Steven Dellamore |
+ * @language javascript | 
+ * @desc Startscreen will build the startscreen and
+ * create all the buttons needed for the user to 
+ * get into a game with their friends. The mouseClicks
+ * and the keyboard imports all all forwarded to this class
+ * when gamestate == 0 |
+ */
 class StartScreen {
 
-    // #function StartScreen::constructor |
-    // @author Steven Dellamore |
-	// @desc The constructor gets called when making a 
-	// startscreen object. It will init all the values 
-	// and set up the socket listener for the server to 
-	// send things too. Here are the init values of the class
-	// variables: 
-	// @link{StartScreenContorVars} 
-	// These varibles will be updated throughout the life of 
-	// start screen. @inline{this.TokenBoxText} will init 
-	// the token box to nothing, since the user has yet to do anyhting. 
-	// the @inline{this.usernameBoxStroke} will be set to false so the program knows if
-	// the user as tried to sumbit. @inline{this.titleAnimation = [300, 500, 400, 700];} 
-	// is the starting position of the title, and will fall every X frames. |
-    // @header constructor() | 
-	// @param void : constructor takes no params |
-	// @returns StartScreen : An object of start class class | 
+	/**
+     * #function StartScreen::constructor |
+     * @author Steven Dellamore |
+	 * @desc The constructor gets called when making a 
+	 * startscreen object. It will init all the values 
+	 * and set up the socket listener for the server to 
+	 * send things too. Here are the init values of the class
+	 * variables: 
+	 * @link{StartScreenContorVars} 
+	 * These varibles will be updated throughout the life of 
+	 * start screen. @inline{this.TokenBoxText} will init 
+	 * the token box to nothing, since the user has yet to do anyhting. 
+	 * the @inline{this.usernameBoxStroke} will be set to false so the program knows if
+	 * the user as tried to sumbit. @inline{this.titleAnimation = [300, 500, 400, 700];} 
+	 * is the starting position of the title, and will fall every X frames. |
+     * @header constructor() | 
+	 * @param void : constructor takes no params |
+	 * @returns StartScreen : An object of start class class | 
+	 */
 	constructor() {
 		if (startscreen_constructor) console.log("Creating StartScreen Object");
 		/* 							X, Y 				 , W  			  , H 				 , gamestate, default color	*/
@@ -58,19 +63,20 @@ class StartScreen {
 		// |
 	}
 
-	// #function StartScreen::draw |
-    // @author Steven Dellamore |
-	// @desc This funcion will be ran at 60 frames a 
-	// second and will call all the functions needed 
-	// to draw the launch screen. The draw function will call
-	// the title functions, the highscore functions, and call
-	// the join and create button rendering/hitboxes with @inline{Buttonloop()}.
-	// Depending on what @inline{this.gameStateStartScreen} is evaluated to. 
-	// @link{drawVar} @inline{0 = this.drawUsernameBox}, 
-	// @inline{1 = this.drawTokenBox} |
-    // @header draw() | 
-	// @param void : draw takes no arugments |
-	// @returns void : something should go ehre | 
+	/**
+	 * #function StartScreen::draw |
+     * @author Steven Dellamore |
+	 * @desc This funcion will be ran at 60 frames a 
+	 * second and will call all the functions needed 
+	 * to draw the launch screen. The draw function will call
+	 * the title functions, the highscore functions, and call
+	 * the join and create button rendering/hitboxes with @inline{Buttonloop()}.
+	 * Depending on what @inline{this.gameStateStartScreen} is evaluated to. 
+	 * @link{drawVar} |
+     * @header draw() | 
+	 * @param void : draw takes no arugments |
+	 * @returns void : void | 
+	 */
 	draw() {
 		this.drawTitle(); // Draws the title
 		this.animateTitle(); // Draws the T's dropping
@@ -95,17 +101,19 @@ class StartScreen {
 		// |
 	}
 
-	// #function StartScreen::animateTitle |
-    // @author Steven Dellamore |
-	// @desc Will check and add/subtract the locations 
-	// of the T's falling when you go to the launch screen. 
-	// @link{animatetitleVar}
-	// Once @inline{this.titleAnimation[i]}, where @inline{i}
-	// is between @inline{[0,4]}, is negative, the array index 
-	// will no longer be decremented.  |
-    // @header animateTitle() | 
-	// @param void : animateTitle takes no arugments |
-	// @returns void | 
+	/** 
+	 * #function StartScreen::animateTitle |
+     * @author Steven Dellamore |
+	 * @desc Will check and add/subtract the locations 
+	 * of the T's falling when you go to the launch screen. 
+	 * @link{animatetitleVar}
+	 * Once @inline{this.titleAnimation[i]}, where @inline{i}
+	 * is between @inline{[0,4]}, is negative, the array index 
+	 * will no longer be decremented.  |
+     * @header animateTitle() | 
+	 * @param void : animateTitle takes no arugments |
+	 * @returns void | 
+	 */
 	animateTitle() {
 		for (let i = 0; i < this.titleAnimation.length; i++) {
 			// #code animatetitleVar javascript
@@ -379,12 +387,8 @@ class StartScreen {
 	// @desc Called whenever the @inline{General::function keyPressed()} function
 	// routes the signal to this function. a.k.a whenver @inline{gameState == 0}.
 	// This function first checks the @inline{this.gameStateStartScreen} like so:
-	// \\@inline{switch(this.gameStateStartScreen)} 
-	// \\@inline{case 1:} 
-	// \\@inline{	...} 
-	// \\@inline{case 2:} 
-	// \\@inline{	...} 
-	// \\From here, we can figure out where the user is trying to type and 
+	// @link{keyPressedStartExample}
+	// From here, we can figure out where the user is trying to type and 
 	// add the types characters accoridngly. |
     // @header keyPressedStart() | 
 	// @param void : keyPressedStart takes no arugments |

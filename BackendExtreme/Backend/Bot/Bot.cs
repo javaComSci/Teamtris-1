@@ -2,30 +2,53 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+
+// #code BotDefVar csharp
 public abstract class Bot {
-
-    public abstract List<Tuple<int, int>> GetMove(Board board, List<Block> blocks, bool allRotations = false);
-   
+    public abstract List<Tuple<int, int>> GetMove(
+        Board board, 
+        List<Block> blocks, 
+        bool allRotations = false
+    );
 }
+// |
 
+/**
+ * #class SingleBot |
+ * @author JavaComSci | 
+ * @language csharp | 
+ * @desc Single bot extends the abstract bot class defined here:
+ * @link{BotDefVar}
+ * The SingleBot class will be made if the player requires only one 
+ * bot in their game. |
+ */
 public class SingleBot : Bot {
     Prints botInfoPrinter;
 
+	/**
+     * #function SingleBot::SingleBot |
+     * @author JavaComSci |
+	 * @desc Creates a new board for the bot.  |
+     * @header SingleBot() | 
+	 * @param void : SingleBot takes no params |
+	 * @returns SingleBot : An object of single bot class | 
+	 */
     public SingleBot() {
         // create a board for this bot
         Console.WriteLine("I AM A BOT");
         botInfoPrinter = new Prints();
     }
 
-
-    /** 
-        @@param
-            Board board - contains the the board that we want to make the move on
-            Block block - contains the block that we want to fit
-            int rotation - which roation we are trying to fit for
-        @@return
-            List<Tuple<int, List<Tuple<int, int>>, int, int>> compatiblePieces - information about the pieces that are compatible on the board
-     */
+    /**
+     * #function SingleBot::getFit |
+     * @author JavaComSci |
+	 * @desc need desc here TODO |
+     * @header List<...> getFit(Board board, Block block, int rotation) | 
+	 * @param Board board : contains the the board that we want to make the move on |
+     * @param Block block : contains the block that we want to fit |
+     * @param int rotation : which roation we are trying to fit for |
+	 * @returns List<...> compatiblePieces : information about the pieces that are compatible on the board |
+	 */
     public List<Tuple<int, List<Tuple<int, int>>, int, int>> getFit(Board board, Block block, int rotation) {
         // has all the positions compatible for this piece with the rotation, location on board, area covered, and number of lines it can clear
         List<Tuple<int, List<Tuple<int, int>>, int, int>> compatiblePieces = new List<Tuple<int, List<Tuple<int, int>>, int, int>>();
@@ -222,13 +245,16 @@ public class SingleBot : Bot {
         return compatiblePieces;
     }
 
-
-
-    /** 
-        @@param
-            int[][] board - current enviornment
-            List<Block> blocks - contains the list of all the blocks to try to fit in this location
-     */
+    /**
+     * #function SingleBot::GetMove |
+     * @author JavaComSci |
+	 * @desc need desc here TODO |
+     * @header public override List<...> GetMove(Board, List<Block>, bool) | 
+	 * @param int[][] board : current enviornment |
+     * @param List<Block> blocks : contains the list of all the blocks to try to fit in this location |
+	 * @returns List<...> bestPiecePlacementOfCurrentBlock : contains the list of the indicies 
+     * of where the piece would be on the board |
+	 */
     public override List<Tuple<int, int>> GetMove(Board board, List<Block> blocks, bool allRotations = false) {
         Console.WriteLine("BOARD");
         botInfoPrinter.PrintMultiDimArr(board.board);
@@ -401,7 +427,15 @@ public class SingleBot : Bot {
 }
 
 
-
+/**
+ * #class DoubleBot |
+ * @author JavaComSci | 
+ * @language csharp | 
+ * @desc DoubleBot bot extends the abstract bot class defined here:
+ * @link{BotDefVar}
+ * The DoubleBot class will be made if the player requires two
+ * bots in their game. |
+ */
 public class DoubleBot : Bot {
     public override List<Tuple<int, int>> GetMove(Board board, List<Block> blocks, bool allRotations = false) {
         return null;
@@ -409,7 +443,15 @@ public class DoubleBot : Bot {
 }
 
 
-
+/**
+ * #class TripleBot |
+ * @author JavaComSci | 
+ * @language csharp | 
+ * @desc TripleBot extends the abstract bot class defined here:
+ * @link{BotDefVar}
+ * The TripleBot class will be made if the player requires three 
+ * bots in their game. |
+ */
 public class TripleBot : Bot {
     public override List<Tuple<int, int>> GetMove(Board board, List<Block> blocks, bool allRotations = false) {
         return null;

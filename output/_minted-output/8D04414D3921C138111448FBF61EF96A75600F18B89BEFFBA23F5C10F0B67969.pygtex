@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{// Creating my lobbyscreen object}
+\PYG{n+nx}{mLobbyScreen} \PYG{o}{=} \PYG{k}{new} \PYG{n+nx}{LobbyScreen}\PYG{p}{(}
+	\PYG{k}{new} \PYG{n+nx}{Player}\PYG{p}{(}
+		\PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{usernameText}\PYG{p}{,} \PYG{n+nb}{Math}\PYG{p}{.}\PYG{n+nx}{floor}\PYG{p}{(}\PYG{n+nb}{Math}\PYG{p}{.}\PYG{n+nx}{random}\PYG{p}{()} \PYG{o}{*} \PYG{l+m+mi}{100}\PYG{p}{),} \PYG{k+kc}{true}\PYG{p}{));}
+
+\PYG{n+nx}{gameState} \PYG{o}{=} \PYG{l+m+mi}{1}\PYG{p}{;} \PYG{c+c1}{// Switch to lobby screen}
+\end{Verbatim}

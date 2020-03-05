@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k}{if} \PYG{p}{(}\PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{titleAnimation}\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{]} \PYG{o}{\PYGZgt{}} \PYG{l+m+mi}{0}\PYG{p}{)} \PYG{p}{\PYGZob{}}
+	\PYG{k}{this}\PYG{p}{.}\PYG{n+nx}{titleAnimation}\PYG{p}{[}\PYG{n+nx}{i}\PYG{p}{]} \PYG{o}{\PYGZhy{}=} \PYG{l+m+mi}{10}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

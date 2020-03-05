@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kr}{public} \PYG{k+kr}{abstract} \PYG{k+kr}{class} \PYG{n+nx}{Bot} \PYG{p}{\PYGZob{}}
+    \PYG{k+kr}{public} \PYG{k+kr}{abstract} \PYG{n+nx}{List}\PYG{o}{\PYGZlt{}}\PYG{n+nx}{Tuple}\PYG{o}{\PYGZlt{}}\PYG{k+kr}{int}\PYG{p}{,} \PYG{k+kr}{int}\PYG{o}{\PYGZgt{}\PYGZgt{}} \PYG{n+nx}{GetMove}\PYG{p}{(}
+        \PYG{n+nx}{Board} \PYG{n+nx}{board}\PYG{p}{,}
+        \PYG{n+nx}{List}\PYG{o}{\PYGZlt{}}\PYG{n+nx}{Block}\PYG{o}{\PYGZgt{}} \PYG{n+nx}{blocks}\PYG{p}{,}
+        \PYG{n+nx}{bool} \PYG{n+nx}{allRotations} \PYG{o}{=} \PYG{k+kc}{false}
+    \PYG{p}{);}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}
