@@ -597,7 +597,7 @@ async function testCheckTitlePosAfterTwoDraw()
 async function testChangeUserUsername()
 \end{lstlisting} 
 \vspace*{1\baselineskip}
-\textbf{Description}: TODO 
+\textbf{Description}: Will set the \mintinline[fontsize=\footnotesize]{javascript}{keyCode} equal to \mintinline[fontsize=\footnotesize]{javascript}{65} and \mintinline[fontsize=\footnotesize]{javascript}{66} and call the \mintinline[fontsize=\footnotesize]{javascript}{keyPressedStart()} function. Which tells the start screen that a key has been presesed. We then check if \mintinline[fontsize=\footnotesize]{javascript}{mStartScreen.usernameText} was changed to \mintinline[fontsize=\footnotesize]{javascript}{"A"} and \mintinline[fontsize=\footnotesize]{javascript}{"AB"}. 
 
 
 
@@ -608,7 +608,16 @@ async function testChangeUserUsername()
 async function testChangeMaxUsername()
 \end{lstlisting} 
 \vspace*{1\baselineskip}
-\textbf{Description}: TODO 
+\textbf{Description}: Will call the \mintinline[fontsize=\footnotesize]{javascript}{keyPressedStart()} function with letters ABCDEFGHIJKLMNOPQRS and check to ensure that the \mintinline[fontsize=\footnotesize]{javascript}{mStartScreen.usernameText} does not get above 11 chars. 
+\begin{minted}[fontsize=\footnotesize]{javascript}
+for(var i = 0; i < 15; i++) {
+    mStartScreen.keyPressedStart(); // Press Key
+    str += strFull.charAt(i);
+    CheckSame(mStartScreen.usernameText,str,"testUsernameText" + str);
+    global.keyCode++; // go next key
+}
+\end{minted}
+ 
 
 
 
@@ -619,7 +628,7 @@ async function testChangeMaxUsername()
 async function testDeleteUsername()
 \end{lstlisting} 
 \vspace*{1\baselineskip}
-\textbf{Description}: TODO 
+\textbf{Description}: Does the same thing as testChangeMaxUsername but deletes characters 15 times and checks \mintinline[fontsize=\footnotesize]{javascript}{mStartScreen.usernameText} to ensure that everything has been deleted. \\Note: \mintinline[fontsize=\footnotesize]{javascript}{KeyCode=8} is the delete key. 
 
 
 
@@ -630,7 +639,7 @@ async function testDeleteUsername()
 async function testCheckSpecialChars()
 \end{lstlisting} 
 \vspace*{1\baselineskip}
-\textbf{Description}: TODO 
+\textbf{Description}: Will try to add special chars like ASCII codes \mintinline[fontsize=\footnotesize]{javascript}{10}, \mintinline[fontsize=\footnotesize]{javascript}{240}, \mintinline[fontsize=\footnotesize]{javascript}{33} and then make sure \mintinline[fontsize=\footnotesize]{javascript}{mStartScreen.usernameText} is unchanged because you can't have special chars in ur username. 
 
 
 
@@ -641,7 +650,16 @@ async function testCheckSpecialChars()
 async function testHighScoreButton()
 \end{lstlisting} 
 \vspace*{1\baselineskip}
-\textbf{Description}: TODO 
+\textbf{Description}: Sets the mouse positions to be over the high score button. 
+\begin{minted}[fontsize=\footnotesize]{javascript}
+global.mouseX = mStartScreen.RightX + 1;
+global.mouseY = mStartScreen.TopY + 1;
+CheckSame(mStartScreen.gameStateStartScreen,0,
+    "testCheckInitGameStateScoreButton");
+CheckSame(mStartScreen.drawHighScoreButtonCheckMouse(),true,
+    "testDrawHighScoreButtonCheckMouse");
+\end{minted}
+ Then we check that \mintinline[fontsize=\footnotesize]{javascript}{gameStateStartScreen == 0} still equals zero since we havent clicked yet, and check that the high score button is being highlighted correctly. The test then checks if we click on the Score Button \mintinline[fontsize=\footnotesize]{javascript}{gameState == 1}. 
 
 
 
@@ -652,7 +670,7 @@ async function testHighScoreButton()
 async function testCreateGameButton()
 \end{lstlisting} 
 \vspace*{1\baselineskip}
-\textbf{Description}: TODO 
+\textbf{Description}: Sets the mouse to be over the Create game Button 
 
 
 
