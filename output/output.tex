@@ -482,6 +482,341 @@ public abstract class Bot {
 
 \section{FrontendTests}
 \textbf{Author}: Steven Dellamore, Richard Hansen \\
-\textbf{Description}: TODO \\
+\textbf{Description}: This is the testing doc for all the frontend tests. We decided to not go with a framework because we didnt think we needed everything the framework gives us. This framework uses the idea of dependency injection. We mock out all the p5 variables like so: 
+\begin{minted}[fontsize=\footnotesize]{javascript}
+global.mouseY = 30;
+global.LEFT_ARROW = 37;
+global.RIGHT_ARROW = 39;
+global.DOWN_ARROW = 40;
+global.createCanvas = function (x,y) { }
+global.push = function () { }
+global.pop = function () { }
+global.translate = function () { }
+... // Keeps going
+\end{minted}
+ This allows us to control all aspects of the test and really unit test every line of code in our functions. More over, we are able to mock out other classes that are being used by the class we are trying to test like so: 
+\begin{minted}[fontsize=\footnotesize]{javascript}
+global.buttonList = button[0];
+global.Buttons = button[1];
+global.Buttonloop = button[2];
+global.ClickedLoop = button[3];
+global.FindButtonbyID = button[4];
+\end{minted}
+ Once again, we can really drill down to the functions and have a really good understanding of what its doing and its return values. \\
+
+
+
+\subsection{CheckSame}
+\textbf{Author}: Steven Dellamore, Richard Hansen 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+CheckSame( string, string, string, boolean = false )
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: Checks to see if the \mintinline[fontsize=\footnotesize]{javascript}{given} and \mintinline[fontsize=\footnotesize]{javascript}{expected} strings are the same. If they are not this function will return false and print what the expected was. 
+\begin{minted}[fontsize=\footnotesize]{javascript}
+console.log(
+    red, numTests++ + ". " + name + " failed should have been " + 
+                                    expect + " but was " + given);
+\end{minted}
+ If its true it will print a success message. 
+
+
+\textbf{\large{\\Parameters}}:\\
+\textbf{string given }: real output\\
+\textbf{string expect }: expected output\\
+\textbf{string name }: name of test\\
+\textbf{boolean debug }: \mintinline[fontsize=\footnotesize]{javascript}{true} if you want debug statments printed\\\textbf{\large{\\Returns}}:\\\textbf{boolean }: true if given and expected match, false otherwise
+
+\subsection{testDefaultUsername}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+async function testDefaultUsername()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: Checks to see if the default \mintinline[fontsize=\footnotesize]{javascript}{mStartScreen.usernameText} is \mintinline[fontsize=\footnotesize]{javascript}{"username"}. 
+
+
+
+\subsection{testDefaultTokenValue}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+async function testDefaultTokenValue()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: Checks to see if the default \mintinline[fontsize=\footnotesize]{javascript}{mStartScreen.TokenBoxText} is \mintinline[fontsize=\footnotesize]{javascript}{""}. 
+
+
+
+\subsection{testCheckInitStartScreenValues}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+async function testCheckInitStartScreenValues()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: Checks to see if all the other init startscreen values are correct. 
+\begin{minted}[fontsize=\footnotesize]{javascript}
+// check usernameTextTouched is false
+CheckSame(
+    mStartScreen.usernameTextTouched,false,
+        "checkInitStartScreenValues.usernameTextTouched");
+
+// check titleAnimation [0-4] is set to the correct values
+CheckSame(
+    mStartScreen.titleAnimation[0],300,
+        "checkInitStartScreenValues.titleAnimation[0]");
+... // other indexs of titleAnimation
+
+// Check the stroke of the box is set to false
+CheckSame(
+    mStartScreen.usernameBoxStroke,false,
+        "checkInitStartScreenValues.usernameBoxStroke");
+\end{minted}
+ 
+
+
+
+\subsection{testCheckTitlePosAfterTwoDraw}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+async function testCheckTitlePosAfterTwoDraw()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: Run \mintinline[fontsize=\footnotesize]{javascript}{mStartScreen.draw()} twice and check that the title pos values have been updated correctly. 
+
+
+
+\subsection{testChangeUserUsername}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+async function testChangeUserUsername()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: TODO 
+
+
+
+\subsection{testChangeMaxUsername}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+async function testChangeMaxUsername()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: TODO 
+
+
+
+\subsection{testDeleteUsername}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+async function testDeleteUsername()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: TODO 
+
+
+
+\subsection{testCheckSpecialChars}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+async function testCheckSpecialChars()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: TODO 
+
+
+
+\subsection{testHighScoreButton}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+async function testHighScoreButton()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: TODO 
+
+
+
+\subsection{testCreateGameButton}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+async function testCreateGameButton()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: TODO 
+
+
+
+\subsection{testJoinLobbyButton}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+async function testJoinLobbyButton()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: TODO 
+
+
+
+\subsection{testCheckLobbyInitValues}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+async function testCheckLobbyInitValues()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: TODO 
+
+
+
+\subsection{testCheckTokenIsBeingDisplayed}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+async function testCheckTokenIsBeingDisplayed()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: TODO 
+
+
+
+\subsection{testAddAndRemoveBotsFromLobby}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+async function testAddAndRemoveBotsFromLobby()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: TODO 
+
+
+
+\subsection{checkPlayCardValues}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+async function checkPlayCardValues()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: TODO 
+
+
+
+\subsection{integrationTest1}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+async function integrationTest1()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: TODO 
+
+
+
+\subsection{testGameArrayNotNull}
+\textbf{Author}: Richard Hansen 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+async function testGameArrayNotNull()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: TODO 
+
+
+
+\subsection{testGameScreenRotateKeyPress}
+\textbf{Author}: Richard Hansen 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+async function testGameScreenRotateKeyPress()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: TODO 
+
+
+
+\subsection{testGameScreenFailRotateKeyPress}
+\textbf{Author}: Richard Hansen 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+async function testGameScreenFailRotateKeyPress()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: TODO 
+
+
+
+\subsection{testGameScreenFailRotateKeyPress}
+\textbf{Author}: Richard Hansen 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+async function testGameScreenFailRotateKeyPress()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: TODO 
+
+
+
+\subsection{testFourRotate}
+\textbf{Author}: Richard Hansen 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+async function testFourRotate()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: TODO 
+
+
+
+\subsection{testMove}
+\textbf{Author}: Richard Hansen 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+async function testMove()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: TODO 
+
+
+
+\subsection{testNewSquare}
+\textbf{Author}: Richard Hansen 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+async function testNewSquare()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: TODO 
+
+
+
+\subsection{testNumberOfPlayers}
+\textbf{Author}: Richard Hansen 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+async function testNumberOfPlayers()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: TODO 
+
+
+
+\subsection{testRunnerSetupStartScreen}
+\textbf{Author}: Steven Dellamore, Richard Hansen 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+async function testRunnerSetupStartScreen()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: TODO 
 
 \end{document}
