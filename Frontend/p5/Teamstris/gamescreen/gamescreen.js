@@ -7,7 +7,7 @@ class GameScreen {
     yOffset = 0,
     CustomWindowWidth = windowWidth,
     CustomWindowHeight = windowHeight,
-    PlayerCount=2
+    PlayerCount=1
   ) {
     if (gamescreen_constructor) console.log("Creating GameScreen Object");
 
@@ -15,7 +15,7 @@ class GameScreen {
     this.NumPlayers = PlayerCount;
 
     // ID of the current player
-    this.PlayerID = 2;
+    this.PlayerID = 1;
 
     // size of the game board, determined by this.NumPlayers.
     this.BoardSquareSize = [20, 5 + 5 * this.NumPlayers];
@@ -58,7 +58,7 @@ class GameScreen {
     this.PreviousTime = 0;
 
     // number of milliseconds between every update
-    this.GameSpeed = 1000;
+    this.GameSpeed = 200;
   }
 
   /**
