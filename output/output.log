@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  5 MAR 2020 15:51
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  5 MAR 2020 22:01
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -1091,10 +1091,6 @@ Overfull \hbox (0.25758pt too wide) in paragraph at lines 611--1
 969.pygtex)
 \openout3 = `output.pyg'.
 
-runsystem(pygmentize -l javascript -f latex -P commandprefix=PYG -F tokenmerge 
--o _minted-output/156502C1482F3A68BE4B9D9FE736341975600F18B89BEFFBA23F5C10F0B67
-969.pygtex output.pyg)...executed.
-
 
 (./_minted-output/156502C1482F3A68BE4B9D9FE736341975600F18B89BEFFBA23F5C10F0B67
 969.pygtex [20])
@@ -1112,19 +1108,109 @@ Overfull \hbox (0.5033pt too wide) in paragraph at lines 662--663
 \T1/cmr/m/n/12 Then we check that [] still equals zero since we havent
  []
 
-[21] [22] [23] [24]
-runsystem(rm _minted-output/B815384F3F5FD3B32FF2C8C0A907AC1575600F18B89BEFFBA23
-F5C10F0B67969.pygtex)...executed.
+\openout4 = `output.pyg'.
 
- [25] (./output.aux)
+
+(./_minted-output/31BA3E1E21B4F9DE6EF2B6C1D368AEFF75600F18B89BEFFBA23F5C10F0B67
+969.pygtex)
+\openout4 = `output.pyg'.
+
+
+(./_minted-output/43840B94B1351065767A92309511B98575600F18B89BEFFBA23F5C10F0B67
+969.pygtex)
+\openout4 = `output.pyg'.
+
+
+(./_minted-output/9911A7E6B93216A134273E16D793220675600F18B89BEFFBA23F5C10F0B67
+969.pygtex)
+\openout4 = `output.pyg'.
+
+
+(./_minted-output/CA1278612DBFA0230A830A0393780C8675600F18B89BEFFBA23F5C10F0B67
+969.pygtex)
+\openout4 = `output.pyg'.
+
+
+(./_minted-output/5A9D78ECFD7ED6E4A54338543473FFF175600F18B89BEFFBA23F5C10F0B67
+969.pygtex) [21]
+\openout4 = `output.pyg'.
+
+
+(./_minted-output/A591D44360DC82294B644B9B1F1C891275600F18B89BEFFBA23F5C10F0B67
+969.pygtex)
+\openout3 = `output.pyg'.
+
+
+(./_minted-output/B98435E8D352C4519EF01AFF3DA342BD75600F18B89BEFFBA23F5C10F0B67
+969.pygtex)
+\openout4 = `output.pyg'.
+
+
+(./_minted-output/FE8CBD89EDEBB548BD48AFDC8A8BABD775600F18B89BEFFBA23F5C10F0B67
+969.pygtex)
+\openout3 = `output.pyg'.
+
+
+(./_minted-output/C68CE6C263BA26582C7BA4BDFA24C7C175600F18B89BEFFBA23F5C10F0B67
+969.pygtex)
+\openout3 = `output.pyg'.
+
+
+(./_minted-output/F49A9803A151687886F912B5D40AA67D75600F18B89BEFFBA23F5C10F0B67
+969.pygtex)
+\openout4 = `output.pyg'.
+
+
+(./_minted-output/B90B0511A596B62EF7875AC7B538348575600F18B89BEFFBA23F5C10F0B67
+969.pygtex)
+\openout4 = `output.pyg'.
+
+
+(./_minted-output/789AFD15D6792ECB1DD4DDEB67D194C875600F18B89BEFFBA23F5C10F0B67
+969.pygtex) [22]
+\openout4 = `output.pyg'.
+
+
+(./_minted-output/9911A7E6B93216A134273E16D793220675600F18B89BEFFBA23F5C10F0B67
+969.pygtex)
+\openout4 = `output.pyg'.
+
+
+(./_minted-output/CA1278612DBFA0230A830A0393780C8675600F18B89BEFFBA23F5C10F0B67
+969.pygtex)
+\openout4 = `output.pyg'.
+
+
+(./_minted-output/70F516A196F1FC775C5374652CEEEC7775600F18B89BEFFBA23F5C10F0B67
+969.pygtex)
+\openout4 = `output.pyg'.
+
+
+(./_minted-output/D2716CB8C2F3352D530CADDC2ECFC37975600F18B89BEFFBA23F5C10F0B67
+969.pygtex)
+\openout4 = `output.pyg'.
+
+
+(./_minted-output/701C5DD907B08B14F918B408A3F90D0E75600F18B89BEFFBA23F5C10F0B67
+969.pygtex)
+Overfull \hbox (10.49811pt too wide) in paragraph at lines 757--758
+\T1/cmr/m/n/12 play-cards are be-ing ren-dered within the bounds of [] and []. 
+
+ []
+
+\openout3 = `output.pyg'.
+
+
+(./_minted-output/AF1B2496A76EAD819276BD0A7E13DA5B75600F18B89BEFFBA23F5C10F0B67
+969.pygtex [23]) [24] [25] [26] (./output.aux)
 runsystem(rm output.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 7681 strings out of 492616
- 144748 string characters out of 6129482
- 246943 words of memory out of 5000000
- 11253 multiletter control sequences out of 15000+600000
+ 7744 strings out of 492616
+ 149902 string characters out of 6129482
+ 252767 words of memory out of 5000000
+ 11267 multiletter control sequences out of 15000+600000
  15200 words of font info for 36 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  37i,6n,35p,845b,971s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1139,10 +1225,10 @@ texlive/2019/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/te
 xlive/2019/texmf-dist/fonts/type1/public/cm-super/sfrm2074.pfb></usr/local/texl
 ive/2019/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb></usr/local/texliv
 e/2019/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb>
-Output written on output.pdf (26 pages, 230408 bytes).
+Output written on output.pdf (27 pages, 233935 bytes).
 PDF statistics:
- 129 PDF objects out of 1000 (max. 8388607)
- 90 compressed objects within 1 object stream
+ 132 PDF objects out of 1000 (max. 8388607)
+ 92 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -670,7 +670,7 @@ CheckSame(mStartScreen.drawHighScoreButtonCheckMouse(),true,
 async function testCreateGameButton()
 \end{lstlisting} 
 \vspace*{1\baselineskip}
-\textbf{Description}: Sets the mouse to be over the Create game Button 
+\textbf{Description}: Sets the mouse to be over the "Create Game" Button and checks to see if it gets highlighted correctly. Then we click on the button with an empty \mintinline[fontsize=\footnotesize]{javascript}{mStartScreen.usernameText} and check to make sure we did not get moved into the Lobby screen. Finally we add a username \\ \mintinline[fontsize=\footnotesize]{javascript}{mStartScreen.usernameText = "Steven"} and click on the "Create Game" button. We then check we got moved into the lobby screen correctly. 
 
 
 
@@ -681,7 +681,7 @@ async function testCreateGameButton()
 async function testJoinLobbyButton()
 \end{lstlisting} 
 \vspace*{1\baselineskip}
-\textbf{Description}: TODO 
+\textbf{Description}: Sets the \mintinline[fontsize=\footnotesize]{javascript}{mouseX} and \mintinline[fontsize=\footnotesize]{javascript}{mouseY} to be over the "Join Game" button. Then we call \mintinline[fontsize=\footnotesize]{javascript}{mStartScreen.mouseClickedStart()} and check to that we are being put into the token screen correctly. 
 
 
 
@@ -692,7 +692,21 @@ async function testJoinLobbyButton()
 async function testCheckLobbyInitValues()
 \end{lstlisting} 
 \vspace*{1\baselineskip}
-\textbf{Description}: TODO 
+\textbf{Description}: Check the init values when moving to the lobby screen from the start screen. We first check to make sure the \mintinline[fontsize=\footnotesize]{javascript}{Player} object is set corretly like so: 
+\begin{minted}[fontsize=\footnotesize]{javascript}
+CheckSame(mLobbyScreen.player.username,"Steven","testCheckInitUsername");
+CheckSame(mLobbyScreen.player.owner,true,"testCheckInitOwnerTrue");
+CheckSame(typeof mLobbyScreen.player.id,"number","testCheckInitID");
+\end{minted}
+ Then we need to check the \mintinline[fontsize=\footnotesize]{javascript}{Team} object like so: 
+\begin{minted}[fontsize=\footnotesize]{javascript}
+CheckSame(mLobbyScreen.team.playersInTeam[0].username,"Steven","testCheckInitTeamUsername");
+CheckSame(mLobbyScreen.team.playersInTeam[0].owner,true,"testCheckInitTeamOwnerTrue");
+CheckSame(typeof mLobbyScreen.team.playersInTeam[0].id,"number","testCheckInitTeamID");
+CheckSame(mLobbyScreen.team.teamName,"","testCheckInitTeamName");
+CheckSame(typeof mLobbyScreen.team.lobbyToken,"string","testCheckInitLobbyToken");
+\end{minted}
+ Once these are checked we know that we have good init values. 
 
 
 
@@ -703,7 +717,22 @@ async function testCheckLobbyInitValues()
 async function testCheckTokenIsBeingDisplayed()
 \end{lstlisting} 
 \vspace*{1\baselineskip}
-\textbf{Description}: TODO 
+\textbf{Description}: Checks to see if the Token is being displayed by the frontend in the correct position. This is an example of how we can use Dependency Injection: 
+\begin{minted}[fontsize=\footnotesize]{javascript}
+var strInside;
+var x;
+var y;
+global.text = function(str, xx, yy) {
+    x = xx;
+    y = yy;
+    strInside = str;
+};
+mLobbyScreen.drawToken();
+CheckSame(strInside,"Token: ","testCheckTextPositionWithNoValue");
+CheckSame(x,256,"testCheckYOfTextCall");
+CheckSame(y,1454.5454545454545,"testCheckYOfTextCall");
+\end{minted}
+ As you can see we are checking what \mintinline[fontsize=\footnotesize]{javascript}{drawToken()} is sending the p5 function \mintinline[fontsize=\footnotesize]{javascript}{text()}, which is sent the token, xPos and yPos. 
 
 
 
@@ -714,7 +743,7 @@ async function testCheckTokenIsBeingDisplayed()
 async function testAddAndRemoveBotsFromLobby()
 \end{lstlisting} 
 \vspace*{1\baselineskip}
-\textbf{Description}: TODO 
+\textbf{Description}: Checks to see if the owner of the lobby can add and remove bots from their lobby. We set \mintinline[fontsize=\footnotesize]{javascript}{mouseX} and \mintinline[fontsize=\footnotesize]{javascript}{mouseY} to the position of the add bot button and then call \mintinline[fontsize=\footnotesize]{javascript}{mouseClickedLobby()} and check if the bot has been increased. 
 
 
 
@@ -725,7 +754,7 @@ async function testAddAndRemoveBotsFromLobby()
 async function checkPlayCardValues()
 \end{lstlisting} 
 \vspace*{1\baselineskip}
-\textbf{Description}: TODO 
+\textbf{Description}: Checks the init values of the player cards. Also check that the playcards are being rendered within the bounds of \mintinline[fontsize=\footnotesize]{javascript}{windowWidth} and \mintinline[fontsize=\footnotesize]{javascript}{windowHeight}. 
 
 
 
@@ -736,7 +765,22 @@ async function checkPlayCardValues()
 async function integrationTest1()
 \end{lstlisting} 
 \vspace*{1\baselineskip}
-\textbf{Description}: TODO 
+\textbf{Description}: This integration test will render the start screen 90,000 times and do different actions at certain times to ensure the start screen as a whole is working correctly. 
+\begin{minted}[fontsize=\footnotesize]{javascript}
+for(var i = 0; i < 90000; i++) {
+    mStartScreen.draw();
+    if(i == 500) { 
+        // Do Action
+    } else if(i == 700) { 
+        // Do another action
+    } else if(i == 1000) { 
+        // Do another action
+    } else if(i == 55000) { 
+        // Do another action
+    }
+}
+\end{minted}
+ Here we are rending the draw method 90,000 times and at different renders we are doing different actions (like mouse clicking, or key pressing). 
 
 
 
