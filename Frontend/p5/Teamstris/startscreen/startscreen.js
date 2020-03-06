@@ -18,7 +18,7 @@
  * create all the buttons needed for the user to 
  * get into a game with their friends. The mouseClicks
  * and the keyboard imports all all forwarded to this class
- * when gamestate == 0 |
+ * when @inline{gamestate == 0} |
  */
 class StartScreen {
 

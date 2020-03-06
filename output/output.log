@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  5 MAR 2020 22:01
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.5.8)  6 MAR 2020 10:03
 entering extended mode
  \write18 enabled.
  file:line:error style messages enabled.
@@ -495,6 +495,16 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 \openout5 = `output.toc'.
 
  [2]
+\openout4 = `output.pyg'.
+
+ (./_minted-output/default-pyg-prefix.pygstyle)
+(./_minted-output/default.pygstyle)
+(./_minted-output/68BEE84F1DBFE95C21DF6C9FA85591EB75600F18B89BEFFBA23F5C10F0B67
+969.pygtex
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 1.
+ (/usr/local/texlive/2019/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+))
 Overfull \hbox (3.09396pt too wide) in paragraph at lines 34--36
 \T1/cmr/m/n/12 tons needed for the user to get into a game with their friends. 
 The mouseClicks
@@ -507,14 +517,9 @@ Underfull \hbox (badness 10000) in paragraph at lines 34--36
 
 \openout3 = `output.pyg'.
 
-(./_minted-output/default-pyg-prefix.pygstyle)
-(./_minted-output/default.pygstyle)
+
 (./_minted-output/D5AB24F08683B03EBBF74B4119077AC675600F18B89BEFFBA23F5C10F0B67
 969.pygtex
-LaTeX Font Info:    Try loading font information for T1+cmtt on input line 1.
- (/usr/local/texlive/2019/texmf-dist/tex/latex/base/t1cmtt.fd
-File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
 LaTeX Font Info:    Font shape `T1/cmtt/bx/n' in size <10> not available
 (Font)              Font shape `T1/cmtt/m/n' tried instead on input line 2.
 )
@@ -1207,10 +1212,10 @@ runsystem(rm output.pyg)...executed.
 
  ) 
 Here is how much of TeX's memory you used:
- 7744 strings out of 492616
- 149902 string characters out of 6129482
- 252767 words of memory out of 5000000
- 11267 multiletter control sequences out of 15000+600000
+ 7748 strings out of 492616
+ 150225 string characters out of 6129482
+ 253091 words of memory out of 5000000
+ 11268 multiletter control sequences out of 15000+600000
  15200 words of font info for 36 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  37i,6n,35p,845b,971s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1225,7 +1230,7 @@ texlive/2019/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/local/te
 xlive/2019/texmf-dist/fonts/type1/public/cm-super/sfrm2074.pfb></usr/local/texl
 ive/2019/texmf-dist/fonts/type1/public/cm-super/sfti1200.pfb></usr/local/texliv
 e/2019/texmf-dist/fonts/type1/public/cm-super/sftt1000.pfb>
-Output written on output.pdf (27 pages, 233935 bytes).
+Output written on output.pdf (27 pages, 233956 bytes).
 PDF statistics:
  132 PDF objects out of 1000 (max. 8388607)
  92 compressed objects within 1 object stream
