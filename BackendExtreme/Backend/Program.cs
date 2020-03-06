@@ -7,6 +7,12 @@ using Newtonsoft.Json;
 
 namespace Teamtris
 {
+    /**
+    * #class Program |
+    * @author ??? | 
+    * @language csharp | 
+    * @desc TODO |
+    */
     class Program
     {
         static void Main(string[] args)

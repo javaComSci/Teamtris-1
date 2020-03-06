@@ -384,10 +384,83 @@ switch (gameState) {
 \textbf{\large{\\Parameters}}:\\
 \textbf{void }: takes no parameters\\\textbf{\large{\\Returns}}:\\\textbf{void }: returns nothing
 
+\section{Block}
+\textbf{Author}: ??? \\
+\textbf{Description}: TODO \\
+
+
+
+\section{Board}
+\textbf{Author}: ??? \\
+\textbf{Description}: Board class to include the information that the board will need to have for a bot \\
+
+
+
+\subsection{board}
+\textbf{Author}: ??? 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+public int[,] board()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: TODO 
+
+
+\textbf{\large{\\Parameters}}:\\
+\textbf{type name }: what it does\\\textbf{\large{\\Returns}}:\\\textbf{type }: what it does
+
+\subsection{numFilledFloor}
+\textbf{Author}: ??? 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+public int numFilledFloor()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: has the number of heights that are not 0 - meaning that they have already been filled 
+
+
+\textbf{\large{\\Parameters}}:\\
+\textbf{type name }: what it does\\\textbf{\large{\\Returns}}:\\\textbf{type }: what it does
+
+\section{Play}
+\textbf{Author}: ??? \\
+\textbf{Description}: TODO \\
+
+
+
+\subsection{Play}
+\textbf{Author}: ??? 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+public Play()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: TODO 
+
+
+
+\section{Player}
+\textbf{Author}: ??? \\
+\textbf{Description}: TODO \\
+
+
+
+\section{Prints}
+\textbf{Author}: ??? \\
+\textbf{Description}: TODO \\
+
+
+
+\section{Program}
+\textbf{Author}: ??? \\
+\textbf{Description}: TODO \\
+
+
+
 \section{SingleBot}
 \textbf{Author}: JavaComSci \\
 \textbf{Description}: Single bot extends the abstract bot class defined here: 
-\begin{minted}[fontsize=\footnotesize]{javascript}
+\begin{minted}[fontsize=\footnotesize]{csharp}
 public abstract class Bot {
     public abstract List<Tuple<int, int>> GetMove(
         Board board, 
@@ -445,7 +518,7 @@ public override List<...> GetMove(Board, List<Block>, bool)
 \section{DoubleBot}
 \textbf{Author}: JavaComSci \\
 \textbf{Description}: DoubleBot bot extends the abstract bot class defined here: 
-\begin{minted}[fontsize=\footnotesize]{javascript}
+\begin{minted}[fontsize=\footnotesize]{csharp}
 public abstract class Bot {
     public abstract List<Tuple<int, int>> GetMove(
         Board board, 
@@ -461,7 +534,7 @@ public abstract class Bot {
 \section{TripleBot}
 \textbf{Author}: JavaComSci \\
 \textbf{Description}: TripleBot extends the abstract bot class defined here: 
-\begin{minted}[fontsize=\footnotesize]{javascript}
+\begin{minted}[fontsize=\footnotesize]{csharp}
 public abstract class Bot {
     public abstract List<Tuple<int, int>> GetMove(
         Board board, 
