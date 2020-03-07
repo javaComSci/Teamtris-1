@@ -4,6 +4,8 @@ using WebSocketSharp;
 using WebSocketSharp.Server;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using MySql.Data;
+using MySql.Data.MySqlClient;
 
 namespace Teamtris
 {
@@ -187,8 +189,8 @@ namespace Teamtris
             Block block2 = new Block(b2, 1);
             Block block3 = new Block(b3, 1);
             blocks.Add(block1);
-            blocks.Add(block2);
-            blocks.Add(block3);
+            // blocks.Add(block2);
+            // blocks.Add(block3);
 
             try {
                 game.bot.GetMove(game.board, blocks);
@@ -196,7 +198,8 @@ namespace Teamtris
                 Console.WriteLine("Recieved error: "  + e.Message);
             }
 
-
+            List<string> players = new List<string>(new string [] {"p1, p2"});
+            SQLConnection.AddTeamScore("Team 1", players, 5, 60);
 
             // create localhost web socket server on port 5202
             var wssv = new WebSocketServer("ws://0.0.0.0:5202");
