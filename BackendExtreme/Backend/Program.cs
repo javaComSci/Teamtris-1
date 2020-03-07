@@ -199,7 +199,8 @@ namespace Teamtris
             }
 
             List<string> players = new List<string>(new string [] {"p1, p2"});
-            SQLConnection.AddTeamScore("Team 1", players, 5, 60);
+            ScoresInfo scoresInfo = new ScoresInfo("Team 1", players, 5, 60);
+            SQLConnection.AddTeamScore(scoresInfo);
 
             // create localhost web socket server on port 5202
             var wssv = new WebSocketServer("ws://0.0.0.0:5202");
