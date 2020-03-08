@@ -24,6 +24,9 @@ namespace Teamtris
             game.players = new Dictionary<int, Player>();
             Dictionary<string, Lobby> lobbies = new Dictionary<string, Lobby>();
 
+            // printing
+            Prints infoPrinter = new Prints();
+
             // currently just have a single bot
             game.bot = new SingleBot();
             List<Block> blocks = new List<Block>();
@@ -198,9 +201,21 @@ namespace Teamtris
                 Console.WriteLine("Recieved error: "  + e.Message);
             }
 
-            List<string> players = new List<string>(new string [] {"p1, p2"});
+            // connection and adding to the db scores
+            List<string> players = new List<string>();
+            players.Add("p1");
+            players.Add("p2");
+            players.Add(null);
+            players.Add(null);
             ScoresInfo scoresInfo = new ScoresInfo("Team 1", players, 5, 60);
-            SQLConnection.AddTeamScore(scoresInfo);
+            long id = SQLConnection.AddTeamScore(scoresInfo);   
+            Tuple<List<ScoresInfo>, ScoresInfo> retrievedInfo = SQLConnection.GetTopTeamsAndCurrentTeam(id);
+            Console.WriteLine("Top teams");
+            infoPrinter.PrintScoreList(retrievedInfo.Item1);
+            Console.WriteLine("Current team");
+            infoPrinter.PrintScoreInfo(retrievedInfo.Item2);
+
+
 
             // create localhost web socket server on port 5202
             var wssv = new WebSocketServer("ws://0.0.0.0:5202");

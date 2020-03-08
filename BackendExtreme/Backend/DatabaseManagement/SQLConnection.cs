@@ -12,7 +12,7 @@ using MySql.Data.MySqlClient;
  */
 public class SQLConnection
 {
-    private static string connString = "Server=198.199.64.158;Database=Scores;Uid=root;Port=3306;Pwd=mypassword;";
+    private static string connString = "Server=198.199.64.158;Database=Scores;Uid=dbuser;Port=3306;Pwd=mypassword;";
 
     public SQLConnection() {
         Console.WriteLine("DB connection setup");    
@@ -27,8 +27,12 @@ public class SQLConnection
      * @param int score: Score of team |
      * @param int timeInSeconds: Time played of team |
      */
-    public static void AddTeamScore(ScoresInfo scoresInfo) {
+    public static long AddTeamScore(ScoresInfo scoresInfo) {
+        // create connection
         MySqlConnection conn = new MySqlConnection(connString);
+
+        // id of the team that has just inserted
+        long imageId = -1;
 
         try
         {
@@ -52,6 +56,10 @@ public class SQLConnection
 
             // execute the query
             command.ExecuteNonQuery();
+
+            // get the id of the last inserted score for the team that has just placed in the scores
+            imageId = command.LastInsertedId;
+
         }
         catch (Exception ex)
         {
@@ -60,6 +68,9 @@ public class SQLConnection
 
         // close the connection
         conn.Close();
+
+        // return the image id that has just been inserted
+        return imageId;
     }
 
 
@@ -67,13 +78,17 @@ public class SQLConnection
      * #function SQLConnection::GetTopTeamsAndCurrentTeam |
      * @author JavaComSci |
      * @desc Connects to the database in order to obtain team results |
-     * @param String teamName: Name of team |
+     * @param long teamId: Id of team |
      */
-    public static void GetTopTeamsAndCurrentTeam(String teamName) {
+    public static Tuple<List<ScoresInfo>, ScoresInfo> GetTopTeamsAndCurrentTeam(long id) {
+        // create connection
         MySqlConnection conn = new MySqlConnection(connString);
 
-        // ScoresInfo list for the top teams
+        // scoresInfo list for the top teams
         List<ScoresInfo> topTeams = new List<ScoresInfo>();
+
+        // information for current team
+        ScoresInfo currentTeam = null;
 
         try
         {
@@ -81,38 +96,37 @@ public class SQLConnection
             conn.Open();
 
             // create new command
-            MySqlCommand commandTopTeams = conn.CreateCommand();
+            MySqlCommand command = conn.CreateCommand();
 
-            // text for command with parameterization
-            commandTopTeams.CommandText = "SELECT * FROM Scores ORDER BY TeamScore ASC LIMIT 10";
-
+            // text for command with top teams
+            command.CommandText = "SELECT * FROM Scores ORDER BY TeamScore ASC LIMIT 10";
             // create a reader to read the high scores
-            MySqlDataReader reader1 = commandTopTeams.ExecuteReader();
+            MySqlDataReader reader1 = command.ExecuteReader();
+            if (reader1.HasRows == true) {   
+                while(reader1.Read()) {
+                    // put the information read into the score info object
+                    String teamName = Convert.ToString(reader1[1]);
+                    List<String> playerNames = new List<String>();
+                    if(reader1[2] != DBNull.Value) {
+                        playerNames.Add(Convert.ToString(reader1[2]));
+                    }
+                    if(reader1[3] != DBNull.Value) {
+                        playerNames.Add(Convert.ToString(reader1[3]));
+                    }
+                    if(reader1[4] != DBNull.Value) {
+                        playerNames.Add(Convert.ToString(reader1[4]));
+                    }
+                    if(reader1[5] != DBNull.Value) {
+                        playerNames.Add(Convert.ToString(reader1[5]));
+                    }
+                    int teamScore = Convert.ToInt32(reader1[6]);
+                    int timePlayed = Convert.ToInt32(reader1[7]);
 
-            while (reader1.HasRows == true)
-            {   
-                // put the information read into the score info object
-                String tname = Convert.ToString(reader1[1]);
-
-                List<String> playerNames = new List<String>();
-                if(reader1[2] != DBNull.Value) {
-                    playerNames.Add(Convert.ToString(reader1[2]));
+                    // add the top team to the list of top teams
+                    ScoresInfo topTeam = new ScoresInfo(teamName, playerNames, teamScore, timePlayed);
+                    topTeams.Add(topTeam);
                 }
-                if(reader1[3] != DBNull.Value) {
-                    playerNames.Add(Convert.ToString(reader1[3]));
-                }
-                if(reader1[4] != DBNull.Value) {
-                    playerNames.Add(Convert.ToString(reader1[4]));
-                }
-                if(reader1[5] != DBNull.Value) {
-                    playerNames.Add(Convert.ToString(reader1[5]));
-                }
-
-                int teamScore = Convert.ToInt32(reader1[6]);
-                int timePlayed = Convert.ToInt32(reader1[7]);
-                ScoresInfo topTeam = new ScoresInfo(tname, playerNames, teamScore, timePlayed);
-            }
-            
+            }            
         }
         catch (Exception ex)
         {
@@ -121,5 +135,8 @@ public class SQLConnection
 
         // close the connection
         conn.Close();
+
+        // return the tuple
+        return Tuple.Create(topTeams, currentTeam);
     }
 }
