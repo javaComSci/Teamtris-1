@@ -99,12 +99,22 @@ public class SQLConnection
             MySqlCommand command = conn.CreateCommand();
 
             // text for command with top teams
-            command.CommandText = "SELECT * FROM Scores ORDER BY TeamScore ASC LIMIT 10";
+            // command.CommandText = "SELECT * FROM Scores ORDER BY TeamScore DESC LIMIT 10";
+            command.CommandText = "SELECT * FROM (SELECT *, rank() OVER (ORDER BY TeamScore DESC) as Ranking FROM Scores) AS ScoresRanked WHERE Ranking <= 10 OR Id = @teamId";
+             command.Parameters.AddWithValue("@teamId", id);
             // create a reader to read the high scores
             MySqlDataReader reader1 = command.ExecuteReader();
+
+            // team counter
+            int teamCount = 0;
+
             if (reader1.HasRows == true) {   
                 while(reader1.Read()) {
+                    
+                    teamCount += 1;
+
                     // put the information read into the score info object
+                    int teamId = Convert.ToInt32(reader1[0]);
                     String teamName = Convert.ToString(reader1[1]);
                     List<String> playerNames = new List<String>();
                     if(reader1[2] != DBNull.Value) {
@@ -121,10 +131,21 @@ public class SQLConnection
                     }
                     int teamScore = Convert.ToInt32(reader1[6]);
                     int timePlayed = Convert.ToInt32(reader1[7]);
+                    int ranking = Convert.ToInt32(reader1[8]);
 
                     // add the top team to the list of top teams
-                    ScoresInfo topTeam = new ScoresInfo(teamName, playerNames, teamScore, timePlayed);
-                    topTeams.Add(topTeam);
+                    ScoresInfo team = new ScoresInfo(teamName, playerNames, teamScore, timePlayed);
+
+                    // current team looking at
+                    if(teamId == id) {
+                        // current team
+                        currentTeam = team;
+                    }
+
+                    // add to the top teams
+                    if(teamCount < 10) {
+                        topTeams.Add(team);
+                    }
                 }
             }            
         }

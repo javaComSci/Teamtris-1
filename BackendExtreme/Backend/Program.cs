@@ -207,7 +207,7 @@ namespace Teamtris
             players.Add("p2");
             players.Add(null);
             players.Add(null);
-            ScoresInfo scoresInfo = new ScoresInfo("Team 1", players, 5, 60);
+            ScoresInfo scoresInfo = new ScoresInfo("Team HI", players, 1, 60);
             long id = SQLConnection.AddTeamScore(scoresInfo);   
             Tuple<List<ScoresInfo>, ScoresInfo> retrievedInfo = SQLConnection.GetTopTeamsAndCurrentTeam(id);
             Console.WriteLine("Top teams");
