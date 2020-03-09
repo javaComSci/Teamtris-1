@@ -5,6 +5,8 @@
 \usepackage[T1]{fontenc}
 \newlength{\drop}
 
+\newcommand{\opt}[0]
+
 \begin{document}
   \begin{titlepage}
     \centering
@@ -31,18 +33,20 @@
 
 
 \section{StartScreen}
-\textbf{Author}: Steven Dellamore \\
+\opt\textbf{Author}: Steven Dellamore \\\opt
+\noindent
 \textbf{Description}: Startscreen will build the startscreen and create all the buttons needed for the user to get into a game with their friends. The mouseClicks and the keyboard imports all all forwarded to this class when \mintinline[fontsize=\footnotesize]{javascript}{gamestate == 0} \\
 
 
 
 \subsection{constructor}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 constructor()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: The constructor gets called when making a startscreen object. It will init all the values and set up the socket listener for the server to send things too. Here are the init values of the class variables: 
 \begin{minted}[fontsize=\footnotesize]{javascript}
 this.TokenBoxText = ""; 
@@ -60,12 +64,13 @@ this.titleAnimation = [300, 500, 400, 700];
 \textbf{StartScreen }: An object of start class\\
 
 \subsection{draw}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 draw()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: This funcion will be ran at 60 frames a second and will call all the functions needed to draw the launch screen. The draw function will call the title functions, the highscore functions, and call the join and create button rendering/hitboxes with \mintinline[fontsize=\footnotesize]{javascript}{Buttonloop()}. Depending on what \mintinline[fontsize=\footnotesize]{javascript}{this.gameStateStartScreen} is evaluated to. 
 \begin{minted}[fontsize=\footnotesize]{javascript}
 switch (this.gameStateStartScreen) {
@@ -85,12 +90,13 @@ switch (this.gameStateStartScreen) {
 \textbf{void }: void\\
 
 \subsection{animateTitle}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 animateTitle()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Will check and add/subtract the locations of the T's falling when you go to the launch screen. 
 \begin{minted}[fontsize=\footnotesize]{javascript}
 if (this.titleAnimation[i] > 0) {
@@ -105,12 +111,13 @@ if (this.titleAnimation[i] > 0) {
 \textbf{void}
 
 \subsection{drawUsernameBox}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 drawUsernameBox()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: This function will draw the white username box onto the screen displaying the \mintinline[fontsize=\footnotesize]{javascript}{this.usernameText} in the center. This function will also use \mintinline[fontsize=\footnotesize]{javascript}{this.usernameBoxStroke} to display the red outline around the username box. 
 
 
@@ -119,12 +126,13 @@ drawUsernameBox()
 \textbf{void}
 
 \subsection{drawTitle}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 drawTitle()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: This function will draw the title (Teamtris) onto the launch screen. Also, the function will be responable for displaying the current falling location of the two T's falling at the start of the screen. We make rects based on the current location of \mintinline[fontsize=\footnotesize]{javascript}{this.titleAnimation}. 
 \begin{minted}[fontsize=\footnotesize]{javascript}
 let yStart;
@@ -155,12 +163,13 @@ rect(-windowWidth / 4.3 + spaceBetweenSquares,
 \textbf{void}
 
 \subsection{drawTokenBox}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 drawTokenBox()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: This function will draw the token box once the user clicks "join game". It will display the token box and the accept button. Unlike other buttons, all mouse clicks are handled. 
 
 
@@ -169,12 +178,13 @@ drawTokenBox()
 \textbf{void}
 
 \subsection{mouseClickedStart}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 mouseClickedStart()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: This function is being called whenever \mintinline[fontsize=\footnotesize]{javascript}{gamestate = 0} AND the user clicks their mouse. First, we will check what \mintinline[fontsize=\footnotesize]{javascript}{this.gameStateStartScreen} is. If its \mintinline[fontsize=\footnotesize]{javascript}{0}, we will check the \mintinline[fontsize=\footnotesize]{javascript}{function ClickedLoop()} to see if the user is clicking on the join game, create game, or highscore score buttons. If the user clicks on a the create game button with a valid username we are going to send them into the lobbyscreen. 
 \begin{minted}[fontsize=\footnotesize]{javascript}
 // Creating my lobbyscreen object
@@ -201,12 +211,13 @@ constructor(username, id, owner){
 \textbf{void}
 
 \subsection{drawHighScoreButtonCheckMouse}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 drawHighScoreButtonCheckMouse()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: This function is being called whenever the user clicks with gamestate of the \mintinline[fontsize=\footnotesize]{javascript}{this.gameStateStartScreen == 0;}. This function checks if the mouse is over the highscore button and returns \mintinline[fontsize=\footnotesize]{javascript}{true} if it is, \mintinline[fontsize=\footnotesize]{javascript}{false} if its not. 
 
 
@@ -215,12 +226,13 @@ drawHighScoreButtonCheckMouse()
 \textbf{bool }: \\true => If mouse is over score button \\false => If mouse is not over score button\\
 
 \subsection{drawHighScoreButton}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 drawHighScoreButton()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: This function will draw the three bars in the bottom left of the screen. It will first check what \mintinline[fontsize=\footnotesize]{javascript}{this.drawHighScoreButtonCheckMouse()} and set accordingly: 
 \begin{minted}[fontsize=\footnotesize]{javascript}
 let fillHighScore = "white"; // default value is white
@@ -238,12 +250,13 @@ if (this.drawHighScoreButtonCheckMouse()) {
 \textbf{void }: no return\\
 
 \subsection{keyPressedStart}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 keyPressedStart()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Called whenever the \mintinline[fontsize=\footnotesize]{javascript}{General::function keyPressed()} function routes the signal to this function. a.k.a whenver \mintinline[fontsize=\footnotesize]{javascript}{gameState == 0}. This function first checks the \mintinline[fontsize=\footnotesize]{javascript}{this.gameStateStartScreen} like so: 
 \begin{minted}[fontsize=\footnotesize]{javascript}
 switch(this.gameStateStartScreen) {
@@ -263,18 +276,20 @@ switch(this.gameStateStartScreen) {
 \textbf{void}
 
 \section{LobbyScreen}
-\textbf{Author}: Steven Dellamore \\
+\opt\textbf{Author}: Steven Dellamore \\\opt
+\noindent
 \textbf{Description}: The lobby screen is where players will create or join lobbys and wait to be put into game. The owner will be the one that has the start button and will bring everyone into game. \\
 
 
 
 \subsection{constructor}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 constructor(player)
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: The Constructor is in chage of createing all the init values for the lobby screen to use and create all the buttons. The owner will be the only ones with the "add bot", "remove bot" , "Start". The lobby screen will also be communicating to and from the backend, the setup starts in this function. 
 \begin{minted}[fontsize=\footnotesize]{javascript}
 socket.onmessage = (event) => {
@@ -291,34 +306,37 @@ socket.onmessage = (event) => {
 \textbf{LobbyScreen }: An object of Lobby Screen\\
 
 \subsection{changeOwnerToMe}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 changeOwnerToMe()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: When the owner leaves the backend will send a notification with the new owner. If the new owner is this current player, then we will have to start drawing the owner buttons on the screen so they can start the game. We use the \mintinline[fontsize=\footnotesize]{javascript}{Buttons()} class to aid us in this process. 
 
 
 
 \subsection{draw}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 draw()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: This will be called 60 times a second when \mintinline[fontsize=\footnotesize]{javascript}{gameState == 1}. \mintinline[fontsize=\footnotesize]{javascript}{"sketch.js"} is where it takes care of the routing for this. 
 
 
 
 \subsection{addAndRemoveBotButton}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 addAndRemoveBotButton(addOrRemove)
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Will be called when the user clicks on either the "Add bot" or "Remove bot" button. \mintinline[fontsize=\footnotesize]{javascript}{mouseClickedLobby()} is who calls this function. This function will form and send a response based on which button you clicked. \\Add Bot: 
 \begin{minted}[fontsize=\footnotesize]{javascript}
 var data = JSON.stringify({"action": 1, "lobbyid":this.team.lobbyToken.toLowerCase()})
@@ -336,12 +354,13 @@ socket.send(JSON.stringify({"type": "7", "data": data}));
 \textbf{addOrRemove }: This param can either be the following \\ "addbot": Clicked add bot button. \\ "removebot": Clicked remove bot button\\
 
 \subsection{drawToken}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 drawToken()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: draws the token onto the screen for everyone in the lobby 
 \begin{minted}[fontsize=\footnotesize]{javascript}
 // draw the token with p5 text() function
@@ -352,23 +371,25 @@ text("Token: " + this.team.lobbyToken,windowWidth/10,windowHeight/1.1)
 
 
 \subsection{drawTitle}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 drawTitle()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: draws the title (\mintinline[fontsize=\footnotesize]{javascript}{"lobby"}) onto the screen for all players in the lobby. 
 
 
 
 \subsection{newPlayerJoins}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 newPlayerJoins(player)
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Will check if a new player can be added to the lobby. If they can, a new player card will be made for the new user. 
 \begin{minted}[fontsize=\footnotesize]{javascript}
 // add a new playercard to the playerCard array
@@ -384,12 +405,13 @@ this.playerCards.push(
 \textbf{boolean }: If the new player is added. \\ true: if new player was added. \\ false: if new player was denied from lobby (Lobby is full).\\
 
 \subsection{playerLeaves}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 playerLeaves(player)
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Will eject a player from the team's list and allow another spot for a new player to join. 
 \begin{minted}[fontsize=\footnotesize]{javascript}
 this.team.playersInTeam.forEach(function(playerInList, index, object) {
@@ -405,23 +427,25 @@ this.team.playersInTeam.forEach(function(playerInList, index, object) {
 \textbf{Player player }: The player trying to leave the lobby\\
 
 \subsection{keyPressedLobby}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 keyPressedLobby()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: This function will handle all key presses by the user. Since we only have one place to press a key, the team box, when \mintinline[fontsize=\footnotesize]{javascript}{this.lobbyGameState} is set to \mintinline[fontsize=\footnotesize]{javascript}{0}, we will append to the teamname. The teamname cannot go above 11 chars or below 0. 
 
 
 
 \subsection{mouseClickedLobby}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 mouseClickedLobby()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Handles all the mouse clicks when the user clicks on the lobby screen. 
 \begin{minted}[fontsize=\footnotesize]{javascript}
 switch (this.lobbyGameState) {
@@ -437,19 +461,116 @@ switch (this.lobbyGameState) {
 
 
 
+\section{ScoreScreen}
+\opt\textbf{Author}: Steven Dellamore, JavaComSci \\\opt
+\noindent
+\textbf{Description}: Displays the score screen to the user when the \mintinline[fontsize=\footnotesize]{javascript}{gameState = 3}. \\
+
+
+
+\subsection{constructor}
+\opt
+\opt\begin{lstlisting}
+constructor()
+\end{lstlisting} 
+\vspace*{1\baselineskip}\opt
+\noindent
+\textbf{Description}: ScoreScreen is going to setup all init values for the screen. 
+\begin{minted}[fontsize=\footnotesize]{javascript}
+this.player = player;
+this.fromGameScreen = fromGameScreen;
+this.scoreArray = [];
+this.team = team;
+\end{minted}
+ We will also have to ask the server for the scores like so: 
+\begin{minted}[fontsize=\footnotesize]{javascript}
+// var data = JSON.stringify(
+//     {"maxPlayers":"4","name": this.player.username,"playerID": this.player.id})
+// socket.send(JSON.stringify({"type": "1", "data": data}));
+\end{minted}
+ and finally, we have to listen for incoming packets from the server: 
+\begin{minted}[fontsize=\footnotesize]{javascript}
+socket.onmessage = (event) => {
+    // Listen for backend packets.
+    // Parse them and call the correct functions
+    ...
+};
+\end{minted}
+ 
+
+\textbf{\large{\\Returns}}:\\
+\textbf{ScoreScreen }: An object of scorescreen class\\
+
+\subsection{drawTitle}
+\opt
+\opt\begin{lstlisting}
+drawTitle()
+\end{lstlisting} 
+\vspace*{1\baselineskip}\opt
+\noindent
+\textbf{Description}: TODO 
+
+
+
+\subsection{renderScores}
+\opt
+\opt\begin{lstlisting}
+renderScores()
+\end{lstlisting} 
+\vspace*{1\baselineskip}\opt
+\noindent
+\textbf{Description}: TODO 
+
+
+
+\subsection{mouseClickedScore}
+\opt
+\opt\begin{lstlisting}
+mouseClickedScore()
+\end{lstlisting} 
+\vspace*{1\baselineskip}\opt
+\noindent
+\textbf{Description}: Will be called whenever the user clicks and \mintinline[fontsize=\footnotesize]{javascript}{gameState == 3}. Will render a new startScreen if the user clicks on the back button. 
+
+
+
+\subsection{keyPressedScore}
+\opt
+\opt\begin{lstlisting}
+keyPressedScore()
+\end{lstlisting} 
+\vspace*{1\baselineskip}\opt
+\noindent
+\textbf{Description}: TODO 
+
+
+
+\subsection{draw}
+\opt
+\opt\begin{lstlisting}
+draw()
+\end{lstlisting} 
+\vspace*{1\baselineskip}\opt
+\noindent
+\textbf{Description}: This will be called 60 times a second in \mintinline[fontsize=\footnotesize]{javascript}{"sketch.js"}. It will render everything onto the screen. 
+
+
+
 \section{Player}
-\textbf{Author}: Steven Dellamore, Richard Hansen \\
+\opt\textbf{Author}: Steven Dellamore, Richard Hansen \\\opt
+\noindent
 \textbf{Description}: Every user will have their own object of the Player class. This is going to be passed around to other people in the lobby. This class will tell the game screen who is who and will help identify moves. \\
 
 
 
 \subsection{constructor}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 constructor(username, id, owner)
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: The constructor takes in three things, a name, id and a owner flag. It will then create an object of \mintinline[fontsize=\footnotesize]{javascript}{Player} and init all class varibles. This Class is used throughout all stages of the program. 
 
 
@@ -460,12 +581,13 @@ constructor(username, id, owner)
 \textbf{Player }: An object of Player class\\
 
 \subsection{setPlayerNum}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 setPlayerNum(num)
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Will set \mintinline[fontsize=\footnotesize]{javascript}{this.playerNum} equal to \mintinline[fontsize=\footnotesize]{javascript}{num}. This is just a helper function. 
 
 
@@ -474,18 +596,20 @@ setPlayerNum(num)
 \textbf{void }: returns nothing\\
 
 \section{Team}
-\textbf{Author}: Steven Dellamore, Richard Hansen \\
+\opt\textbf{Author}: Steven Dellamore, Richard Hansen \\\opt
+\noindent
 \textbf{Description}: The team class will contain all the other players that are in your game, the team name and the token for your lobby. Once new players come addPlayer will be called to push a newplayer onto the playersInTeam array. \\
 
 
 
 \subsection{constructor}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 constructor()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: The constructor gets called anytime someone joins or create a game. 
 
 
@@ -494,12 +618,13 @@ constructor()
 \textbf{Team }: A object of the class\\
 
 \subsection{addPlayer}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 addPlayer(player)
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: The add player function gets called whenever a bot or a real player joins your lobby. This function will also be called to populate the lobby when you join. 
 
 
@@ -508,18 +633,20 @@ addPlayer(player)
 \textbf{void }: no return\\
 
 \section{General}
-\textbf{Author}: Steven Dellamore, Richard Hansen \\
+\opt\textbf{Author}: Steven Dellamore, Richard Hansen \\\opt
+\noindent
 \textbf{Description}: This is an abstract class that will hold mouseClicked and keyPressed p5 functions. \\
 
 
 
 \subsection{mouseClicked}
-\textbf{Author}: Steven Dellamore, Richard Hansen 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore, Richard Hansen 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 mouseClicked()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Will be called whenever the user clicks on anywhere on the screen. Once called, it will go straight into a switch to decide where to route to based on the gameState 
 \begin{minted}[fontsize=\footnotesize]{javascript}
 switch (gameState) {
@@ -534,6 +661,7 @@ switch (gameState) {
     case 2:
         break;
     case 3:
+        mScoreScreen.mouseClickedScore();
         break;
 }
 \end{minted}
@@ -545,12 +673,13 @@ switch (gameState) {
 \textbf{void }: returns nothing\\
 
 \subsection{keyPressed}
-\textbf{Author}: Steven Dellamore, Richard Hansen 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore, Richard Hansen 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 mouseClicked()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Will be called whenever the presses a key. Once called, it will go straight into a switch to decide where to route to based on the gameState 
 \begin{minted}[fontsize=\footnotesize]{javascript}
 switch (gameState) {
@@ -564,7 +693,7 @@ switch (gameState) {
     mGameScreen.keyPressedGame();
     break;
   case 3:
-    // mScoreScreen.keyPressedScore();
+    mScoreScreen.keyPressedScore();
     break;
 }
 \end{minted}
@@ -576,24 +705,27 @@ switch (gameState) {
 \textbf{void }: returns nothing\\
 
 \section{Block}
-\textbf{Author}: ??? \\
+\opt\textbf{Author}: ??? \\\opt
+\noindent
 \textbf{Description}: TODO \\
 
 
 
 \section{Board}
-\textbf{Author}: ??? \\
+\opt\textbf{Author}: ??? \\\opt
+\noindent
 \textbf{Description}: Board class to include the information that the board will need to have for a bot \\
 
 
 
 \subsection{board}
-\textbf{Author}: ??? 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: ??? 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 public int[,] board()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: TODO 
 
 
@@ -602,12 +734,13 @@ public int[,] board()
 \textbf{type }: what it does\\
 
 \subsection{numFilledFloor}
-\textbf{Author}: ??? 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: ??? 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 public int numFilledFloor()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: has the number of heights that are not 0 - meaning that they have already been filled 
 
 
@@ -616,35 +749,39 @@ public int numFilledFloor()
 \textbf{type }: what it does\\
 
 \section{Play}
-\textbf{Author}: ??? \\
+\opt\textbf{Author}: ??? \\\opt
+\noindent
 \textbf{Description}: TODO \\
 
 
 
 \subsection{Play}
-\textbf{Author}: ??? 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: ??? 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 public Play()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: TODO 
 
 
 
 \section{Player}
-\textbf{Author}: ??? \\
+\opt\textbf{Author}: ??? \\\opt
+\noindent
 \textbf{Description}: TODO \\
 
 
 
 \subsection{constructor}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 constructor(username, id, owner)
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: The constructor takes in three things, a name, id and a owner flag. It will then create an object of \mintinline[fontsize=\footnotesize]{javascript}{Player} and init all class varibles. This Class is used throughout all stages of the program. 
 
 
@@ -655,12 +792,13 @@ constructor(username, id, owner)
 \textbf{Player }: An object of Player class\\
 
 \subsection{setPlayerNum}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 setPlayerNum(num)
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Will set \mintinline[fontsize=\footnotesize]{javascript}{this.playerNum} equal to \mintinline[fontsize=\footnotesize]{javascript}{num}. This is just a helper function. 
 
 
@@ -669,19 +807,22 @@ setPlayerNum(num)
 \textbf{void }: returns nothing\\
 
 \section{Prints}
-\textbf{Author}: ??? \\
+\opt\textbf{Author}: ??? \\\opt
+\noindent
 \textbf{Description}: TODO \\
 
 
 
 \section{Program}
-\textbf{Author}: ??? \\
+\opt\textbf{Author}: ??? \\\opt
+\noindent
 \textbf{Description}: TODO \\
 
 
 
 \section{SingleBot}
-\textbf{Author}: JavaComSci \\
+\opt\textbf{Author}: JavaComSci \\\opt
+\noindent
 \textbf{Description}: Single bot extends the abstract bot class defined here: 
 \begin{minted}[fontsize=\footnotesize]{csharp}
 public abstract class Bot {
@@ -697,12 +838,13 @@ public abstract class Bot {
 
 
 \subsection{SingleBot}
-\textbf{Author}: JavaComSci 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: JavaComSci 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 SingleBot()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Creates a new board for the bot. 
 
 
@@ -711,12 +853,13 @@ SingleBot()
 \textbf{SingleBot }: An object of single bot class\\
 
 \subsection{getFit}
-\textbf{Author}: JavaComSci 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: JavaComSci 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 List<...> getFit(Board board, Block block, int rotation)
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: need desc here TODO 
 
 
@@ -727,12 +870,13 @@ List<...> getFit(Board board, Block block, int rotation)
 \textbf{List<...> compatiblePieces }: information about the pieces that are compatible on the board\\
 
 \subsection{GetMove}
-\textbf{Author}: JavaComSci 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: JavaComSci 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 public override List<...> GetMove(Board, List<Block>, bool)
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: need desc here TODO 
 
 
@@ -742,7 +886,8 @@ public override List<...> GetMove(Board, List<Block>, bool)
 \textbf{List<...> bestPiecePlacementOfCurrentBlock }: contains the list of the indicies of where the piece would be on the board\\
 
 \section{DoubleBot}
-\textbf{Author}: JavaComSci \\
+\opt\textbf{Author}: JavaComSci \\\opt
+\noindent
 \textbf{Description}: DoubleBot bot extends the abstract bot class defined here: 
 \begin{minted}[fontsize=\footnotesize]{csharp}
 public abstract class Bot {
@@ -758,7 +903,8 @@ public abstract class Bot {
 
 
 \section{TripleBot}
-\textbf{Author}: JavaComSci \\
+\opt\textbf{Author}: JavaComSci \\\opt
+\noindent
 \textbf{Description}: TripleBot extends the abstract bot class defined here: 
 \begin{minted}[fontsize=\footnotesize]{csharp}
 public abstract class Bot {
@@ -774,13 +920,15 @@ public abstract class Bot {
 
 
 \section{BotManager}
-\textbf{Author}: JavaComSci \\
+\opt\textbf{Author}: JavaComSci \\\opt
+\noindent
 \textbf{Description}: TODO \\
 
 
 
 \section{FrontendTests}
-\textbf{Author}: Steven Dellamore, Richard Hansen \\
+\opt\textbf{Author}: Steven Dellamore, Richard Hansen \\\opt
+\noindent
 \textbf{Description}: This is the testing doc for all the frontend tests. We decided to not go with a framework because we didnt think we needed everything the framework gives us. This framework uses the idea of dependency injection. We mock out all the p5 variables like so: 
 \begin{minted}[fontsize=\footnotesize]{javascript}
 global.mouseY = 30;
@@ -806,12 +954,13 @@ global.FindButtonbyID = button[4];
 
 
 \subsection{CheckSame}
-\textbf{Author}: Steven Dellamore, Richard Hansen 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore, Richard Hansen 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 CheckSame( string, string, string, boolean = false )
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Checks to see if the \mintinline[fontsize=\footnotesize]{javascript}{given} and \mintinline[fontsize=\footnotesize]{javascript}{expected} strings are the same. If they are not this function will return false and print what the expected was. 
 \begin{minted}[fontsize=\footnotesize]{javascript}
 console.log(
@@ -829,34 +978,37 @@ console.log(
 \textbf{boolean }: true if given and expected match, false otherwise\\
 
 \subsection{testDefaultUsername}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 async function testDefaultUsername()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Checks to see if the default \mintinline[fontsize=\footnotesize]{javascript}{mStartScreen.usernameText} is \mintinline[fontsize=\footnotesize]{javascript}{"username"}. 
 
 
 
 \subsection{testDefaultTokenValue}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 async function testDefaultTokenValue()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Checks to see if the default \mintinline[fontsize=\footnotesize]{javascript}{mStartScreen.TokenBoxText} is \mintinline[fontsize=\footnotesize]{javascript}{""}. 
 
 
 
 \subsection{testCheckInitStartScreenValues}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 async function testCheckInitStartScreenValues()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Checks to see if all the other init startscreen values are correct. 
 \begin{minted}[fontsize=\footnotesize]{javascript}
 // check usernameTextTouched is false
@@ -880,34 +1032,37 @@ CheckSame(
 
 
 \subsection{testCheckTitlePosAfterTwoDraw}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 async function testCheckTitlePosAfterTwoDraw()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Run \mintinline[fontsize=\footnotesize]{javascript}{mStartScreen.draw()} twice and check that the title pos values have been updated correctly. 
 
 
 
 \subsection{testChangeUserUsername}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 async function testChangeUserUsername()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Will set the \mintinline[fontsize=\footnotesize]{javascript}{keyCode} equal to \mintinline[fontsize=\footnotesize]{javascript}{65} and \mintinline[fontsize=\footnotesize]{javascript}{66} and call the \mintinline[fontsize=\footnotesize]{javascript}{keyPressedStart()} function. Which tells the start screen that a key has been presesed. We then check if \mintinline[fontsize=\footnotesize]{javascript}{mStartScreen.usernameText} was changed to \mintinline[fontsize=\footnotesize]{javascript}{"A"} and \mintinline[fontsize=\footnotesize]{javascript}{"AB"}. 
 
 
 
 \subsection{testChangeMaxUsername}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 async function testChangeMaxUsername()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Will call the \mintinline[fontsize=\footnotesize]{javascript}{keyPressedStart()} function with letters ABCDEFGHIJKLMNOPQRS and check to ensure that the \mintinline[fontsize=\footnotesize]{javascript}{mStartScreen.usernameText} does not get above 11 chars. 
 \begin{minted}[fontsize=\footnotesize]{javascript}
 for(var i = 0; i < 15; i++) {
@@ -922,34 +1077,37 @@ for(var i = 0; i < 15; i++) {
 
 
 \subsection{testDeleteUsername}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 async function testDeleteUsername()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Does the same thing as testChangeMaxUsername but deletes characters 15 times and checks \mintinline[fontsize=\footnotesize]{javascript}{mStartScreen.usernameText} to ensure that everything has been deleted. \\Note: \mintinline[fontsize=\footnotesize]{javascript}{KeyCode=8} is the delete key. 
 
 
 
 \subsection{testCheckSpecialChars}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 async function testCheckSpecialChars()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Will try to add special chars like ASCII codes \mintinline[fontsize=\footnotesize]{javascript}{10}, \mintinline[fontsize=\footnotesize]{javascript}{240}, \mintinline[fontsize=\footnotesize]{javascript}{33} and then make sure \mintinline[fontsize=\footnotesize]{javascript}{mStartScreen.usernameText} is unchanged because you can't have special chars in ur username. 
 
 
 
 \subsection{testHighScoreButton}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 async function testHighScoreButton()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Sets the mouse positions to be over the high score button. 
 \begin{minted}[fontsize=\footnotesize]{javascript}
 global.mouseX = mStartScreen.RightX + 1;
@@ -964,34 +1122,37 @@ CheckSame(mStartScreen.drawHighScoreButtonCheckMouse(),true,
 
 
 \subsection{testCreateGameButton}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 async function testCreateGameButton()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Sets the mouse to be over the "Create Game" Button and checks to see if it gets highlighted correctly. Then we click on the button with an empty \mintinline[fontsize=\footnotesize]{javascript}{mStartScreen.usernameText} and check to make sure we did not get moved into the Lobby screen. Finally we add a username \\ \mintinline[fontsize=\footnotesize]{javascript}{mStartScreen.usernameText = "Steven"} and click on the "Create Game" button. We then check we got moved into the lobby screen correctly. 
 
 
 
 \subsection{testJoinLobbyButton}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 async function testJoinLobbyButton()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Sets the \mintinline[fontsize=\footnotesize]{javascript}{mouseX} and \mintinline[fontsize=\footnotesize]{javascript}{mouseY} to be over the "Join Game" button. Then we call \mintinline[fontsize=\footnotesize]{javascript}{mStartScreen.mouseClickedStart()} and check to that we are being put into the token screen correctly. 
 
 
 
 \subsection{testCheckLobbyInitValues}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 async function testCheckLobbyInitValues()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Check the init values when moving to the lobby screen from the start screen. We first check to make sure the \mintinline[fontsize=\footnotesize]{javascript}{Player} object is set corretly like so: 
 \begin{minted}[fontsize=\footnotesize]{javascript}
 CheckSame(mLobbyScreen.player.username,"Steven","testCheckInitUsername");
@@ -1011,12 +1172,13 @@ CheckSame(typeof mLobbyScreen.team.lobbyToken,"string","testCheckInitLobbyToken"
 
 
 \subsection{testCheckTokenIsBeingDisplayed}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 async function testCheckTokenIsBeingDisplayed()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Checks to see if the Token is being displayed by the frontend in the correct position. This is an example of how we can use Dependency Injection: 
 \begin{minted}[fontsize=\footnotesize]{javascript}
 var strInside;
@@ -1037,34 +1199,37 @@ CheckSame(y,1454.5454545454545,"testCheckYOfTextCall");
 
 
 \subsection{testAddAndRemoveBotsFromLobby}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 async function testAddAndRemoveBotsFromLobby()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Checks to see if the owner of the lobby can add and remove bots from their lobby. We set \mintinline[fontsize=\footnotesize]{javascript}{mouseX} and \mintinline[fontsize=\footnotesize]{javascript}{mouseY} to the position of the add bot button and then call \mintinline[fontsize=\footnotesize]{javascript}{mouseClickedLobby()} and check if the bot has been increased. 
 
 
 
 \subsection{checkPlayCardValues}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 async function checkPlayCardValues()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: Checks the init values of the player cards. Also check that the playcards are being rendered within the bounds of \mintinline[fontsize=\footnotesize]{javascript}{windowWidth} and \mintinline[fontsize=\footnotesize]{javascript}{windowHeight}. 
 
 
 
 \subsection{integrationTest1}
-\textbf{Author}: Steven Dellamore 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 async function integrationTest1()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: This integration test will render the start screen 90,000 times and do different actions at certain times to ensure the start screen as a whole is working correctly. 
 \begin{minted}[fontsize=\footnotesize]{javascript}
 for(var i = 0; i < 90000; i++) {
@@ -1085,100 +1250,109 @@ for(var i = 0; i < 90000; i++) {
 
 
 \subsection{testGameArrayNotNull}
-\textbf{Author}: Richard Hansen 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Richard Hansen 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 async function testGameArrayNotNull()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: TODO 
 
 
 
 \subsection{testGameScreenRotateKeyPress}
-\textbf{Author}: Richard Hansen 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Richard Hansen 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 async function testGameScreenRotateKeyPress()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: TODO 
 
 
 
 \subsection{testGameScreenFailRotateKeyPress}
-\textbf{Author}: Richard Hansen 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Richard Hansen 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 async function testGameScreenFailRotateKeyPress()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: TODO 
 
 
 
 \subsection{testGameScreenFailRotateKeyPress}
-\textbf{Author}: Richard Hansen 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Richard Hansen 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 async function testGameScreenFailRotateKeyPress()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: TODO 
 
 
 
 \subsection{testFourRotate}
-\textbf{Author}: Richard Hansen 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Richard Hansen 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 async function testFourRotate()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: TODO 
 
 
 
 \subsection{testMove}
-\textbf{Author}: Richard Hansen 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Richard Hansen 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 async function testMove()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: TODO 
 
 
 
 \subsection{testNewSquare}
-\textbf{Author}: Richard Hansen 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Richard Hansen 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 async function testNewSquare()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: TODO 
 
 
 
 \subsection{testNumberOfPlayers}
-\textbf{Author}: Richard Hansen 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Richard Hansen 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 async function testNumberOfPlayers()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: TODO 
 
 
 
 \subsection{testRunnerSetupStartScreen}
-\textbf{Author}: Steven Dellamore, Richard Hansen 
-\vspace*{1\baselineskip}
-\begin{lstlisting}
+\opt\textbf{Author}: Steven Dellamore, Richard Hansen 
+\vspace*{1\baselineskip}\opt
+\opt\begin{lstlisting}
 async function testRunnerSetupStartScreen()
 \end{lstlisting} 
-\vspace*{1\baselineskip}
+\vspace*{1\baselineskip}\opt
+\noindent
 \textbf{Description}: TODO 
 
 \end{document}
