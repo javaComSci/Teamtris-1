@@ -39,7 +39,7 @@ class StartScreen {
 	 * is the starting position of the title, and will fall every X frames. |
      * @header constructor() | 
 	 * @param void : constructor takes no params |
-	 * @returns StartScreen : An object of start class class | 
+	 * @returns StartScreen : An object of start class | 
 	 */
 	constructor() {
 		if (startscreen_constructor) console.log("Creating StartScreen Object");

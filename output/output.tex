@@ -56,7 +56,8 @@ this.titleAnimation = [300, 500, 400, 700];
 
 
 \textbf{\large{\\Parameters}}:\\
-\textbf{void }: constructor takes no params\\\textbf{\large{\\Returns}}:\\\textbf{StartScreen }: An object of start class class
+\textbf{void }: constructor takes no params\\\textbf{\large{\\Returns}}:\\
+\textbf{StartScreen }: An object of start class\\
 
 \subsection{draw}
 \textbf{Author}: Steven Dellamore 
@@ -80,7 +81,8 @@ switch (this.gameStateStartScreen) {
 
 
 \textbf{\large{\\Parameters}}:\\
-\textbf{void }: draw takes no arugments\\\textbf{\large{\\Returns}}:\\\textbf{void }: void
+\textbf{void }: draw takes no arugments\\\textbf{\large{\\Returns}}:\\
+\textbf{void }: void\\
 
 \subsection{animateTitle}
 \textbf{Author}: Steven Dellamore 
@@ -99,7 +101,8 @@ if (this.titleAnimation[i] > 0) {
 
 
 \textbf{\large{\\Parameters}}:\\
-\textbf{void }: animateTitle takes no arugments\\\textbf{\large{\\Returns}}:\\\textbf{void}
+\textbf{void }: animateTitle takes no arugments\\\textbf{\large{\\Returns}}:\\
+\textbf{void}
 
 \subsection{drawUsernameBox}
 \textbf{Author}: Steven Dellamore 
@@ -112,7 +115,8 @@ drawUsernameBox()
 
 
 \textbf{\large{\\Parameters}}:\\
-\textbf{void }: drawUsernameBox takes no arugments\\\textbf{\large{\\Returns}}:\\\textbf{void}
+\textbf{void }: drawUsernameBox takes no arugments\\\textbf{\large{\\Returns}}:\\
+\textbf{void}
 
 \subsection{drawTitle}
 \textbf{Author}: Steven Dellamore 
@@ -147,7 +151,8 @@ rect(-windowWidth / 4.3 + spaceBetweenSquares,
 
 
 \textbf{\large{\\Parameters}}:\\
-\textbf{void }: drawTitle takes no arugments\\\textbf{\large{\\Returns}}:\\\textbf{void}
+\textbf{void }: drawTitle takes no arugments\\\textbf{\large{\\Returns}}:\\
+\textbf{void}
 
 \subsection{drawTokenBox}
 \textbf{Author}: Steven Dellamore 
@@ -160,7 +165,8 @@ drawTokenBox()
 
 
 \textbf{\large{\\Parameters}}:\\
-\textbf{void }: drawTokenBox takes no arugments\\\textbf{\large{\\Returns}}:\\\textbf{void}
+\textbf{void }: drawTokenBox takes no arugments\\\textbf{\large{\\Returns}}:\\
+\textbf{void}
 
 \subsection{mouseClickedStart}
 \textbf{Author}: Steven Dellamore 
@@ -191,7 +197,8 @@ constructor(username, id, owner){
 
 
 \textbf{\large{\\Parameters}}:\\
-\textbf{void }: mouseClickedStart takes no arugments\\\textbf{\large{\\Returns}}:\\\textbf{void}
+\textbf{void }: mouseClickedStart takes no arugments\\\textbf{\large{\\Returns}}:\\
+\textbf{void}
 
 \subsection{drawHighScoreButtonCheckMouse}
 \textbf{Author}: Steven Dellamore 
@@ -204,7 +211,8 @@ drawHighScoreButtonCheckMouse()
 
 
 \textbf{\large{\\Parameters}}:\\
-\textbf{void }: drawHighScoreButtonCheckMouse takes no arugments\\\textbf{\large{\\Returns}}:\\\textbf{bool }: \\true => If mouse is over score button \\false => If mouse is not over score button
+\textbf{void }: drawHighScoreButtonCheckMouse takes no arugments\\\textbf{\large{\\Returns}}:\\
+\textbf{bool }: \\true => If mouse is over score button \\false => If mouse is not over score button\\
 
 \subsection{drawHighScoreButton}
 \textbf{Author}: Steven Dellamore 
@@ -226,7 +234,8 @@ if (this.drawHighScoreButtonCheckMouse()) {
 
 
 \textbf{\large{\\Parameters}}:\\
-\textbf{void }: takes no arugments\\\textbf{\large{\\Returns}}:\\\textbf{void }: no return
+\textbf{void }: takes no arugments\\\textbf{\large{\\Returns}}:\\
+\textbf{void }: no return\\
 
 \subsection{keyPressedStart}
 \textbf{Author}: Steven Dellamore 
@@ -250,7 +259,183 @@ switch(this.gameStateStartScreen) {
 
 
 \textbf{\large{\\Parameters}}:\\
-\textbf{void }: keyPressedStart takes no arugments\\\textbf{\large{\\Returns}}:\\\textbf{void}
+\textbf{void }: keyPressedStart takes no arugments\\\textbf{\large{\\Returns}}:\\
+\textbf{void}
+
+\section{LobbyScreen}
+\textbf{Author}: Steven Dellamore \\
+\textbf{Description}: The lobby screen is where players will create or join lobbys and wait to be put into game. The owner will be the one that has the start button and will bring everyone into game. \\
+
+
+
+\subsection{constructor}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+constructor(player)
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: The Constructor is in chage of createing all the init values for the lobby screen to use and create all the buttons. The owner will be the only ones with the "add bot", "remove bot" , "Start". The lobby screen will also be communicating to and from the backend, the setup starts in this function. 
+\begin{minted}[fontsize=\footnotesize]{javascript}
+socket.onmessage = (event) => {
+    // Listen for backend packets.
+    // Parse them and call the correct functions
+    ...
+};
+\end{minted}
+ 
+
+
+\textbf{\large{\\Parameters}}:\\
+\textbf{Player player }: The player that is joining the lobby\\\textbf{\large{\\Returns}}:\\
+\textbf{LobbyScreen }: An object of Lobby Screen\\
+
+\subsection{changeOwnerToMe}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+changeOwnerToMe()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: When the owner leaves the backend will send a notification with the new owner. If the new owner is this current player, then we will have to start drawing the owner buttons on the screen so they can start the game. We use the \mintinline[fontsize=\footnotesize]{javascript}{Buttons()} class to aid us in this process. 
+
+
+
+\subsection{draw}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+draw()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: This will be called 60 times a second when \mintinline[fontsize=\footnotesize]{javascript}{gameState == 1}. \mintinline[fontsize=\footnotesize]{javascript}{"sketch.js"} is where it takes care of the routing for this. 
+
+
+
+\subsection{addAndRemoveBotButton}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+addAndRemoveBotButton(addOrRemove)
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: Will be called when the user clicks on either the "Add bot" or "Remove bot" button. \mintinline[fontsize=\footnotesize]{javascript}{mouseClickedLobby()} is who calls this function. This function will form and send a response based on which button you clicked. \\Add Bot: 
+\begin{minted}[fontsize=\footnotesize]{javascript}
+var data = JSON.stringify({"action": 1, "lobbyid":this.team.lobbyToken.toLowerCase()})
+socket.send(JSON.stringify({"type": "7", "data": data}));
+\end{minted}
+ Remove bot: 
+\begin{minted}[fontsize=\footnotesize]{javascript}
+var data = JSON.stringify({"action": 0, "lobbyid":this.team.lobbyToken.toLowerCase()})
+socket.send(JSON.stringify({"type": "7", "data": data}));
+\end{minted}
+ 
+
+
+\textbf{\large{\\Parameters}}:\\
+\textbf{addOrRemove }: This param can either be the following \\ "addbot": Clicked add bot button. \\ "removebot": Clicked remove bot button\\
+
+\subsection{drawToken}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+drawToken()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: draws the token onto the screen for everyone in the lobby 
+\begin{minted}[fontsize=\footnotesize]{javascript}
+// draw the token with p5 text() function
+text("Token: " + this.team.lobbyToken,windowWidth/10,windowHeight/1.1) 
+\end{minted}
+ 
+
+
+
+\subsection{drawTitle}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+drawTitle()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: draws the title (\mintinline[fontsize=\footnotesize]{javascript}{"lobby"}) onto the screen for all players in the lobby. 
+
+
+
+\subsection{newPlayerJoins}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+newPlayerJoins(player)
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: Will check if a new player can be added to the lobby. If they can, a new player card will be made for the new user. 
+\begin{minted}[fontsize=\footnotesize]{javascript}
+// add a new playercard to the playerCard array
+this.playerCards.push(
+    new PlayerCard(
+        player, windowWidth/6, (windowHeight/4), .6, windowHeight/60));
+\end{minted}
+ Otherwise the function will return false and nothing will be changed. 
+
+
+\textbf{\large{\\Parameters}}:\\
+\textbf{Player player }: The player trying to join the lobby\\\textbf{\large{\\Returns}}:\\
+\textbf{boolean }: If the new player is added. \\ true: if new player was added. \\ false: if new player was denied from lobby (Lobby is full).\\
+
+\subsection{playerLeaves}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+playerLeaves(player)
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: Will eject a player from the team's list and allow another spot for a new player to join. 
+\begin{minted}[fontsize=\footnotesize]{javascript}
+this.team.playersInTeam.forEach(function(playerInList, index, object) {
+    if(playerInList == player) {
+        object.splice(index, 1);
+    }
+});
+\end{minted}
+ This shows how we go through the array and splice out the player that has left. 
+
+
+\textbf{\large{\\Parameters}}:\\
+\textbf{Player player }: The player trying to leave the lobby\\
+
+\subsection{keyPressedLobby}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+keyPressedLobby()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: This function will handle all key presses by the user. Since we only have one place to press a key, the team box, when \mintinline[fontsize=\footnotesize]{javascript}{this.lobbyGameState} is set to \mintinline[fontsize=\footnotesize]{javascript}{0}, we will append to the teamname. The teamname cannot go above 11 chars or below 0. 
+
+
+
+\subsection{mouseClickedLobby}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+mouseClickedLobby()
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: Handles all the mouse clicks when the user clicks on the lobby screen. 
+\begin{minted}[fontsize=\footnotesize]{javascript}
+switch (this.lobbyGameState) {
+    case 0:
+        // check if owner accepted the team name
+        ...
+    case 1: 
+        // check addbot, removebot, start game buttons
+        ...
+}
+\end{minted}
+ \mintinline[fontsize=\footnotesize]{javascript}{"mouseClicked.js"} is responsible for routing clicks to the correct screen. 
+
+
 
 \section{Player}
 \textbf{Author}: Steven Dellamore, Richard Hansen \\
@@ -271,7 +456,8 @@ constructor(username, id, owner)
 \textbf{\large{\\Parameters}}:\\
 \textbf{String username }: username of the new Player\\
 \textbf{int id }: id, \mintinline[fontsize=\footnotesize]{javascript}{[0,4]}, of the new player.\\
-\textbf{boolean owner }: \mintinline[fontsize=\footnotesize]{javascript}{true} or \mintinline[fontsize=\footnotesize]{javascript}{false} if they are owner\\\textbf{\large{\\Returns}}:\\\textbf{Player }: An object of Player class
+\textbf{boolean owner }: \mintinline[fontsize=\footnotesize]{javascript}{true} or \mintinline[fontsize=\footnotesize]{javascript}{false} if they are owner\\\textbf{\large{\\Returns}}:\\
+\textbf{Player }: An object of Player class\\
 
 \subsection{setPlayerNum}
 \textbf{Author}: Steven Dellamore 
@@ -284,7 +470,8 @@ setPlayerNum(num)
 
 
 \textbf{\large{\\Parameters}}:\\
-\textbf{int num }: sets the \mintinline[fontsize=\footnotesize]{javascript}{this.playerNum = num}\\\textbf{\large{\\Returns}}:\\\textbf{void }: returns nothing
+\textbf{int num }: sets the \mintinline[fontsize=\footnotesize]{javascript}{this.playerNum = num}\\\textbf{\large{\\Returns}}:\\
+\textbf{void }: returns nothing\\
 
 \section{Team}
 \textbf{Author}: Steven Dellamore, Richard Hansen \\
@@ -303,7 +490,8 @@ constructor()
 
 
 \textbf{\large{\\Parameters}}:\\
-\textbf{void}: no parameters\\\textbf{\large{\\Returns}}:\\\textbf{Team }: A object of the class
+\textbf{void}: no parameters\\\textbf{\large{\\Returns}}:\\
+\textbf{Team }: A object of the class\\
 
 \subsection{addPlayer}
 \textbf{Author}: Steven Dellamore 
@@ -316,7 +504,8 @@ addPlayer(player)
 
 
 \textbf{\large{\\Parameters}}:\\
-\textbf{Player player}: This parameter is the new player/bot that is joining your team.\\\textbf{\large{\\Returns}}:\\\textbf{void }: no return
+\textbf{Player player}: This parameter is the new player/bot that is joining your team.\\\textbf{\large{\\Returns}}:\\
+\textbf{void }: no return\\
 
 \section{General}
 \textbf{Author}: Steven Dellamore, Richard Hansen \\
@@ -352,7 +541,8 @@ switch (gameState) {
 
 
 \textbf{\large{\\Parameters}}:\\
-\textbf{void }: takes no parameters\\\textbf{\large{\\Returns}}:\\\textbf{void }: returns nothing
+\textbf{void }: takes no parameters\\\textbf{\large{\\Returns}}:\\
+\textbf{void }: returns nothing\\
 
 \subsection{keyPressed}
 \textbf{Author}: Steven Dellamore, Richard Hansen 
@@ -382,7 +572,8 @@ switch (gameState) {
 
 
 \textbf{\large{\\Parameters}}:\\
-\textbf{void }: takes no parameters\\\textbf{\large{\\Returns}}:\\\textbf{void }: returns nothing
+\textbf{void }: takes no parameters\\\textbf{\large{\\Returns}}:\\
+\textbf{void }: returns nothing\\
 
 \section{Block}
 \textbf{Author}: ??? \\
@@ -407,7 +598,8 @@ public int[,] board()
 
 
 \textbf{\large{\\Parameters}}:\\
-\textbf{type name }: what it does\\\textbf{\large{\\Returns}}:\\\textbf{type }: what it does
+\textbf{type name }: what it does\\\textbf{\large{\\Returns}}:\\
+\textbf{type }: what it does\\
 
 \subsection{numFilledFloor}
 \textbf{Author}: ??? 
@@ -420,7 +612,8 @@ public int numFilledFloor()
 
 
 \textbf{\large{\\Parameters}}:\\
-\textbf{type name }: what it does\\\textbf{\large{\\Returns}}:\\\textbf{type }: what it does
+\textbf{type name }: what it does\\\textbf{\large{\\Returns}}:\\
+\textbf{type }: what it does\\
 
 \section{Play}
 \textbf{Author}: ??? \\
@@ -444,6 +637,36 @@ public Play()
 \textbf{Description}: TODO \\
 
 
+
+\subsection{constructor}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+constructor(username, id, owner)
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: The constructor takes in three things, a name, id and a owner flag. It will then create an object of \mintinline[fontsize=\footnotesize]{javascript}{Player} and init all class varibles. This Class is used throughout all stages of the program. 
+
+
+\textbf{\large{\\Parameters}}:\\
+\textbf{String username }: username of the new Player\\
+\textbf{int id }: id, \mintinline[fontsize=\footnotesize]{javascript}{[0,4]}, of the new player.\\
+\textbf{boolean owner }: \mintinline[fontsize=\footnotesize]{javascript}{true} or \mintinline[fontsize=\footnotesize]{javascript}{false} if they are owner\\\textbf{\large{\\Returns}}:\\
+\textbf{Player }: An object of Player class\\
+
+\subsection{setPlayerNum}
+\textbf{Author}: Steven Dellamore 
+\vspace*{1\baselineskip}
+\begin{lstlisting}
+setPlayerNum(num)
+\end{lstlisting} 
+\vspace*{1\baselineskip}
+\textbf{Description}: Will set \mintinline[fontsize=\footnotesize]{javascript}{this.playerNum} equal to \mintinline[fontsize=\footnotesize]{javascript}{num}. This is just a helper function. 
+
+
+\textbf{\large{\\Parameters}}:\\
+\textbf{int num }: sets the \mintinline[fontsize=\footnotesize]{javascript}{this.playerNum = num}\\\textbf{\large{\\Returns}}:\\
+\textbf{void }: returns nothing\\
 
 \section{Prints}
 \textbf{Author}: ??? \\
@@ -484,7 +707,8 @@ SingleBot()
 
 
 \textbf{\large{\\Parameters}}:\\
-\textbf{void }: SingleBot takes no params\\\textbf{\large{\\Returns}}:\\\textbf{SingleBot }: An object of single bot class
+\textbf{void }: SingleBot takes no params\\\textbf{\large{\\Returns}}:\\
+\textbf{SingleBot }: An object of single bot class\\
 
 \subsection{getFit}
 \textbf{Author}: JavaComSci 
@@ -499,7 +723,8 @@ List<...> getFit(Board board, Block block, int rotation)
 \textbf{\large{\\Parameters}}:\\
 \textbf{Board board }: contains the the board that we want to make the move on\\
 \textbf{Block block }: contains the block that we want to fit\\
-\textbf{int rotation }: which roation we are trying to fit for\\\textbf{\large{\\Returns}}:\\\textbf{List<...> compatiblePieces }: information about the pieces that are compatible on the board
+\textbf{int rotation }: which roation we are trying to fit for\\\textbf{\large{\\Returns}}:\\
+\textbf{List<...> compatiblePieces }: information about the pieces that are compatible on the board\\
 
 \subsection{GetMove}
 \textbf{Author}: JavaComSci 
@@ -513,7 +738,8 @@ public override List<...> GetMove(Board, List<Block>, bool)
 
 \textbf{\large{\\Parameters}}:\\
 \textbf{int[][] board }: current enviornment\\
-\textbf{List<Block> blocks }: contains the list of all the blocks to try to fit in this location\\\textbf{\large{\\Returns}}:\\\textbf{List<...> bestPiecePlacementOfCurrentBlock }: contains the list of the indicies of where the piece would be on the board
+\textbf{List<Block> blocks }: contains the list of all the blocks to try to fit in this location\\\textbf{\large{\\Returns}}:\\
+\textbf{List<...> bestPiecePlacementOfCurrentBlock }: contains the list of the indicies of where the piece would be on the board\\
 
 \section{DoubleBot}
 \textbf{Author}: JavaComSci \\
@@ -599,7 +825,8 @@ console.log(
 \textbf{string given }: real output\\
 \textbf{string expect }: expected output\\
 \textbf{string name }: name of test\\
-\textbf{boolean debug }: \mintinline[fontsize=\footnotesize]{javascript}{true} if you want debug statments printed\\\textbf{\large{\\Returns}}:\\\textbf{boolean }: true if given and expected match, false otherwise
+\textbf{boolean debug }: \mintinline[fontsize=\footnotesize]{javascript}{true} if you want debug statments printed\\\textbf{\large{\\Returns}}:\\
+\textbf{boolean }: true if given and expected match, false otherwise\\
 
 \subsection{testDefaultUsername}
 \textbf{Author}: Steven Dellamore 
