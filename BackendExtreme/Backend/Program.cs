@@ -19,9 +19,6 @@ namespace Teamtris
     {
         static void Main(string[] args)
         {
-            // String d = "{\"teamName\":\"Team1\",\"playerNames\":[\"Player1\",\"Player2\"],\"teamScore\":3,\"timePlayed\":50}";
-            // ScoresPacket sPacket = JsonConvert.DeserializeObject<ScoresPacket>(d);
-            // Console.WriteLine("SPACKET " + sPacket.teamName + " " + sPacket.playerNames[0]);
 
             // initialize game state
             GameState game = new GameState(6, 6);
