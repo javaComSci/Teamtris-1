@@ -19,6 +19,10 @@ namespace Teamtris
     {
         static void Main(string[] args)
         {
+            // String d = "{\"teamName\":\"Team1\",\"playerNames\":[\"Player1\",\"Player2\"],\"teamScore\":3,\"timePlayed\":50}";
+            // ScoresPacket sPacket = JsonConvert.DeserializeObject<ScoresPacket>(d);
+            // Console.WriteLine("SPACKET " + sPacket.teamName + " " + sPacket.playerNames[0]);
+
             // initialize game state
             GameState game = new GameState(6, 6);
             game.players = new Dictionary<int, Player>();
@@ -202,18 +206,18 @@ namespace Teamtris
             }
 
             // connection and adding to the db scores
-            List<string> players = new List<string>();
-            players.Add("p1");
-            players.Add("p2");
-            players.Add(null);
-            players.Add(null);
-            ScoresInfo scoresInfo = new ScoresInfo("Team HI", players, 1, 60);
-            long id = SQLConnection.AddTeamScore(scoresInfo);   
-            Tuple<List<ScoresInfo>, ScoresInfo> retrievedInfo = SQLConnection.GetTopTeamsAndCurrentTeam(id);
-            Console.WriteLine("Top teams");
-            infoPrinter.PrintScoreList(retrievedInfo.Item1);
-            Console.WriteLine("Current team");
-            infoPrinter.PrintScoreInfo(retrievedInfo.Item2);
+            // List<string> players = new List<string>();
+            // players.Add("p1");
+            // players.Add("p2");
+            // players.Add(null);
+            // players.Add(null);
+            // ScoresInfo scoresInfo = new ScoresInfo("Team HI", players, 1, 60);
+            // long id = SQLConnection.AddTeamScore(scoresInfo);   
+            // Tuple<List<ScoresInfo>, ScoresInfo> retrievedInfo = SQLConnection.GetTopTeamsAndCurrentTeam(id);
+            // Console.WriteLine("Top teams");
+            // infoPrinter.PrintScoreList(retrievedInfo.Item1);
+            // Console.WriteLine("Current team");
+            // infoPrinter.PrintScoreInfo(retrievedInfo.Item2);
 
 
 
@@ -222,6 +226,7 @@ namespace Teamtris
             wssv.Start();
             wssv.AddWebSocketService<LobbyManager>("/lobby", () => new LobbyManager(lobbies));
             wssv.AddWebSocketService<Play>("/play", () => new Play(lobbies));
+            wssv.AddWebSocketService<ScoresManager>("/scores", () => new ScoresManager());
             GameManager gameManager = new GameManager(lobbies);
             Console.WriteLine("Starting to check for sockets");
             // start game broadcasting service
