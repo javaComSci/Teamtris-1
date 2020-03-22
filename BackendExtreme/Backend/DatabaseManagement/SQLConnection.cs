@@ -73,6 +73,56 @@ public class SQLConnection
         return imageId;
     }
 
+    /**
+     * #function SQLConnection::UpdateTeamScore |
+     * @author JavaComSci |
+     * @desc Connects to the database in order to update a team information about scores |
+     * @param String teamName: Name of team |
+     * @param List<String> playerNames: Players of team |
+     * @param int score: Score of team |
+     * @param int timeInSeconds: Time played of team |
+     */
+    public static long UpdateTeamScore(ScoresInfo scoresInfo, long imageId) {
+        // create connection
+        MySqlConnection conn = new MySqlConnection(connString);
+
+        try
+        {
+            // open connection
+            conn.Open();
+
+            // create new command
+            MySqlCommand command = conn.CreateCommand();
+
+            // text for command with parameterization
+            command.CommandText = "UPDATE Scores SET TeamName = @teamName, Player1 = @player1, Player2 = @player2, Player3 = @player3, Player4 = @player4, TeamScore = @teamScore, TimePlayed = @timePlayed WHERE Id = @id";
+            
+            // add all the params
+            command.Parameters.AddWithValue("@teamName", scoresInfo.teamName);
+            command.Parameters.AddWithValue("@player1", scoresInfo.playerNames[0]);
+            command.Parameters.AddWithValue("@player2", scoresInfo.playerNames[1] ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@player3", scoresInfo.playerNames[2] ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@player4", scoresInfo.playerNames[3] ?? (object)DBNull.Value);
+            command.Parameters.AddWithValue("@teamScore", scoresInfo.teamScore);
+            command.Parameters.AddWithValue("@timePlayed", scoresInfo.timePlayed);
+            command.Parameters.AddWithValue("@id", imageId);
+
+            // execute the query
+            command.ExecuteNonQuery();
+
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+
+        // close the connection
+        conn.Close();
+
+        // return the image id that has just been updated
+        return imageId;
+    }
+
 
      /**
      * #function SQLConnection::GetTopTeamsAndCurrentTeam |
