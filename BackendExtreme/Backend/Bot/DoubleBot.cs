@@ -21,19 +21,34 @@ public class DoubleBot : Bot {
         botInfoPrinter = new Prints();
     }
 
-    public List<Tuple<int [][], int [][]>> GetAllOrientations(Block bot1Block, Block bot2Block) {
+    public List<Tuple<Block, Block>> GetAllOrientations(Block bot1Block, Block bot2Block) {
         // contains all the orientaitons of the rotated blocks
-        List<Tuple<int [][], int [][]>> allOrientations = new List<Tuple<int [][], int [][]>>();
+        BlockEqualityComparer blockEqualityComparer = new BlockEqualityComparer();
+        List<Tuple<Block, Block>> allOrientations = new List<Tuple<Block, Block>>();
 
-        // try all orientations of each of the blocks
+        // orientations of each block
+        HashSet<Block> bot1BlockOrientations = new HashSet<Block>(blockEqualityComparer);
+        HashSet<Block> bot2BlockOrientations = new HashSet<Block>(blockEqualityComparer);
+
+        Console.WriteLine("PIECE 1 BOT 1");
+        botInfoPrinter.PrintJaggedArr(bot1Block.data);
+        Console.WriteLine("PIECE 2 BOT 2");
+        botInfoPrinter.PrintJaggedArr(bot2Block.data);
+
         for(int i = 0; i < 3; i++) {
             bot1Block.data = bot1Block.RotateMatrix();
-            for(int j = 0; j < 3; j++) {
-                bot2Block.data = bot2Block.RotateMatrix();
-                allOrientations.Add(new Tuple<int [][], int [][]>(bot1Block.data, bot2Block.data));
-            }
+            Block newBot1Block = new Block(bot1Block.data.Select(s => s.ToArray()).ToArray(), bot1Block.color);
+            bot1BlockOrientations.Add(newBot1Block);
+
             bot2Block.data = bot2Block.RotateMatrix();
+            Block newBot2Block = new Block(bot2Block.data.Select(s => s.ToArray()).ToArray(), bot2Block.color);
+            bot2BlockOrientations.Add(newBot2Block);            
         }
+
+        Console.WriteLine("BLOCKS " + bot1BlockOrientations.Count);
+        allOrientations = (from bot1List in bot1BlockOrientations
+								from bot2List in bot2BlockOrientations
+								select new Tuple<Block, Block>(bot1List, bot2List)).ToList();
 
         return allOrientations;
     }
@@ -60,7 +75,10 @@ public class DoubleBot : Bot {
         }
 
         // all orientations of the 2 blocks
-        List<Tuple<int [][], int [][]>> allOrientations = GetAllOrientations(bot1Blocks[0], bot2Blocks[0]);
+        List<Tuple<Block, Block>> allOrientations = GetAllOrientations(bot1Blocks[0], bot2Blocks[0]);
+        Console.WriteLine("ALL ORIENTATIONS");
+        botInfoPrinter.PrintAllOrientations(allOrientations);
+
 
         // place bot 2 piece then bot 1 piece
         // GetFit(board, bot1Blocks[0], bot2Blocks[0]);
