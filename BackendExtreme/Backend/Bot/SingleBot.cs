@@ -24,7 +24,7 @@ public class SingleBot : Bot {
 	 */
     public SingleBot() {
         // create a board for this bot
-        Console.WriteLine("I AM A BOT");
+        Console.WriteLine("I AM A SINGLE BOT");
         botInfoPrinter = new Prints();
     }
 
