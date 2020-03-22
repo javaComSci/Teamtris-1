@@ -38,14 +38,11 @@ public class DoubleBot : Bot {
         for(int i = 0; i < 3; i++) {
             bot1Block.data = bot1Block.RotateMatrix();
             Block newBot1Block = new Block(bot1Block.data.Select(s => s.ToArray()).ToArray(), bot1Block.color);
-            bot1BlockOrientations.Add(newBot1Block);
 
             bot2Block.data = bot2Block.RotateMatrix();
-            Block newBot2Block = new Block(bot2Block.data.Select(s => s.ToArray()).ToArray(), bot2Block.color);
-            bot2BlockOrientations.Add(newBot2Block);            
+            Block newBot2Block = new Block(bot2Block.data.Select(s => s.ToArray()).ToArray(), bot2Block.color);        
         }
 
-        Console.WriteLine("BLOCKS " + bot1BlockOrientations.Count);
         allOrientations = (from bot1List in bot1BlockOrientations
 								from bot2List in bot2BlockOrientations
 								select new Tuple<Block, Block>(bot1List, bot2List)).ToList();
