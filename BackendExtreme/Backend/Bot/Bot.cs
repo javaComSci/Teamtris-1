@@ -7,7 +7,7 @@ using System.Linq;
 public abstract class Bot {
     public abstract List<Tuple<int, int>> GetMove(
         Board board, 
-        List<Block> blocks, 
+        List<List<Block>> allBotBlocks, 
         bool allRotations = false
     );
 }

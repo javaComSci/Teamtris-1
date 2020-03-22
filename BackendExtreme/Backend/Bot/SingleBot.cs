@@ -244,7 +244,8 @@ public class SingleBot : Bot {
 	 * @returns List<...> bestPiecePlacementOfCurrentBlock : contains the list of the indicies 
      * of where the piece would be on the board |
 	 */
-    public override List<Tuple<int, int>> GetMove(Board board, List<Block> blocks, bool allRotations = false) {
+    public override List<Tuple<int, int>> GetMove(Board board, List<List<Block>> allBotBlocks, bool allRotations = false) {
+        List<Block> blocks = allBotBlocks[0];
         Console.WriteLine("BOARD");
         botInfoPrinter.PrintMultiDimArr(board.board);
         Console.WriteLine("PIECE");

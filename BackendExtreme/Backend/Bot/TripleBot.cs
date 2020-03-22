@@ -12,7 +12,7 @@ using System.Linq;
  * bots in their game. |
  */
 public class TripleBot : Bot {
-    public override List<Tuple<int, int>> GetMove(Board board, List<Block> blocks, bool allRotations = false) {
+    public override List<Tuple<int, int>> GetMove(Board board, List<List<Block>> allBotBlocks, bool allRotations = false) {
         return null;
     }
 }

@@ -10,6 +10,8 @@ public class GameManager
     Dictionary<string, Lobby> lobbies;
     private Thread thread;
     private List<Block> blocks;
+
+    private List<List<Block>> allBlocks;
     private int[][] data;
     public GameManager(Dictionary<string, Lobby> lobbies)
     {
@@ -75,7 +77,7 @@ public class GameManager
                         Console.WriteLine("making bot move");
                         try
                         {
-                            List<Tuple<int, int>> bob = bot.GetMove(lobby.game.board, blocks);
+                            List<Tuple<int, int>> bob = bot.GetMove(lobby.game.board, allBlocks);
                             if (bob == null)
                             {
                                 Console.WriteLine("no place to place piece");
