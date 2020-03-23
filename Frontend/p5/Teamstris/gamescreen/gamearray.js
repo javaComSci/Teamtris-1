@@ -477,6 +477,9 @@ class GameArray {
      * @return void
      */
     SendAction(ID, boardIndices, action) {
+        if (!team) {
+            return
+        }
         var data = JSON.stringify({"lobbyID":team.lobbyToken.toLowerCase(),"playerID":ID,"shapeIndices": boardIndices, "move": action})
         socket.send(JSON.stringify({"type": "6", "data": data}))
     }
