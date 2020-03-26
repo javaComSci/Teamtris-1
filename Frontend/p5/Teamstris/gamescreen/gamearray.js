@@ -17,12 +17,12 @@ class GameArray {
         this.NumPlayers = NumPlayers
         this.ShapeArray = new Array(this.NumPlayers)
         this.ShapeArray[0] = this.InstantiateShape(1,null,0,5, false)
-        //this.ShapeArray[1] = this.InstantiateShape(2,null,0,10,false)
+        // this.ShapeArray[1] = this.InstantiateShape(2,null,0,10,false)
         // this.ShapeArray[2] = this.InstantiateShape(3,null,0,15,false)
         // this.ShapeArray[3] = this.InstantiateShape(4,null,0,20,false)
         //this.PlaceShape(this.ShapeArray[1])
 
-        // allows easy determination of whenv to freeze an object
+        // allows easy determination of when to freeze an object
         this.CollisionType = {
             OutOfBounds : 1,
             FrozenObject : 2,
@@ -50,10 +50,25 @@ class GameArray {
     InstantiateSquares() {
         for (var i = 0; i < this.row_count; i++) {
             for (var j = 0; j < this.column_count; j++) {
-                this.arr[i][j] = new Square(this.SquareEdgeLength)
+                this.arr[i][j] = new Square(this.SquareEdgeLength,0,"grey",false)
                 this.arr[i][j].SetPosition(i,j)
             }
         }
+    }
+
+    /** 
+     * @description returns true if the provided indices are in bounds
+     * 
+     * @param i - row index
+     * @param j - col index
+     * 
+     * @return boolean
+     */
+    OnBoard(i,j) {
+        if (i < 0 || i >= this.row_count || j < 0 || j >= this.column_count) {
+            return false
+        }
+        return true
     }
 
     /** 
@@ -103,10 +118,10 @@ class GameArray {
      * @return void
      */
     PlaceShape(Shape) {
-        Shape.RemoveShape()
+        //Shape.RemoveShape()
         for (var i = 0; i < Shape.Squares.length; i++) {
             var s = Shape.Squares[i]
-            this.arr[s.i][s.j].ChangeOwner(s.ID,s.Color)
+            this.arr[s.i][s.j].ChangeOwner(s.ID,s.Color,this.arr[s.i][s.j].PowerCubeType)
         }
     }
 
@@ -199,7 +214,7 @@ class GameArray {
     async RotateShape(ID, reply=true) {
         var Shape = this.ShapeArray[ID-1]
 
-        // returns in the form [new squares, blueprint, dimensions]
+        // returns in the form [[i,j,PowerCubeType], blueprint, dimensions]
         var narr = Shape.RotateIndices(this.row_count,this.column_count)
 
         // for all the new provided indices, check to ensure that they can be used
@@ -208,19 +223,25 @@ class GameArray {
         for (var i = 0; i < narr[0].length; i++) {
             if (this.IsValidSquare(Shape.ID,narr[0][i][0],narr[0][i][1]) == this.CollisionType.NoCollision) {
                 boardIndices.push([narr[0][i][0],narr[0][i][1]])
-                newSquares.push(this.arr[narr[0][i][0]][narr[0][i][1]])
+                // var newSquare = this.arr[narr[0][i][0]][narr[0][i][1]]
+                // newSquares.push([narr[0][i][0],narr[0][i][1],narr[0][i][2]])
             } else {
                 // couldn't rotate the shape, so just return
                 return
             }
         }
 
+        // if we successfully rotate, update all new squares with the power cube
+        // for (var i = 0; i < newSquares.length; i++) {
+        //     newSquares[i].SetPowerCube(narr[0][i][2])
+        // }
+
         // reply to the server if it was a player-made move
         if (reply) {
             this.SendAction(ID, boardIndices, "rotate")
         }
         
-        Shape.UpdateAfterRotate(newSquares, narr[1], narr[2])
+        Shape.UpdateAfterRotate(this.arr, narr[0], narr[1], narr[2])
         this.PlaceShape(Shape)
     }
 
@@ -297,15 +318,100 @@ class GameArray {
     }
 
     /** 
-     * @description Removes the provided row from the game board
+     * @description Executes the proper power cube effect depending on the square
      * 
-     * @param row - A row in the game array
+     * @param square - A square object
      * 
      * @return void
      */
-    RemoveRow(row) {
+    ApplySquare(square) {
+        if (square.applied) {
+            square.SetEmpty()
+            return
+        }
+        switch(square.PowerCubeType) {
+            case square.PowerCubeTypes.DEFAULT:
+                square.SetApplied()
+                square.SetEmpty()
+                break
+            case square.PowerCubeTypes.DESTROYCOL:
+                square.SetApplied()
+                this.RemoveCol(square.j)
+                break;
+            case square.PowerCubeTypes.DESTROYAREA:
+                square.SetApplied()
+                this.RemoveArea(square.i,square.j)
+                break;
+        }
+    }
+
+    /** 
+     * @description Removes the provided row from the game board
+     * 
+     * @param row - A row in the game array
+     * @param removeAll - If set to true, all squares (including player owned squares) will be removed
+     * 
+     * @return void
+     */
+    RemoveRow(row, removeAll=false) {
         for (var j = 0; j < this.column_count; j++) {
-            this.GetSquare(row,j).SetEmpty()
+            var s = this.GetSquare(row,j)
+            if (removeAll) {
+                this.ApplySquare(s)
+            } else {
+                this.RemoveNonPlayer(s)
+            }
+        }
+    }
+
+    /** 
+     * @description Removes the provided col from the game board
+     * 
+     * @param col - A col in the game array
+     * @param removeAll - If set to true, all squares (including player owned squares) will be removed
+     * 
+     * @return void
+     */
+    RemoveCol(col, removeAll=false) {
+        for (var i = 0; i < this.row_count; i++) {
+            var s = this.GetSquare(i,col)
+            if (removeAll) {
+                this.ApplySquare(s)
+            } else {
+                this.RemoveNonPlayer(s)
+            }
+        }
+    }
+
+     /** 
+     * @description Removes the the square surrounding the provided indices
+     * 
+     * @param i - row index
+     * @param j - col index
+     * @param dim - How far left/right up/down from the provided indices to be removed
+     * 
+     * @return void
+     */
+    RemoveArea(i,j, dim=2) {
+        for (var ik = i - dim; i < i + dim; i++) {
+            for (var jk = j - dim; j < j + dim; j++) {
+                if (this.OnBoard(ik,jk)) {
+                    this.RemoveNonPlayer(this.GetSquare(ik,jk))
+                }
+            }
+        }
+    }
+
+    /**
+     * @description Sets the square to empty if it is not owned by a player
+     * 
+     * @param square -  A square object
+     * 
+     * @return void
+     */
+    RemoveNonPlayer(square) {
+        if (!(square.ID > 0) || !(square.ID < 5)) {
+            this.ApplySquare(square)
         }
     }
 
@@ -386,7 +492,7 @@ class GameArray {
         for (var i = 0; i < 4; i++) {
             for (var j = 0; j < 4; j++) {
             // if the blueprint has a square at this location, we attempt to place it
-            if (NewShape.ShapeBlueprint[i][j] == 1) {
+            if (NewShape.ShapeBlueprint[i][j] != 0) {
                 var iOffset = i-NewShape.ShapeDimensions[0]+RowOffset
                 var jOffset = j-NewShape.ShapeDimensions[1]+ColOffset
 
@@ -396,11 +502,14 @@ class GameArray {
                 } else {
                 // Always place the shape as if it were in a bounding box
                 //this.PlaceSquare(iOffset,jOffset,NewShape.ID,NewShape.Color)
-                NewShape.AddSquare(this.arr[iOffset][jOffset])
+                var newSquare = this.GetSquare(iOffset,jOffset)
+                newSquare.SetPowerCube(NewShape.ShapeBlueprint[i][j])
+                NewShape.AddSquare(newSquare)
                 }
             }
             }
         }
+        //console.log(NewShape)
         return NewShape
     }
     
@@ -485,5 +594,5 @@ class GameArray {
     }
 }
 
-/* This export is used for testing*/
+/* This export is used for testing */
 module.exports = [GameArray]
