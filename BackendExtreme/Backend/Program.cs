@@ -69,14 +69,14 @@ namespace Teamtris
             int[][] block11 = new int[][] {
                 new int[] {0, 0, 1, 1}, 
                 new int[] {0, 0, 1, 1}, 
-                new int[] {0, 0, 1, 0}, 
-                new int[] {0, 0, 1, 0}, 
+                new int[] {0, 0, 0, 0}, 
+                new int[] {0, 0, 0, 0}, 
             };
             int[][] block21 = new int[][] {
                 new int[] {0, 0, 1, 1}, 
                 new int[] {0, 0, 1, 1}, 
-                new int[] {0, 0, 0, 0}, 
-                new int[] {0, 0, 0, 0}, 
+                new int[] {0, 0, 1, 0}, 
+                new int[] {0, 0, 1, 0}, 
             };
             bot1Blocks.Add(new Block(block11, 1));
             bot2Blocks.Add(new Block(block21, 1));
