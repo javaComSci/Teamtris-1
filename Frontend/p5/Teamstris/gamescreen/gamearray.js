@@ -314,7 +314,7 @@ class GameArray {
             }
         }
         this.RemoveRow(row) // remove the row
-        this.ShiftRows(row) // shift all rows down as necessary
+        this.ShiftRows() // shift all rows down as necessary
     }
 
     /** 
@@ -325,10 +325,12 @@ class GameArray {
      * @return void
      */
     ApplySquare(square) {
-        if (square.applied) {
+        if (square.IsApplied() || square.IsEmpty()) {
             square.SetEmpty()
             return
         }
+
+        //console.log(square.PowerCubeType)
         switch(square.PowerCubeType) {
             case square.PowerCubeTypes.DEFAULT:
                 square.SetApplied()
@@ -336,10 +338,12 @@ class GameArray {
                 break
             case square.PowerCubeTypes.DESTROYCOL:
                 square.SetApplied()
+                square.SetEmpty()
                 this.RemoveCol(square.j)
                 break;
             case square.PowerCubeTypes.DESTROYAREA:
                 square.SetApplied()
+                square.SetEmpty()
                 this.RemoveArea(square.i,square.j)
                 break;
         }
@@ -393,9 +397,9 @@ class GameArray {
      * @return void
      */
     RemoveArea(i,j, dim=2) {
-        for (var ik = i - dim; i < i + dim; i++) {
-            for (var jk = j - dim; j < j + dim; j++) {
-                if (this.OnBoard(ik,jk)) {
+        for (var ik = i - dim; ik < i + dim; ik++) {
+            for (var jk = j - dim; jk < j + dim; jk++) {
+                if (this.OnBoard(ik,jk) && (ik != i || jk != j)) {
                     this.RemoveNonPlayer(this.GetSquare(ik,jk))
                 }
             }
@@ -422,19 +426,20 @@ class GameArray {
      * 
      * @return void
      */
-    ShiftRows(row=this.row_count-1) {
+    ShiftRows(row=this.row_count-2) {
         var SquaresList = []
 
-        for (var i = row; i >= 0; i--) {
-            for (var j = 0; j < this.column_count; j++) {
+        for ( var j = 0; j < this.column_count; j++) {
+            var shiftAmount = 1;
+            for (var i = row; i >= 0; i--) {
                 if (this.GetSquare(i,j).IsFrozen()) {
-                    SquaresList.push(this.GetSquare(i,j))
+                    SquaresList.push([this.GetSquare(i,j), shiftAmount])
                 } else {
-                    continue
+                    shiftAmount++
                 }
             }
         }
-        this.ShiftSquares(SquaresList,0,0,1)
+        this.ShiftSquares(SquaresList,0,0,0)
     }
 
     /** 
@@ -571,8 +576,12 @@ class GameArray {
      */
     ShiftSquares(Squares, left, right, down) {
         for (var s = 0; s < Squares.length; s++) {
-            Squares[s].SetEmpty();
-            this.GetSquare(Squares[s].i+down, Squares[s].j-left+right).SetFrozen();
+            var i = Squares[s][0].i + Squares[s][1] + down
+            var j = Squares[s][0].j - left + right
+            if (this.OnBoard(i,j)) {
+                this.GetSquare(i, j).SetFrozen(Squares[s][0].PowerCubeType);
+                Squares[s][0].SetEmpty();
+            }
         }
     }
 
