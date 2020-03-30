@@ -14,7 +14,7 @@ class ScoreScreen {
      * We will also have to ask the server for the scores like so:
      * @link{requestScores1} and finally, we have to listen
      * for incoming packets from the server: @link{contorLobbyScreenVar1} |
-     * @header constructor() | 
+     * @header constructor(player, team, fromGameScreen = true) | 
 	 * @returns ScoreScreen : An object of scorescreen class | 
 	 */
     constructor( player, team, fromGameScreen = true ) {
@@ -25,15 +25,28 @@ class ScoreScreen {
         this.team = team;
         // |
 
-        buttonList.push(new Buttons(windowWidth/2.5, windowHeight / 2.6, windowWidth / 7, windowHeight / 12, 3, "green"));
-        buttonList[buttonList.length - 1].text = "Back"; // Text to put in the button
-        buttonList[buttonList.length - 1].hoverColor = "yellow"; // What color to make the button on mouse hover
+        buttonList.push(new Buttons(windowWidth/2.5, windowHeight / 2.6, windowWidth / 7, windowHeight / 12, 3, "black"));
+        buttonList[buttonList.length - 1].text = "Home"; // Text to put in the button
+        buttonList[buttonList.length - 1].hoverColor = "blue"; // What color to make the button on mouse hover
         buttonList[buttonList.length - 1].id = "back"; // ID of the button
+        buttonList[buttonList.length - 1].round = 5;
+        buttonList[buttonList.length - 1].borderWeight = 2;
+        buttonList[buttonList.length - 1].border = 255;
+        buttonList[buttonList.length - 1].textColor = 255;
 
+        var teamMembers;
+        if(this.team == undefined) {
+            teamMembers = undefined;
+        } else {
+            teamMembers = this.team.playersInTeam.map(player => player.username);
+        }
         // #code requestScores1 javascript
-        // var data = JSON.stringify(
-        //     {"maxPlayers":"4","name": this.player.username,"playerID": this.player.id})
-        // socket.send(JSON.stringify({"type": "1", "data": data}));
+        var data = JSON.stringify(
+            {"teamName": "", 
+            "playerNames": teamMembers, 
+            "teamScore": 0, 
+            "timePlayed": 0})
+        // socket.send(JSON.stringify({"type": "11", "data": data}));
         // |
         socket.onmessage = (event) => {
             var e = JSON.parse(event.data);
@@ -48,7 +61,14 @@ class ScoreScreen {
      * @header drawTitle() | 
 	 */
     drawTitle() {
-
+        push();
+        translate(windowWidth/2, windowHeight/7);
+        fill(255,0,0);
+        stroke(255);
+        strokeWeight(0);
+        textSize(windowHeight/5)
+        text("Top Scores",0,0)
+        pop();
     }
 
     /**
@@ -57,7 +77,44 @@ class ScoreScreen {
      * @header renderScores() | 
 	 */
     renderScores() {
+        push();
+        var yHeight = windowHeight/1.5;
+        translate(windowWidth/2, windowHeight/1.6);
+        fill(0,0,255);
+        strokeWeight(0);
+        rect(0,-yHeight/2.19,windowWidth/3,yHeight/12);
+        fill(255,0,0);
+        strokeWeight(0);
+        rect(0,yHeight/2.19,windowWidth/3,yHeight/12);
+        strokeWeight(1);
+        stroke(255);
+        fill(0,0,0,0);
+        rect(0,0,windowWidth/3,yHeight, 3);
+        line(-windowWidth/3/2,-yHeight/2 + (1 * yHeight/12),windowWidth/3/2,-yHeight/2 + (1 * yHeight/12));
+        line(-windowWidth/3/2,-yHeight/2 + (11 * yHeight/12),windowWidth/3/2,-yHeight/2 + (11 * yHeight/12));
 
+        strokeWeight(1);
+        stroke(0);
+        fill(0);
+        textSize(windowHeight/40);
+        var posOfNum = createVector(-windowWidth/3/2.4, -yHeight/2.2);
+        text("No.",posOfNum.x, posOfNum.y);
+        text("Team Name",posOfNum.x + windowWidth/10, posOfNum.y);
+        text("Score",posOfNum.x + windowWidth/5, posOfNum.y);
+        text("Time",posOfNum.x + windowWidth/4, posOfNum.y);
+        fill(255);
+        textSize(windowHeight/40);
+        for(var i = 1; i < 11; i++){
+            text(i + ".",posOfNum.x, (posOfNum.y + (i * yHeight/12.2)));
+            text("MyTeamName",posOfNum.x + windowWidth/10, (posOfNum.y + (i * yHeight/12.2)));
+            text(0,posOfNum.x + windowWidth/5, (posOfNum.y + (i * yHeight/12.2)));
+            text(1,posOfNum.x + windowWidth/4, (posOfNum.y + (i * yHeight/12.2)));
+        }
+        text("38.",posOfNum.x, (posOfNum.y + (11 * yHeight/12)));
+        text("CoolPerson",posOfNum.x + windowWidth/10, (posOfNum.y + (11 * yHeight/12)));
+        text(195,posOfNum.x + windowWidth/5, (posOfNum.y + (11 * yHeight/12)));
+        text(48,posOfNum.x + windowWidth/4, (posOfNum.y + (11 * yHeight/12)));
+        pop();
     }
 
     /**
