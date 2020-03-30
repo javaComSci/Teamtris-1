@@ -17,7 +17,7 @@ public class DoubleBot : Bot {
 
     public DoubleBot() {
         // create a board for this bot
-        Console.WriteLine("I AM A SINGLE BOT");
+        Console.WriteLine("I AM A DOUBLE BOT");
         botInfoPrinter = new Prints();
     }
 
