@@ -21,14 +21,24 @@ public class DoubleBot : Bot {
         botInfoPrinter = new Prints();
     }
 
-    public List<Tuple<Block, Block>> GetAllOrientations(Block bot1Block, Block bot2Block) {
+    /**
+     * #function DoubleBot::GetAllOrientations |
+     * @author JavaComSci |
+	 * @desc gets all the orientations of the blocks that are possible |
+     * @header public List<Tuple<Block, Block, int>> GetAllOrientations(Block bot1Block, Block bot2Block) | 
+	 * @param Block bot1Block: first block |
+     * @param Block bot2Block: second block |
+	 * @returns List<Tuple<Block, Block, int>> : contains the list of the orientations of the blocks |
+	 */
+    public List<Tuple<Block, Block, int>> GetAllOrientations(Block bot1Block, Block bot2Block) {
         // contains all the orientations of the rotated blocks
         BlockEqualityComparer blockEqualityComparer = new BlockEqualityComparer();
-        List<Tuple<Block, Block>> allOrientations = new List<Tuple<Block, Block>>();
+        List<Tuple<Block, Block, int>> allOrientationsBlock1Block2 = new List<Tuple<Block, Block, int>>();
+        List<Tuple<Block, Block, int>> allOrientationsBlock2Block1 = new List<Tuple<Block, Block, int>>();
 
         // orientations of each block
-        List<Block> bot1BlockOrientations = new List<Block>();
-        List<Block> bot2BlockOrientations = new List<Block>();
+        List<Block> blockOrientationsForBot1 = new List<Block>();
+        List<Block> blockOrientationsForBot2 = new List<Block>();
 
         Console.WriteLine("PIECE 1 BOT 1");
         botInfoPrinter.PrintJaggedArr(bot1Block.data);
@@ -47,34 +57,229 @@ public class DoubleBot : Bot {
             bool bot1BlockExists = false;
             bool bot2BlockExists = false;
 
-            for(int j = 0; j < i; j++) {
-                if(newBot1Block.Equals(bot1BlockOrientations[0])){
+            for(int j = 0; j < blockOrientationsForBot1.Count; j++) {
+                if(newBot1Block.Equals(blockOrientationsForBot1[j])){
                     bot1BlockExists = true;
-                    
                 }
-                if(newBot2Block.Equals(bot2BlockOrientations[0])){
+            }
+            for(int j = 0; j < blockOrientationsForBot2.Count; j++) {
+               if(newBot2Block.Equals(blockOrientationsForBot2[j])){
                     bot2BlockExists = true;
                 }
             }
+    
             if(!bot1BlockExists) {
-                bot1BlockOrientations.Add(newBot1Block);
+                blockOrientationsForBot1.Add(newBot1Block);
             }
             if(!bot2BlockExists) {
-                bot2BlockOrientations.Add(newBot2Block);
+                blockOrientationsForBot2.Add(newBot2Block);
             }
         }
 
-        allOrientations = (from bot1List in bot1BlockOrientations
-								from bot2List in bot2BlockOrientations
-								select new Tuple<Block, Block>(bot1List, bot2List)).ToList();
+        allOrientationsBlock1Block2 = (from bot1List in blockOrientationsForBot1
+								from bot2List in blockOrientationsForBot2
+								select new Tuple<Block, Block, int>(bot1List, bot2List, 1)).ToList();
 
-        return allOrientations;
+        allOrientationsBlock2Block1 = (from bot1List in blockOrientationsForBot1
+								from bot2List in blockOrientationsForBot2
+								select new Tuple<Block, Block, int>(bot2List, bot1List, 2)).ToList();
+        
+        allOrientationsBlock1Block2.AddRange(allOrientationsBlock2Block1);
+
+        return allOrientationsBlock1Block2;
     }
 
+
+
+    /**
+     * #function DoubleBot::GetFit |
+     * @author JavaComSci |
+	 * @desc gets the fit of a single block onboard |
+     * @header public List<CompatiblePiece> GetFit(Board board, Block block) | 
+	 * @param Board board: board to do placing on |
+     * @param Block block: block to be placed|
+	 * @returns List<CompatiblePiece> : contains list of compatible positions for the block |
+	 */
+    public List<CompatiblePiece> GetFit(Board board, Block block) {
+        Console.WriteLine("GET FIT");
+
+        List<CompatiblePiece> compatiblePieces = new List<CompatiblePiece>();
+
+        int[][] shiftedOverPiece = block.data;
+        botInfoPrinter.PrintJaggedArr(block.data);
+        int[] bottomBlocks = block.GetBottomBlocksAsJaggedArray(block.data);
+
+        Console.WriteLine("AFTER JAGGED");
+
+        // to calculate the width of the piece
+        int minCol = 5;
+        int maxCol = -1;        
+
+        // positions of where the piece exists in the data in a tuple with both the ints for row and column
+        List<Tuple<int, int>> dotPositions = new List<Tuple<int, int>>();
+        
+        // go through all the rows and get all the places where there is a true
+        for(int row = 0; row < block.data.Length; row++) {
+            dotPositions.AddRange(block.data[row].Select((b,i) => b == 1 ? i : -1).Where(i => i != -1).Select(index => new Tuple<int, int>(row, index)));
+        }
+
+        // shift over the dot positions
+        foreach(Tuple<int, int>  positionOfDot in dotPositions) {
+            // dot to be tested
+            int dotRowOnPiece = positionOfDot.Item1;
+            int dotColOnPiece = positionOfDot.Item2;
+            // calculate the min and max of the columns
+            minCol = Math.Min(minCol, dotColOnPiece);
+            maxCol = Math.Max(maxCol, dotColOnPiece);
+        }
+
+        // find width of piece
+        int widthOfPiece = maxCol - minCol + 1;
+
+        for(int startingCol = 0; startingCol < board.board.GetLength(1) - widthOfPiece + 1; startingCol++) {
+            for(int startingRow = board.maxHeights[startingCol] + 1; startingRow <= board.height; startingRow++) {
+
+                // compatible board info
+                List<Tuple<int, int>> compatibleBoard = new List<Tuple<int, int>>();
+
+
+                // modified board that is getting filled by these dots
+                int[,] modifiedBoardWithOnlyPieces = new int[board.height,board.width];
+
+                for(int i = 0; i < board.height; i++){
+                    for(int j = 0; j < board.width; j++){
+                        modifiedBoardWithOnlyPieces[i,j] = board.board[i,j];
+                    }
+                }
+
+                // dots nearby for area covered
+                HashSet<Tuple<int, int>> dotsNearby = new HashSet<Tuple<int,int>>();
+
+                // dots that fill the floor
+                int dotsFillingFloor = 0;
+
+                // see if all dots can be placed on the board without indexing issues in the column space
+                foreach(Tuple<int, int> shiftedDotPosition in dotPositions) {
+                    int shiftedDotRow = shiftedDotPosition.Item1;
+                    int shiftedDotCol = shiftedDotPosition.Item2;
+
+                    // shifted on the board size for the dot to be on the board
+                    int shiftedForBoardRow = board.height + (shiftedDotRow - bottomBlocks[0]) - startingRow;
+                    int shiftedForBoardCol = startingCol + shiftedDotCol;
+
+                    // make sure that the shifted piece is not below the possibile pieces already there
+                    if(board.height - board.maxHeights[startingCol + shiftedDotCol] <=  shiftedForBoardRow) {
+                        compatibleBoard = null;
+                        break;
+                    }
+
+                    // check whether the 2 heights are more than height of the board, if yes, then should not continue with the piece in this or any of the following rows
+                    if(shiftedForBoardRow < 0 || shiftedForBoardRow >= board.height) {
+                        compatibleBoard = null;
+                        break;
+                    } 
+
+                    // check if the dot is overriding an exising dot
+                    if(board.board[shiftedForBoardRow, shiftedForBoardCol] == 1) {
+                        compatibleBoard = null;
+                        break;
+                    }
+
+                    // add to the board information
+                    compatibleBoard.Add(Tuple.Create(shiftedForBoardRow, shiftedForBoardCol));
+                    modifiedBoardWithOnlyPieces[shiftedForBoardRow, shiftedForBoardCol] = 2;
+
+                    // see which dots are nearby
+                    // up
+                    if(shiftedForBoardRow - 1 >= 0 && board.board[shiftedForBoardRow - 1,shiftedForBoardCol] == 1) {
+                        dotsNearby.Add(Tuple.Create(shiftedForBoardRow - 1, shiftedForBoardCol));
+                    }
+                    // down
+                    if(shiftedForBoardRow + 1 < board.height && board.board[shiftedForBoardRow + 1,shiftedForBoardCol] == 1) {
+                        dotsNearby.Add(Tuple.Create(shiftedForBoardRow + 1, shiftedForBoardCol));
+                    }
+                    // left
+                    if(shiftedForBoardCol - 1 >= 0 && board.board[shiftedForBoardRow,shiftedForBoardCol - 1] == 1) {
+                        dotsNearby.Add(Tuple.Create(shiftedForBoardRow, shiftedForBoardCol - 1));
+                    }
+                    // right
+                    if(shiftedForBoardCol + 1 < board.width && board.board[shiftedForBoardRow,shiftedForBoardCol + 1] == 1) {
+                        dotsNearby.Add(Tuple.Create(shiftedForBoardRow, shiftedForBoardCol + 1));
+                    }
+                    // check for touching the floor
+                    if(shiftedForBoardRow + 1 == board.height) {
+                        dotsNearby.Add(Tuple.Create(shiftedForBoardRow + 1, shiftedForBoardCol));
+                        dotsFillingFloor += 1;
+                    }
+
+                }
+                
+                 // piece starting at this column and row is actually compatible then add its information
+                if(compatibleBoard != null) {
+                    // check for the number of rows that it fills
+                    int rowsFilled = 0;
+                    for(int k = 0; k < board.height; k++) {
+                        bool allFilled = true;
+                        for(int l = 0; l < board.width; l++) {
+                            if(modifiedBoardWithOnlyPieces[k, l] != 1 && modifiedBoardWithOnlyPieces[k, l] != 2){
+                                allFilled = false;
+                            }
+                        }
+                        if(allFilled) {
+                            rowsFilled += 1;
+                        }
+                    }
+                    
+                    CompatiblePiece compatiblePiece = new CompatiblePiece(compatibleBoard, dotsNearby.Count, rowsFilled);
+                    compatiblePieces.Add(compatiblePiece);
+                    break;
+                }
+            }
+        }
+        return compatiblePieces;
+    }
+    
+
+
+    /**
+     * #function DoubleBot::GetFitBothBlocks |
+     * @author JavaComSci |
+	 * @desc gets the fit of a both block onboard |
+     * @header publicList<Tuple<CompatiblePiece, CompatiblePiece>> GetFitBothBlocks(Board board, List<Tuple<Block, Block, int>> blocksWithOrientations) | 
+	 * @param Board board: board to do placing on |
+     * @param List<Tuple<Block, Block, int>> blocksWithOrientations: blockss to be placed|
+	 * @returns List<CompatiblePiece> : contains list of compatible positions for both blocks |
+	 */
+    public List<Tuple<CompatiblePiece, CompatiblePiece>> GetFitBothBlocks(Board board, List<Tuple<Block, Block, int>> blocksWithOrientations) {
+        
+        foreach(Tuple<Block, Block, int> blockWithOrientation in blocksWithOrientations) {
+            List<CompatiblePiece> compatibleFirstPieces = GetFit(board, blockWithOrientation.Item1);
+            Console.WriteLine("BLOCK WITH ORIENTIATION");
+            botInfoPrinter.PrintCompatiblePieces(board.board, compatibleFirstPieces);
+            break;
+        }
+
+        return null;
+    }
+
+
+
+    /**
+     * #function DoubleBot::GetMove |
+     * @author JavaComSci |
+	 * @desc gets the fit of a both block onboard |
+     * @header public override List<Tuple<int, int>> GetMove(Board board, List<List<Block>> allBotBlocks, bool allRotations = false)  | 
+	 * @param Board board: board to do placing on |
+     * @param List<List<Block>> allBotBlocks: blocks to be placed|
+	 * @returns List<Tuple<int, int>> : contains position for both blocks |
+	 */
     public override List<Tuple<int, int>> GetMove(Board board, List<List<Block>> allBotBlocks, bool allRotations = false) {
         // get each of the bot's blocks
         List<Block> bot1Blocks = allBotBlocks[0];
         List<Block> bot2Blocks = allBotBlocks[1];
+
+        // get the max height of each column of the baord 
+        board.FindMaxHeights();
 
         // print the information
         Console.WriteLine("BOARD");
@@ -92,14 +297,13 @@ public class DoubleBot : Bot {
             throw new Exception("Shape formation is incorrect");
         }
 
-        // all orientations of the 2 blocks
-        List<Tuple<Block, Block>> allOrientations = GetAllOrientations(bot1Blocks[0], bot2Blocks[0]);
+        // all orientations of the 2 blocks in each one going first on the board
+        List<Tuple<Block, Block, int>> allOrientations = GetAllOrientations(bot1Blocks[0], bot2Blocks[0]);
+
         Console.WriteLine("ALL ORIENTATIONS");
-        botInfoPrinter.PrintAllOrientationsAsList(allOrientations);
+        // botInfoPrinter.PrintAllOrientationsAsList(allOrientations);
 
-
-        // place bot 2 piece then bot 1 piece
-        // GetFit(board, bot1Blocks[0], bot2Blocks[0]);
+        GetFitBothBlocks(board, allOrientations);
         
         return null;
     }

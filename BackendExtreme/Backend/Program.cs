@@ -84,11 +84,12 @@ namespace Teamtris
             blocks.Add(bot1Blocks);
             blocks.Add(bot2Blocks);
 
-            try {
-                game.bot.GetMove(game.board, blocks);
-            } catch (Exception e) {
-                Console.WriteLine("Recieved error: "  + e.Message);
-            }
+            game.bot.GetMove(game.board, blocks);
+            // try {
+            //     game.bot.GetMove(game.board, blocks);
+            // } catch (Exception e) {
+            //     Console.WriteLine("Recieved error: "  + e.Message);
+            // }
 
             // connection and adding to the db scores
             // List<string> players = new List<string>();
