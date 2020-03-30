@@ -259,7 +259,6 @@ public class SQLConnection
                     }
                     int teamScore = Convert.ToInt32(reader1[6]);
                     int timePlayed = Convert.ToInt32(reader1[7]);
-                    int ranking = Convert.ToInt32(reader1[8]);
 
                     // add the top team to the list of top teams
                     ScoresInfo team = new ScoresInfo(teamName, playerNames, teamScore, timePlayed);

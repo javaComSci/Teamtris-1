@@ -254,12 +254,13 @@ public class DoubleBot : Bot {
         
         foreach(Tuple<Block, Block, int> blockWithOrientation in blocksWithOrientations) {
 
-            // // make a copy of the boards
-            // Board boardCopy = new Board(board.board.GetLength(0), board.board.GetLength(1));
-            // boardCopy.board = board.CopyBoard(board.board);
+            // make a copy of the boards
+            Board boardCopy = new Board(board.board.GetLength(0), board.board.GetLength(1));
+            boardCopy.board = board.CopyBoard(board.board);
+            boardCopy.FindMaxHeights();
             
-            // // get the fit of the current board given this first piece and orientation
-            // List<CompatiblePiece> compatibleFirstPieces = GetFit(board, blockWithOrientation.Item1);
+            // get the fit of the current board given this first piece and orientation
+            List<CompatiblePiece> compatibleFirstPieces = GetFit(boardCopy, blockWithOrientation.Item1);
 
             // Console.WriteLine("BLOCK WITH ORIENTIATION");
             // botInfoPrinter.PrintCompatiblePieces(board.board, compatibleFirstPieces);
