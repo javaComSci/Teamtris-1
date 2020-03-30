@@ -93,6 +93,8 @@ class GameScreen {
         }
       } else if (e.type == 11) {
         this.GameArray.ForceUpdatePlayer(e.playerID, e.shapeBlueprint)
+      } else if (e.type == 100) {
+        // the entire game state is getting sent here, do something cool with it
       }
 
       // e.type == 11
