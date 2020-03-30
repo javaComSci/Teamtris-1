@@ -312,6 +312,17 @@ class GameArray {
     }
 
     /** 
+     * @description Freezes the shape of the provided player ID
+     * 
+     * @param ID - ID of a shape object
+     * 
+     * @return void
+     */
+    FreezeShape(ID) {
+        this.ShapeArray[ID-1].Freeze()
+    }
+
+    /** 
      * @description Check to see if a shape should be frozen and removed from the owner's control.
      * It will replace the shape with a new one if the current shape is frozen
      * 

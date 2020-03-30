@@ -90,6 +90,8 @@ class GameScreen {
         } else if (e.move == "rotate") {
           this.GameArray.RotateShape(e.playerID, false);
           this.GameArray.ForceMoveShape(e.playerID, 0, 0, 0);
+        } else if (e.move == "freeze") {
+          this.GameArray.FreezeShape(e.playerID)
         }
       } else if (e.type == 11) {
         this.GameArray.ForceUpdatePlayer(e.playerID, e.shapeBlueprint)
