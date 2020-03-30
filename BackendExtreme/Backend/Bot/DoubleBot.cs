@@ -45,7 +45,7 @@ public class DoubleBot : Bot {
         Console.WriteLine("PIECE 2 BOT 2");
         botInfoPrinter.PrintJaggedArr(bot2Block.data);
 
-        for(int i = 0; i < 3; i++) {
+        for(int i = 0; i < 4; i++) {
             bot1Block.data = bot1Block.RotateMatrix();
             Block newBot1Block = new Block(bot1Block.data.Select(s => s.ToArray()).ToArray(), bot1Block.color);
             newBot1Block.ShiftDataBottom();
@@ -101,7 +101,7 @@ public class DoubleBot : Bot {
 	 * @returns List<CompatiblePiece> : contains list of compatible positions for the block |
 	 */
     public List<CompatiblePiece> GetFit(Board board, Block block) {
-        Console.WriteLine("GET FIT");
+        // Console.WriteLine("GET FIT");
 
         List<CompatiblePiece> compatiblePieces = new List<CompatiblePiece>();
 
@@ -109,7 +109,7 @@ public class DoubleBot : Bot {
         botInfoPrinter.PrintJaggedArr(block.data);
         int[] bottomBlocks = block.GetBottomBlocksAsJaggedArray(block.data);
 
-        Console.WriteLine("AFTER JAGGED");
+        // Console.WriteLine("AFTER JAGGED");
 
         // to calculate the width of the piece
         int minCol = 5;
@@ -251,32 +251,77 @@ public class DoubleBot : Bot {
 	 * @returns List<CompatiblePiece> : contains list of compatible positions for both blocks |
 	 */
     public List<Tuple<CompatiblePiece, CompatiblePiece>> GetFitBothBlocks(Board board, List<Tuple<Block, Block, int>> blocksWithOrientations) {
-        
-        foreach(Tuple<Block, Block, int> blockWithOrientation in blocksWithOrientations) {
+        // list of all the compatible pieces that are on the board
+        List<Tuple<CompatiblePiece, CompatiblePiece>> allCompatiblePieces = new List<Tuple<CompatiblePiece, CompatiblePiece>>();
 
-            // make a copy of the boards to send to the current board
-            Board boardCopy = new Board(board.board.GetLength(0), board.board.GetLength(1));
-            boardCopy.board = board.CopyBoard(board.board);
-            boardCopy.FindMaxHeights();
-            
+        foreach(Tuple<Block, Block, int> blockWithOrientation in blocksWithOrientations) {
             // get the fit of the current board given this first piece and orientation
             List<CompatiblePiece> compatibleFirstPieces = GetFit(board, blockWithOrientation.Item1);
 
-            // sort the compatible first pieces
+            // // sort the compatible first pieces
+            // compatibleFirstPieces.Sort((x, y) => {
+            //         // sort by whether a line has been cleared and puts those first if there is
+            //         int result = y.numLinesCleared.CompareTo(x.numLinesCleared);
+            //         // sort by the area covered
+            //         return result == 0 ? y.area.CompareTo(x.area) : result;
+            //     });
 
             // Console.WriteLine("BLOCK WITH ORIENTIATION");
             // botInfoPrinter.PrintCompatiblePieces(board.board, compatibleFirstPieces);
 
+            // get the next pieces to fit
+            foreach(CompatiblePiece compatibleFirstPiece in compatibleFirstPieces) {
+                // make a copy of the boards to send to the current board
+                Board boardCopy = new Board(board.board.GetLength(0), board.board.GetLength(1));
+                boardCopy.board = board.CopyBoard(board.board);
 
+                // add the pieces to this board to where it has the first piece
+                boardCopy.board = board.FillBoardWithPiece(boardCopy.board, compatibleFirstPiece.locationOnBoard);
 
-            // create c
+                // Console.WriteLine("BOARD WITH PIECE CONSIDERED");
+                // botInfoPrinter.PrintMultiDimArr(boardCopy.board);
 
-            break;
+                // get the max heights on the board computed for the next round
+                boardCopy.FindMaxHeights();
+
+                // get the next piece on the board
+                List<CompatiblePiece> compatibleSecondPieces = GetFit(boardCopy, blockWithOrientation.Item2);
+                
+                // // sort the compatible second pieces
+                // compatibleSecondPieces.Sort((x, y) => {
+                //     // sort by whether a line has been cleared and puts those first if there is
+                //     int result = y.numLinesCleared.CompareTo(x.numLinesCleared);
+                //     // sort by the area covered
+                //     return result == 0 ? y.area.CompareTo(x.area) : result;
+                // });
+
+                // Console.WriteLine("BLOCK WITH ORIENTIATION");
+                // botInfoPrinter.PrintCompatiblePieces(boardCopy.board, compatibleSecondPieces);
+
+                foreach(CompatiblePiece compatibleSecondPiece in compatibleSecondPieces){
+                    allCompatiblePieces.Add(Tuple.Create<CompatiblePiece, CompatiblePiece>(compatibleFirstPiece, compatibleSecondPiece));
+                }
+            }
         }
-
-        return null;
+        Console.WriteLine("ALL COMPATIBLE PIECES ON BOARD");
+        botInfoPrinter.PrintAllCompatiblePieces(board.board, allCompatiblePieces);
+        return allCompatiblePieces;
     }
 
+
+
+    /**
+     * #function DoubleBot::GetbestFit |
+     * @author JavaComSci |
+	 * @desc gets the fit of a both block onboard |
+     * @header public Tuple<CompatiblePiece, CompatiblePiece> GetBestFit(List<Tuple<CompatiblePiece, CompatiblePiece>> allCompatiblePieces)  | 
+	 * @param List<Tuple<CompatiblePiece, CompatiblePiece>> allCompatiblePieces: all the pieces to find best fit for|
+	 * @returns List<Tuple<CompatiblePiece, CompatiblePiece>> : contains position for both blocks |
+	 */
+     public Tuple<CompatiblePiece, CompatiblePiece> GetBestFit(List<Tuple<CompatiblePiece, CompatiblePiece>> allCompatiblePieces) {
+        
+        return null;
+     }
 
 
     /**
@@ -318,7 +363,8 @@ public class DoubleBot : Bot {
         Console.WriteLine("ALL ORIENTATIONS");
         // botInfoPrinter.PrintAllOrientationsAsList(allOrientations);
 
-        GetFitBothBlocks(board, allOrientations);
+        List<Tuple<CompatiblePiece, CompatiblePiece>> allCompatiblePieces = GetFitBothBlocks(board, allOrientations);
+        GetBestFit(allCompatiblePieces);
         
         return null;
     }
