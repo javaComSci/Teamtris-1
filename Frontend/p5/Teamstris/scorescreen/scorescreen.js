@@ -158,30 +158,39 @@ class ScoreScreen {
             // console.log(e.topTeamInfos);
             this.scoreArray = e.topTeamInfos;
         };
+        socketScore.onmessage = (event) => {
+            var e = JSON.parse(event.data);
+            console.log("SCORE SCREEN GOT SOMETHING ");
+            console.log(e);
+            this.scoreArray = e.topTeamInfos;
+        };
         this.scoreScreenRequest = true;
-        var teamMembers;
+        var teamMembers = [];
+        this.team = new Team();
+        this.team.playersInTeam.push(new Player("steven", 1, true));
+        this.team.playersInTeam.push(new Player("john", 1, false));
+        this.team.playersInTeam.push(new Player("indhu", 1, false));
+        this.team.teamName = "testingmyteam";
+        this.team.lobbyToken = "1234";
+        this.team.score = 401;
+        this.team.time = 30;
         if(this.team == undefined) {
             // socket.send(JSON.stringify({"type": "7", "data": data}));
             socketScoreWithNoTeamName.send(JSON.stringify({"type": "11"}));
-            let t = [];
-            t.push("steve");
-            t.push("john");
-            t.push("indhu");
             /* Test */
-            // socketScore.send(JSON.stringify({
-            //     "teamName": "MyTeamName", 
-            //     "playerNames": t,
-            //     "teamScore": 553,
-            //     "timePlayed": 54
-            // }));
         } else {
+            console.log(this.team.playersInTeam)
             teamMembers = this.team.playersInTeam.map(player => player.username);
-            socket.send(JSON.stringify({
+            console.log(teamMembers)
+            var data = JSON.stringify({
                 "teamName": this.team.teamName, 
                 "playerNames": teamMembers,
-                "teamScore": this.team.teamScore,
+                "teamScore": this.team.score,
                 "timePlayed": this.team.time
-            }));
+            });
+            console.log("data")
+            console.log(data);
+            socketScore.send(JSON.stringify({"type": "10", "data": data}));
         }
     }
 
