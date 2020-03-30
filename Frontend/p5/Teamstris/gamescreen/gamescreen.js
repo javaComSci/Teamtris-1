@@ -7,7 +7,7 @@ class GameScreen {
     yOffset = 0,
     CustomWindowWidth = windowWidth,
     CustomWindowHeight = windowHeight,
-    PlayerCount=1
+    PlayerCount=2
   ) {
     if (gamescreen_constructor) console.log("Creating GameScreen Object");
 
