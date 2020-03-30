@@ -150,7 +150,7 @@ public class SQLConnection
 
             // text for command with top teams
             // command.CommandText = "SELECT * FROM Scores ORDER BY TeamScore DESC LIMIT 10";
-            command.CommandText = "SELECT * FROM (SELECT *, rank() OVER (ORDER BY TeamScore DESC) as Ranking FROM Scores) AS ScoresRanked WHERE Ranking <= 10 OR Id = @teamId";
+            command.CommandText = "SELECT * FROM (SELECT *, rank() OVER (ORDER BY TeamScore DESC) as Ranking FROM Scores) AS ScoresRanked WHERE Ranking < 11 OR Id = @teamId";
             command.Parameters.AddWithValue("@teamId", id);
             // create a reader to read the high scores
             MySqlDataReader reader1 = command.ExecuteReader();
@@ -193,7 +193,7 @@ public class SQLConnection
                     }
 
                     // add to the top teams
-                    if(teamCount < 10) {
+                    if(teamCount < 11) {
                         topTeams.Add(team);
                     }
                 }
