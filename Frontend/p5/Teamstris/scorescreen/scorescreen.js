@@ -106,22 +106,24 @@ class ScoreScreen {
         text("Time",posOfNum.x + windowWidth/4, posOfNum.y);
         fill(255);
         textSize(windowHeight/40);
-        for(var i = 1; i < 11; i++){
-            text(i + ".",posOfNum.x, (posOfNum.y + (i * yHeight/12.2)));
-            text("MyTeamName",posOfNum.x + windowWidth/10, (posOfNum.y + (i * yHeight/12.2)));
-            text(0,posOfNum.x + windowWidth/5, (posOfNum.y + (i * yHeight/12.2)));
-            text(1,posOfNum.x + windowWidth/4, (posOfNum.y + (i * yHeight/12.2)));
-        }
-        if(this.team == undefined){
-            text("-",posOfNum.x, (posOfNum.y + (11 * yHeight/12)));
-            text("-",posOfNum.x + windowWidth/10, (posOfNum.y + (11 * yHeight/12)));
-            text('-',posOfNum.x + windowWidth/5, (posOfNum.y + (11 * yHeight/12)));
-            text('-',posOfNum.x + windowWidth/4, (posOfNum.y + (11 * yHeight/12)));
-        } else {
-            text("38.",posOfNum.x, (posOfNum.y + (11 * yHeight/12)));
-            text("CoolPerson",posOfNum.x + windowWidth/10, (posOfNum.y + (11 * yHeight/12)));
-            text(195,posOfNum.x + windowWidth/5, (posOfNum.y + (11 * yHeight/12)));
-            text(48,posOfNum.x + windowWidth/4, (posOfNum.y + (11 * yHeight/12)));
+        if(this.scoreArray.length > 0){
+            for(var i = 1; i < 11; i++){
+                text(i + ".",posOfNum.x, (posOfNum.y + (i * yHeight/12.2)));
+                text(this.scoreArray[i-1].teamName,posOfNum.x + windowWidth/10, (posOfNum.y + (i * yHeight/12.2)));
+                text(this.scoreArray[i-1].teamScore,posOfNum.x + windowWidth/5, (posOfNum.y + (i * yHeight/12.2)));
+                text(this.scoreArray[i-1].timePlayed,posOfNum.x + windowWidth/4, (posOfNum.y + (i * yHeight/12.2)));
+            }
+            if(this.team == undefined){
+                text("-",posOfNum.x, (posOfNum.y + (11 * yHeight/12)));
+                text("-",posOfNum.x + windowWidth/10, (posOfNum.y + (11 * yHeight/12)));
+                text('-',posOfNum.x + windowWidth/5, (posOfNum.y + (11 * yHeight/12)));
+                text('-',posOfNum.x + windowWidth/4, (posOfNum.y + (11 * yHeight/12)));
+            } else {
+                text("38.",posOfNum.x, (posOfNum.y + (11 * yHeight/12)));
+                text(this.team.teamName,posOfNum.x + windowWidth/10, (posOfNum.y + (11 * yHeight/12)));
+                text(this.team.score,posOfNum.x + windowWidth/5, (posOfNum.y + (11 * yHeight/12)));
+                text(this.team.time,posOfNum.x + windowWidth/4, (posOfNum.y + (11 * yHeight/12)));
+            }
         }
 
         pop();
@@ -150,15 +152,28 @@ class ScoreScreen {
     }
     // \"teamScore\":3,\"timePlayed\":50}"
     requestTopScores() {
+        socketScoreWithNoTeamName.onmessage = (event) => {
+            var e = JSON.parse(event.data);
+            // console.log("SCORE SCREEN GOT SOMETHING ");
+            // console.log(e.topTeamInfos);
+            this.scoreArray = e.topTeamInfos;
+        };
         this.scoreScreenRequest = true;
         var teamMembers;
         if(this.team == undefined) {
-            socket.send(JSON.stringify({
-                "teamName": "-1", 
-                "playerNames": "null",
-                "teamScore": "null",
-                "timePlayed": "null"
-            }));
+            // socket.send(JSON.stringify({"type": "7", "data": data}));
+            socketScoreWithNoTeamName.send(JSON.stringify({"type": "11"}));
+            let t = [];
+            t.push("steve");
+            t.push("john");
+            t.push("indhu");
+            /* Test */
+            // socketScore.send(JSON.stringify({
+            //     "teamName": "MyTeamName", 
+            //     "playerNames": t,
+            //     "teamScore": 553,
+            //     "timePlayed": 54
+            // }));
         } else {
             teamMembers = this.team.playersInTeam.map(player => player.username);
             socket.send(JSON.stringify({
@@ -168,12 +183,6 @@ class ScoreScreen {
                 "timePlayed": this.team.time
             }));
         }
-
-        socket.onmessage = (event) => {
-            var e = JSON.parse(event.data);
-            console.log("SCORE SCREEN GOT SOMETHING ");
-            console.log(e);
-        };
     }
 
     /**
