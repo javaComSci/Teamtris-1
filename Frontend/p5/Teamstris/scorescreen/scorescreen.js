@@ -25,6 +25,8 @@ class ScoreScreen {
         this.team = team;
         // |
 
+        this.scoreScreenRequest = false;
+
         buttonList.push(new Buttons(windowWidth/2.5, windowHeight / 2.6, windowWidth / 7, windowHeight / 12, 3, "black"));
         buttonList[buttonList.length - 1].text = "Home"; // Text to put in the button
         buttonList[buttonList.length - 1].hoverColor = "blue"; // What color to make the button on mouse hover
@@ -34,25 +36,25 @@ class ScoreScreen {
         buttonList[buttonList.length - 1].border = 255;
         buttonList[buttonList.length - 1].textColor = 255;
 
-        var teamMembers;
-        if(this.team == undefined) {
-            teamMembers = undefined;
-        } else {
-            teamMembers = this.team.playersInTeam.map(player => player.username);
-        }
-        // #code requestScores1 javascript
-        var data = JSON.stringify(
-            {"teamName": "", 
-            "playerNames": teamMembers, 
-            "teamScore": 0, 
-            "timePlayed": 0})
-        // socket.send(JSON.stringify({"type": "11", "data": data}));
-        // |
-        socket.onmessage = (event) => {
-            var e = JSON.parse(event.data);
-            console.log("HERE WE GO SCORE ");
-            console.log(e);
-        };
+        // var teamMembers;
+        // if(this.team == undefined) {
+        //     teamMembers = undefined;
+        // } else {
+        //     teamMembers = this.team.playersInTeam.map(player => player.username);
+        // }
+        // // #code requestScores1 javascript
+        // var data = JSON.stringify(
+        //     {"teamName": "", 
+        //     "playerNames": teamMembers, 
+        //     "teamScore": 0, 
+        //     "timePlayed": 0})
+        // // socket.send(JSON.stringify({"type": "11", "data": data}));
+        // // |
+        // socket.onmessage = (event) => {
+        //     var e = JSON.parse(event.data);
+        //     console.log("HERE WE GO SCORE ");
+        //     console.log(e);
+        // };
     }
  
     /**
@@ -110,10 +112,18 @@ class ScoreScreen {
             text(0,posOfNum.x + windowWidth/5, (posOfNum.y + (i * yHeight/12.2)));
             text(1,posOfNum.x + windowWidth/4, (posOfNum.y + (i * yHeight/12.2)));
         }
-        text("38.",posOfNum.x, (posOfNum.y + (11 * yHeight/12)));
-        text("CoolPerson",posOfNum.x + windowWidth/10, (posOfNum.y + (11 * yHeight/12)));
-        text(195,posOfNum.x + windowWidth/5, (posOfNum.y + (11 * yHeight/12)));
-        text(48,posOfNum.x + windowWidth/4, (posOfNum.y + (11 * yHeight/12)));
+        if(this.team == undefined){
+            text("-",posOfNum.x, (posOfNum.y + (11 * yHeight/12)));
+            text("-",posOfNum.x + windowWidth/10, (posOfNum.y + (11 * yHeight/12)));
+            text('-',posOfNum.x + windowWidth/5, (posOfNum.y + (11 * yHeight/12)));
+            text('-',posOfNum.x + windowWidth/4, (posOfNum.y + (11 * yHeight/12)));
+        } else {
+            text("38.",posOfNum.x, (posOfNum.y + (11 * yHeight/12)));
+            text("CoolPerson",posOfNum.x + windowWidth/10, (posOfNum.y + (11 * yHeight/12)));
+            text(195,posOfNum.x + windowWidth/5, (posOfNum.y + (11 * yHeight/12)));
+            text(48,posOfNum.x + windowWidth/4, (posOfNum.y + (11 * yHeight/12)));
+        }
+
         pop();
     }
 
@@ -138,6 +148,33 @@ class ScoreScreen {
 	 */
     keyPressedScore() {
     }
+    // \"teamScore\":3,\"timePlayed\":50}"
+    requestTopScores() {
+        this.scoreScreenRequest = true;
+        var teamMembers;
+        if(this.team == undefined) {
+            socket.send(JSON.stringify({
+                "teamName": "-1", 
+                "playerNames": "null",
+                "teamScore": "null",
+                "timePlayed": "null"
+            }));
+        } else {
+            teamMembers = this.team.playersInTeam.map(player => player.username);
+            socket.send(JSON.stringify({
+                "teamName": this.team.teamName, 
+                "playerNames": teamMembers,
+                "teamScore": this.team.teamScore,
+                "timePlayed": this.team.time
+            }));
+        }
+
+        socket.onmessage = (event) => {
+            var e = JSON.parse(event.data);
+            console.log("SCORE SCREEN GOT SOMETHING ");
+            console.log(e);
+        };
+    }
 
     /**
      * #function ScoreScreen::draw |
@@ -147,6 +184,8 @@ class ScoreScreen {
      * @header draw() | 
 	 */
     draw() {
+        if(!this.scoreScreenRequest)
+            this.requestTopScores()
         Buttonloop();
         this.drawTitle();
         this.renderScores();
