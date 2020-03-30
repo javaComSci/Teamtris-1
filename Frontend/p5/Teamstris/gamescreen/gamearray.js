@@ -34,7 +34,30 @@ class GameArray {
     }//end constructor
 
     /** 
-     * @description Simply calls InstantiateSqures
+     * @description returns the column offset a shape should be instantiated at base on ID
+     * 
+     * @param ID - ID of the owner of the shape
+     * 
+     * @return integer
+     */
+    OffsetByID(ID) {
+        return 5*ID
+    }
+
+    /** 
+     * @description gives the provided player a new shape
+     * 
+     * @param ID - ID of the owner of the shape
+     * @param shapeBlueprint - BLueprint of the shape to be instantiated
+     * 
+     * @return void
+     */
+    ForceUpdatePlayer(ID, shapeBlueprint) {
+        this.ShapeArray[ID-1] = this.InstantiateShape(ID,shapeBlueprint,0,this.OffsetByID(ID), false)
+    }
+
+    /** 
+     * @description Simply calls InstantiateSquares
      * 
      * @return void
      */

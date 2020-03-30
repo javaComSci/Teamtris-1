@@ -44,15 +44,13 @@ class GameScreen {
     // Default grid stroke of all shapes in the grid (width of edge)
     this.DefaultGridStroke = 8;
 
-    // Instantiate all squares
-    //this.InstantiateSquares()
+    // Create GameArray, which runs the logic for the game
     this.GameArray = new GameArray(
       this.BoardSquareSize[0],
       this.BoardSquareSize[1],
       this.SquareEdgeLength,
       this.NumPlayers
     );
-    //this.GameArray.InstantiateSquares(this.SquareEdgeLength)
 
     // variables used for updating the game grid
     this.PreviousTime = 0;
@@ -81,7 +79,6 @@ class GameScreen {
     /* Going to handle all the connections from the backend */
     socket.onmessage = event => {
       var e = JSON.parse(event.data);
-      //console.log(e);
       if (e.type == 8) {
         if (e.move == "left") {
           this.GameArray.ForceMoveShape(e.playerID, 1, 0, 0);
@@ -93,9 +90,16 @@ class GameScreen {
           this.GameArray.RotateShape(e.playerID, false);
           this.GameArray.ForceMoveShape(e.playerID, 0, 0, 0);
         }
+      } else if (e.type == 11) {
+        this.GameArray.ForceUpdatePlayer(e.playerID, e.shapeBlueprint)
       }
+
+      // e.type == 11
     };
   }
+
+  // receive generated shape for other players
+  // send power cube data
 
   /**
    * @description returns true if it is time to perform a timestep update, moving each shape down 1.
