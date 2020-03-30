@@ -26,6 +26,7 @@ class ScoreScreen {
         // |
 
         this.scoreScreenRequest = false;
+        this.currentTeamsRank = -1;
 
         buttonList.push(new Buttons(windowWidth/2.5, windowHeight / 2.6, windowWidth / 7, windowHeight / 12, 3, "black"));
         buttonList[buttonList.length - 1].text = "Home"; // Text to put in the button
@@ -119,7 +120,7 @@ class ScoreScreen {
                 text('-',posOfNum.x + windowWidth/5, (posOfNum.y + (11 * yHeight/12)));
                 text('-',posOfNum.x + windowWidth/4, (posOfNum.y + (11 * yHeight/12)));
             } else {
-                text("38.",posOfNum.x, (posOfNum.y + (11 * yHeight/12)));
+                text(this.currentTeamsRank,posOfNum.x, (posOfNum.y + (11 * yHeight/12)));
                 text(this.team.teamName,posOfNum.x + windowWidth/10, (posOfNum.y + (11 * yHeight/12)));
                 text(this.team.score,posOfNum.x + windowWidth/5, (posOfNum.y + (11 * yHeight/12)));
                 text(this.team.time,posOfNum.x + windowWidth/4, (posOfNum.y + (11 * yHeight/12)));
@@ -160,9 +161,10 @@ class ScoreScreen {
         };
         socketScore.onmessage = (event) => {
             var e = JSON.parse(event.data);
-            console.log("SCORE SCREEN GOT SOMETHING ");
-            console.log(e);
+            // console.log("SCORE SCREEN GOT SOMETHING ");
+            // console.log(e);
             this.scoreArray = e.topTeamInfos;
+            this.currentTeamsRank = e.currentTeamInfo.rank;
         };
         this.scoreScreenRequest = true;
         var teamMembers = [];
