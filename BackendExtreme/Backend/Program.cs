@@ -107,8 +107,8 @@ namespace Teamtris
             // infoPrinter.PrintScoreInfo(retrievedInfo.Item2);
 
 
-            List<ScoresInfo> retrieved = SQLConnection.GetTopTeams();
-            infoPrinter.PrintScoreList(retrieved);
+            // List<ScoresInfo> retrieved = SQLConnection.GetTopTeams();
+            // infoPrinter.PrintScoreList(retrieved);
 
 
             // create localhost web socket server on port 5202

@@ -185,6 +185,7 @@ public class SQLConnection
 
                     // add the top team to the list of top teams
                     ScoresInfo team = new ScoresInfo(teamName, playerNames, teamScore, timePlayed);
+                    team.rank = ranking;
 
                     // current team looking at
                     if(teamId == id) {

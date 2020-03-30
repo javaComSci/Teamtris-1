@@ -19,12 +19,15 @@ using System.Linq;
 
     public int timePlayed { get; set; }
 
+    public int rank {get; set;}
+
     public ScoresInfo(String teamName, List<String> playerNames, int teamScore, int timePlayed)
     {
         this.teamName = teamName;
         this.playerNames = playerNames;
         this.teamScore = teamScore;
         this.timePlayed = timePlayed;
+        this.rank = -1;
     }
  }
 
