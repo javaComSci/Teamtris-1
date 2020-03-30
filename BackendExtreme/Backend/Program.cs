@@ -107,6 +107,9 @@ namespace Teamtris
             // infoPrinter.PrintScoreInfo(retrievedInfo.Item2);
 
 
+            List<ScoresInfo> retrieved = SQLConnection.GetTopTeams();
+            infoPrinter.PrintScoreList(retrieved);
+
 
             // create localhost web socket server on port 5202
             var wssv = new WebSocketServer("ws://0.0.0.0:5202");
@@ -114,6 +117,7 @@ namespace Teamtris
             wssv.AddWebSocketService<LobbyManager>("/lobby", () => new LobbyManager(lobbies));
             wssv.AddWebSocketService<Play>("/play", () => new Play(lobbies));
             wssv.AddWebSocketService<ScoresManager>("/scores", () => new ScoresManager());
+            wssv.AddWebSocketService<ScoresDirectManager>("/scoresDirect", () => new ScoresDirectManager());
             GameManager gameManager = new GameManager(lobbies);
             Console.WriteLine("Starting to check for sockets");
             // start game broadcasting service
