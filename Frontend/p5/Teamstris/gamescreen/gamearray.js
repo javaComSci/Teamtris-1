@@ -11,12 +11,16 @@ class GameArray {
             this.arr[r] = new Array(columns)
         }
 
+        // ID of the local player
+        this.ID = ID
+
         this.SquareEdgeLength = SquareEdgeLength
         this.InstantiateSquares()
 
         this.NumPlayers = NumPlayers
         this.ShapeArray = new Array(this.NumPlayers)
-        this.ShapeArray[0] = this.InstantiateShape(1,null,0,5, false)
+        this.ShapeArray[this.ID-1] = this.InstantiateShape(this.ID,null,0,this.OffsetByID(this.ID), false)
+        //this.ShapeArray[0] = this.InstantiateShape(1,null,0,5, false)
         //this.ShapeArray[1] = this.InstantiateShape(2,null,0,10,false)
         // this.ShapeArray[2] = this.InstantiateShape(3,null,0,15,false)
         // this.ShapeArray[3] = this.InstantiateShape(4,null,0,20,false)
@@ -29,8 +33,6 @@ class GameArray {
             OtherPlayer : 3,
             NoCollision : 4
         }
-
-        this.ID = ID
 
         //console.log(this.CollisionType)
     }//end constructor
