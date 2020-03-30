@@ -2,7 +2,7 @@
   * @classDesc Represents the game itself, controls shape movement/resets/collision/coloring
   */
 class GameArray {
-    constructor(rows, columns, SquareEdgeLength, NumPlayers) {
+    constructor(rows, columns, SquareEdgeLength, NumPlayers, ID) {
         // array object to represent the game, filled with squares
         this.row_count = rows
         this.column_count = columns
@@ -17,7 +17,7 @@ class GameArray {
         this.NumPlayers = NumPlayers
         this.ShapeArray = new Array(this.NumPlayers)
         this.ShapeArray[0] = this.InstantiateShape(1,null,0,5, false)
-        this.ShapeArray[1] = this.InstantiateShape(2,null,0,10,false)
+        //this.ShapeArray[1] = this.InstantiateShape(2,null,0,10,false)
         // this.ShapeArray[2] = this.InstantiateShape(3,null,0,15,false)
         // this.ShapeArray[3] = this.InstantiateShape(4,null,0,20,false)
         //this.PlaceShape(this.ShapeArray[1])
@@ -29,6 +29,8 @@ class GameArray {
             OtherPlayer : 3,
             NoCollision : 4
         }
+
+        this.ID = ID
 
         //console.log(this.CollisionType)
     }//end constructor
@@ -316,7 +318,9 @@ class GameArray {
     CheckFreeze(Shape, down, ColType) {
         if (down == 1 && (ColType == this.CollisionType.OutOfBounds || ColType == this.CollisionType.FrozenObject)) {
             var r = Shape.Freeze() // r is a set of rows to be checked
-            this.ShapeArray[Shape.ID - 1] = this.InstantiateShape(Shape.ID,null,0,Shape.ID*5,false)
+            if (Shape.ID == this.ID) {
+                this.ShapeArray[Shape.ID - 1] = this.InstantiateShape(Shape.ID,null,0,Shape.ID*5,false)
+            }
             for (var row of Array.from(r.values())) {
                 this.CheckAndRemoveRow(row)
             }

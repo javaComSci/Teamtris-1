@@ -49,7 +49,8 @@ class GameScreen {
       this.BoardSquareSize[0],
       this.BoardSquareSize[1],
       this.SquareEdgeLength,
-      this.NumPlayers
+      this.NumPlayers,
+      this.PlayerID
     );
 
     // variables used for updating the game grid
