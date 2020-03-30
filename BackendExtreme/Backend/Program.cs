@@ -114,6 +114,7 @@ namespace Teamtris
             wssv.AddWebSocketService<LobbyManager>("/lobby", () => new LobbyManager(lobbies));
             wssv.AddWebSocketService<Play>("/play", () => new Play(lobbies));
             wssv.AddWebSocketService<ScoresManager>("/scores", () => new ScoresManager());
+            wssv.AddWebSocketService<ScoresDirectManager>("/scoresDirect", () => new ScoresDirectManager());
             GameManager gameManager = new GameManager(lobbies);
             Console.WriteLine("Starting to check for sockets");
             // start game broadcasting service

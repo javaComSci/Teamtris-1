@@ -210,4 +210,75 @@ public class SQLConnection
         // return the tuple
         return Tuple.Create(topTeams, currentTeam);
     }
+
+
+
+     /**
+     * #function SQLConnection::GetTopTeamsAndCurrentTeam |
+     * @author JavaComSci |
+     * @desc Connects to the database in order to obtain team results |
+     */
+    public static List<ScoresInfo> GetTopTeams() {
+        // create connection
+        MySqlConnection conn = new MySqlConnection(connString);
+
+        // scoresInfo list for the top teams
+        List<ScoresInfo> topTeams = new List<ScoresInfo>();
+
+        try
+        {
+            // open connection
+            conn.Open();
+
+            // create new command
+            MySqlCommand command = conn.CreateCommand();
+
+            // text for command with top teams
+            command.CommandText = "SELECT * FROM Scores ORDER BY TeamScore DESC LIMIT 10";
+            // create a reader to read the high scores
+            MySqlDataReader reader1 = command.ExecuteReader();
+
+            if (reader1.HasRows == true) {   
+                while(reader1.Read()) {
+
+                    // put the information read into the score info object
+                    int teamId = Convert.ToInt32(reader1[0]);
+                    String teamName = Convert.ToString(reader1[1]);
+                    List<String> playerNames = new List<String>();
+                    if(reader1[2] != DBNull.Value) {
+                        playerNames.Add(Convert.ToString(reader1[2]));
+                    }
+                    if(reader1[3] != DBNull.Value) {
+                        playerNames.Add(Convert.ToString(reader1[3]));
+                    }
+                    if(reader1[4] != DBNull.Value) {
+                        playerNames.Add(Convert.ToString(reader1[4]));
+                    }
+                    if(reader1[5] != DBNull.Value) {
+                        playerNames.Add(Convert.ToString(reader1[5]));
+                    }
+                    int teamScore = Convert.ToInt32(reader1[6]);
+                    int timePlayed = Convert.ToInt32(reader1[7]);
+                    int ranking = Convert.ToInt32(reader1[8]);
+
+                    // add the top team to the list of top teams
+                    ScoresInfo team = new ScoresInfo(teamName, playerNames, teamScore, timePlayed);
+
+                    topTeams.Add(team);
+                }
+            }            
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.ToString());
+        }
+
+        // close the connection
+        conn.Close();
+
+        // return the topteams
+        return topTeams;
+    }
+
+
 }
