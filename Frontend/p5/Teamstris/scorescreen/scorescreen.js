@@ -167,15 +167,15 @@ class ScoreScreen {
             this.currentTeamsRank = e.currentTeamInfo.rank;
         };
         this.scoreScreenRequest = true;
-        var teamMembers = [];
-        this.team = new Team();
-        this.team.playersInTeam.push(new Player("steven", 1, true));
-        this.team.playersInTeam.push(new Player("john", 1, false));
-        this.team.playersInTeam.push(new Player("indhu", 1, false));
-        this.team.teamName = "testingmyteam";
-        this.team.lobbyToken = "1234";
-        this.team.score = 401;
-        this.team.time = 30;
+        // var teamMembers = [];
+        // this.team = new Team();
+        // this.team.playersInTeam.push(new Player("steven", 1, true));
+        // this.team.playersInTeam.push(new Player("john", 1, false));
+        // this.team.playersInTeam.push(new Player("indhu", 1, false));
+        // this.team.teamName = "testingmyteam";
+        // this.team.lobbyToken = "1234";
+        // this.team.score = 401;
+        // this.team.time = 30;
         if(this.team == undefined) {
             // socket.send(JSON.stringify({"type": "7", "data": data}));
             socketScoreWithNoTeamName.send(JSON.stringify({"type": "11"}));
