@@ -149,6 +149,59 @@ public class TripleBot : Bot {
 
 
      /**
+     * #function TripleBot::GetFitThreeBlocks |
+     * @author JavaComSci |
+	 * @desc gets the fit of a both block onboard |
+     * @header publicList<Tuple<CompatiblePiece, CompatiblePiece, CompatiblePiece>> GetFitThreeBlocks(Board board, List<Tuple<Block, Block, Block>> blocksWithOrientations) | 
+	 * @param Board board: board to do placing on |
+     * @param List<Tuple<Block, Block, Block>> blocksWithOrientations: blockss to be placed|
+	 * @returns List<CompatiblePiece, CompatiblePiece, CompatiblePiece> : contains list of compatible positions for both blocks |
+	 */
+    public List<Tuple<CompatiblePiece, CompatiblePiece, CompatiblePiece>> GetFitThreeBlocks(Board board, List<Tuple<Block, Block, Block>> blocksWithOrientations) {
+        // list of all the compatible pieces that are on the board
+        List<Tuple<CompatiblePiece, CompatiblePiece, CompatiblePiece>> allCompatiblePieces = new List<Tuple<CompatiblePiece, CompatiblePiece, CompatiblePiece>>();
+
+        foreach(Tuple<Block, Block, Block> blockWithOrientation in blocksWithOrientations) {
+            // get the fit of the current board given this first piece and orientation
+            List<CompatiblePiece> compatibleFirstPieces = GetFit(board, blockWithOrientation.Item1);
+
+            foreach(CompatiblePiece compatibleFirstPiece in compatibleFirstPieces) {
+                // set up next board for next piece
+                Board boardCopy = new Board(board.board.GetLength(0), board.board.GetLength(1));
+                boardCopy.board = board.CopyBoard(board.board);
+                boardCopy.board = board.FillBoardWithPiece(boardCopy.board, compatibleFirstPiece.locationOnBoard);
+                boardCopy.FindMaxHeights();
+
+                // get the next piece on the board
+                List<CompatiblePiece> compatibleSecondPieces = GetFit(boardCopy, blockWithOrientation.Item2);
+
+                foreach(CompatiblePiece compatibleSecondPiece in compatibleSecondPieces) {
+                    // set up next board for next piece
+                    Board boardCopyCopy = new Board(boardCopy.board.GetLength(0), boardCopy.board.GetLength(1));
+                    boardCopyCopy.board = boardCopy.CopyBoard(boardCopy.board);
+                    boardCopyCopy.board = boardCopy.FillBoardWithPiece(boardCopyCopy.board, compatibleSecondPiece.locationOnBoard);
+                    boardCopyCopy.FindMaxHeights();
+
+                    // get the next piece on the board
+                    List<CompatiblePiece> compatibleThirdPieces = GetFit(boardCopyCopy, blockWithOrientation.Item3);
+
+                    foreach(CompatiblePiece compatibleThirdPiece in compatibleThirdPieces){
+                        allCompatiblePieces.Add(Tuple.Create<CompatiblePiece, CompatiblePiece, CompatiblePiece>(compatibleFirstPiece, compatibleSecondPiece, compatibleThirdPiece));
+                    }
+                }
+
+            }
+        }
+        
+        Console.WriteLine("ALL COMPATIBLE PIECES ON BOARD");
+        botInfoPrinter.PrintAllCompatiblePiecesTriple(board.board, allCompatiblePieces);
+        return allCompatiblePieces;
+    }
+
+
+
+
+     /**
      * #function TripleBot::GetMove |
      * @author JavaComSci |
 	 * @desc gets the fit of a three block onboard |
@@ -158,7 +211,7 @@ public class TripleBot : Bot {
 	 * @returns List<List<Tuple<int, int>>> : contains position for both blocks |
 	 */
     public override List<List<Tuple<int, int>>> GetMove(Board board, List<List<Block>> allBotBlocks, bool allRotations = false) {
-         // get each of the bot's blocks
+        // get each of the bot's blocks
         List<Block> bot1Blocks = allBotBlocks[0];
         List<Block> bot2Blocks = allBotBlocks[1];
         List<Block> bot3Blocks = allBotBlocks[2];
@@ -176,10 +229,13 @@ public class TripleBot : Bot {
         Console.WriteLine("PIECE 1 BOT 3");
         botInfoPrinter.PrintJaggedArr(bot3Blocks[0].data);
         
+        // get all the orientations
         List<Tuple<Block, Block, Block>> allOrientations = GenerateAllOrientations(allBotBlocks);
+        // Console.WriteLine("ALL ORIENTATIONS");
+        // botInfoPrinter.PrintAllOrientationsThreeBlocksAsList(allOrientations);
 
-        Console.WriteLine("ALL ORIENTATIONS");
-        botInfoPrinter.PrintAllOrientationsThreeBlocksAsList(allOrientations);
+        // get fit three blocks
+        List<Tuple<CompatiblePiece, CompatiblePiece, CompatiblePiece>> allCompatiblePieces = GetFitThreeBlocks(board, allOrientations);
 
         return null;
     }

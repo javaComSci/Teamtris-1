@@ -29,7 +29,7 @@ namespace Teamtris
             Prints infoPrinter = new Prints();
             
             // CHANGE - RECIEVED FROM THE FRONTEND - REPLACEMENT
-            int numBots = 2;
+            int numBots = 3;
 
             switch(numBots) {
                 case 1: 

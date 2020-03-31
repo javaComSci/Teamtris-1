@@ -98,7 +98,7 @@ public class DoubleBot : Bot {
      * @header publicList<Tuple<CompatiblePiece, CompatiblePiece>> GetFitBothBlocks(Board board, List<Tuple<Block, Block, int>> blocksWithOrientations) | 
 	 * @param Board board: board to do placing on |
      * @param List<Tuple<Block, Block, int>> blocksWithOrientations: blockss to be placed|
-	 * @returns List<CompatiblePiece> : contains list of compatible positions for both blocks |
+	 * @returns List<CompatiblePiece, CompatiblePiece> : contains list of compatible positions for both blocks |
 	 */
     public List<Tuple<CompatiblePiece, CompatiblePiece>> GetFitBothBlocks(Board board, List<Tuple<Block, Block, int>> blocksWithOrientations) {
         // list of all the compatible pieces that are on the board
