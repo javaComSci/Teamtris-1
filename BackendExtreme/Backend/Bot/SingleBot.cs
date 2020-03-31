@@ -235,16 +235,16 @@ public class SingleBot : Bot {
     }
 
     /**
-     * #function SingleBot::GetMove |
+     * #function SingleBot::GetSingleMove |
      * @author JavaComSci |
 	 * @desc need desc here TODO |
-     * @header public override List<...> GetMove(Board, List<Block>, bool) | 
+     * @header public override List<...> GetSingleMove(Board, List<Block>, bool) | 
 	 * @param int[][] board : current enviornment |
      * @param List<Block> blocks : contains the list of all the blocks to try to fit in this location |
 	 * @returns List<...> bestPiecePlacementOfCurrentBlock : contains the list of the indicies 
      * of where the piece would be on the board |
 	 */
-    public override List<Tuple<int, int>> GetMove(Board board, List<List<Block>> allBotBlocks, bool allRotations = false) {
+    public List<Tuple<int, int>> GetSingleMove(Board board, List<List<Block>> allBotBlocks, bool allRotations = false) {
         List<Block> blocks = allBotBlocks[0];
         Console.WriteLine("BOARD");
         botInfoPrinter.PrintMultiDimArr(board.board);
@@ -413,6 +413,13 @@ public class SingleBot : Bot {
         botInfoPrinter.PrintBoardWithPiece(board.board, bestPiecePlacementOfCurrentBlock);
 
         return bestPiecePlacementOfCurrentBlock;
+    }
+
+    public override List<List<Tuple<int, int>>> GetMove(Board board, List<List<Block>> allBotBlocks, bool allRotations = false){
+        List<Tuple<int, int>> singleMove = GetSingleMove(board, allBotBlocks, allRotations);
+        List<List<Tuple<int, int>>> allMoves = new List<List<Tuple<int, int>>>();
+        allMoves.Add(singleMove);
+        return allMoves;
     }
 }
 

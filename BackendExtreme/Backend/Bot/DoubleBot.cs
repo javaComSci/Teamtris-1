@@ -230,6 +230,7 @@ public class DoubleBot : Bot {
                         }
                     }
                     
+                    compatibleBoard = compatibleBoard.OrderBy(c => c.Item1).ThenBy(c => c.Item2).ToList();
                     CompatiblePiece compatiblePiece = new CompatiblePiece(compatibleBoard, dotsNearby.Count, rowsFilled);
                     compatiblePieces.Add(compatiblePiece);
                     break;
@@ -319,8 +320,53 @@ public class DoubleBot : Bot {
 	 * @returns List<Tuple<CompatiblePiece, CompatiblePiece>> : contains position for both blocks |
 	 */
      public Tuple<CompatiblePiece, CompatiblePiece> GetBestFit(List<Tuple<CompatiblePiece, CompatiblePiece>> allCompatiblePieces) {
-        
-        return null;
+
+        // sort the compatible second pieces and get the one that is the best fit
+        List<CompatiblePiece> secondPieces = allCompatiblePieces.Select(t => t.Item2).ToList();
+        secondPieces.Sort((x, y) => {
+            // sort by whether a line has been cleared and puts those first if there is
+            int result = y.numLinesCleared.CompareTo(x.numLinesCleared);
+            // sort by the area covered
+            return result == 0 ? y.area.CompareTo(x.area) : result;
+        });
+
+        // get the best second piece
+        CompatiblePiece bestSecondPiece = secondPieces[0];
+
+        // best first piece
+        CompatiblePiece firstPiece = null;
+
+        // get the corresponding first piece
+        foreach(Tuple<CompatiblePiece, CompatiblePiece> compatiblePieces in allCompatiblePieces){
+            CompatiblePiece potentialFirstPiece = compatiblePieces.Item1;
+            CompatiblePiece potentialSecondPiece = compatiblePieces.Item2;
+
+            bool match = true;
+            if(potentialSecondPiece.area != bestSecondPiece.area) {
+                match = false;
+            }
+            if(potentialSecondPiece.numLinesCleared != bestSecondPiece.numLinesCleared) {
+                match = false;
+            }
+            if(potentialSecondPiece.locationOnBoard.Count != bestSecondPiece.locationOnBoard.Count) {
+                match = false;
+            } else {
+                for(int i = 0; i < potentialSecondPiece.locationOnBoard.Count; i++) {
+                    if(!potentialSecondPiece.locationOnBoard[i].Equals(bestSecondPiece.locationOnBoard[i])) {
+                        match = false;
+                        break;
+                    }
+                }
+            }
+
+            if(match) {
+                firstPiece = potentialFirstPiece;
+                break;
+            }
+        }
+
+        Tuple<CompatiblePiece, CompatiblePiece> bestPieces = new Tuple<CompatiblePiece, CompatiblePiece>(firstPiece, bestSecondPiece);
+        return bestPieces;
      }
 
 
@@ -333,7 +379,7 @@ public class DoubleBot : Bot {
      * @param List<List<Block>> allBotBlocks: blocks to be placed|
 	 * @returns List<Tuple<int, int>> : contains position for both blocks |
 	 */
-    public override List<Tuple<int, int>> GetMove(Board board, List<List<Block>> allBotBlocks, bool allRotations = false) {
+    public override List<List<Tuple<int, int>>> GetMove(Board board, List<List<Block>> allBotBlocks, bool allRotations = false) {
         // get each of the bot's blocks
         List<Block> bot1Blocks = allBotBlocks[0];
         List<Block> bot2Blocks = allBotBlocks[1];
@@ -360,12 +406,26 @@ public class DoubleBot : Bot {
         // all orientations of the 2 blocks in each one going first on the board
         List<Tuple<Block, Block, int>> allOrientations = GetAllOrientations(bot1Blocks[0], bot2Blocks[0]);
 
-        Console.WriteLine("ALL ORIENTATIONS");
+        // Console.WriteLine("ALL ORIENTATIONS");
         // botInfoPrinter.PrintAllOrientationsAsList(allOrientations);
 
+        // get the best fit of blocks
         List<Tuple<CompatiblePiece, CompatiblePiece>> allCompatiblePieces = GetFitBothBlocks(board, allOrientations);
-        GetBestFit(allCompatiblePieces);
-        
-        return null;
+        Tuple<CompatiblePiece, CompatiblePiece> bestPieces = GetBestFit(allCompatiblePieces);
+
+        // printing the info
+        Console.WriteLine("BEST COMPATIBLE PIECES ON BOARD");
+        List<Tuple<CompatiblePiece, CompatiblePiece>> bestPiecesList = new List<Tuple<CompatiblePiece, CompatiblePiece>>();
+        bestPiecesList.Add(bestPieces);
+        botInfoPrinter.PrintAllCompatiblePieces(board.board, bestPiecesList);
+
+
+        // return setup
+        List<Tuple<int, int>> compatiblePiece1 = bestPieces.Item1.locationOnBoard;
+        List<Tuple<int, int>> compatiblePiece2 = bestPieces.Item2.locationOnBoard;
+        List<List<Tuple<int, int>>> allMoves = new List<List<Tuple<int, int>>>();
+        allMoves.Add(compatiblePiece1);
+        allMoves.Add(compatiblePiece2);
+        return allMoves;
     }
 }

@@ -35,7 +35,7 @@ public class TripleBot : Bot {
         return null;
     }
 
-    public override List<Tuple<int, int>> GetMove(Board board, List<List<Block>> allBotBlocks, bool allRotations = false) {
+    public override List<List<Tuple<int, int>>> GetMove(Board board, List<List<Block>> allBotBlocks, bool allRotations = false) {
         return null;
     }
 }

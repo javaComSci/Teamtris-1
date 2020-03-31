@@ -77,7 +77,8 @@ public class GameManager
                         Console.WriteLine("making bot move");
                         try
                         {
-                            List<Tuple<int, int>> bob = bot.GetMove(lobby.game.board, allBlocks);
+                            List<List<Tuple<int, int>>> allBobs = bot.GetMove(lobby.game.board, allBlocks);
+                            List<Tuple<int, int>> bob = allBobs[0];
                             if (bob == null)
                             {
                                 Console.WriteLine("no place to place piece");
