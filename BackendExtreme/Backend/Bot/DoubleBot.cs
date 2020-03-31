@@ -304,8 +304,8 @@ public class DoubleBot : Bot {
                 }
             }
         }
-        Console.WriteLine("ALL COMPATIBLE PIECES ON BOARD");
-        botInfoPrinter.PrintAllCompatiblePieces(board.board, allCompatiblePieces);
+        // Console.WriteLine("ALL COMPATIBLE PIECES ON BOARD");
+        // botInfoPrinter.PrintAllCompatiblePieces(board.board, allCompatiblePieces);
         return allCompatiblePieces;
     }
 
@@ -384,6 +384,18 @@ public class DoubleBot : Bot {
         List<Block> bot1Blocks = allBotBlocks[0];
         List<Block> bot2Blocks = allBotBlocks[1];
 
+        // check to make sure that each block is valid
+        bool blockValid1 = bot1Blocks[0].CheckValidity();
+         // block is invalid
+        if(!blockValid1) {
+            throw new Exception("Shape formation is incorrect");
+        }
+        bool blockValid2 = bot2Blocks[0].CheckValidity();
+        // block is invalid
+        if(!blockValid2) {
+            throw new Exception("Shape formation is incorrect");
+        }
+
         // get the max height of each column of the baord 
         board.FindMaxHeights();
 
@@ -395,13 +407,6 @@ public class DoubleBot : Bot {
         Console.WriteLine("PIECE 2 BOT 2");
         botInfoPrinter.PrintJaggedArr(bot2Blocks[0].data);
 
-        // check to make sure that each block is valid
-        bool blockValid1 = bot1Blocks[0].CheckValidity();
-        bool blockValid2 = bot2Blocks[0].CheckValidity();
-        // block is invalid
-        if(!blockValid1 || !blockValid2) {
-            throw new Exception("Shape formation is incorrect");
-        }
 
         // all orientations of the 2 blocks in each one going first on the board
         List<Tuple<Block, Block, int>> allOrientations = GetAllOrientations(bot1Blocks[0], bot2Blocks[0]);
