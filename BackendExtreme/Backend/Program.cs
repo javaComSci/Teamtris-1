@@ -49,6 +49,7 @@ namespace Teamtris
 
             List<Block> bot1Blocks = new List<Block>();
             List<Block> bot2Blocks = new List<Block>();
+            List<Block> bot3Blocks = new List<Block>();
             // game.board.board =  new int[,]{
             //     {0, 0, 0, 0, 0, 0},
             //     {0, 0, 0, 0, 0, 0},
@@ -67,22 +68,30 @@ namespace Teamtris
                 {0, 1, 1, 1, 1, 1, 1},
             };
             int[][] block11 = new int[][] {
-               new int[] {0, 0, 1, 0}, 
-                    new int[] {0, 0, 1, 0}, 
-                    new int[] {0, 0, 1, 0}, 
-                    new int[] {0, 0, 1, 0}, 
+                new int[] {0, 0, 1, 0}, 
+                new int[] {0, 0, 1, 0}, 
+                new int[] {0, 0, 1, 0}, 
+                new int[] {0, 0, 1, 0}, 
             };
             int[][] block21 = new int[][] {
                 new int[] {0, 1, 1, 0}, 
-                    new int[] {0, 1, 0, 0}, 
-                    new int[] {0, 0, 0, 0}, 
-                    new int[] {0, 0, 0, 0}, 
+                new int[] {0, 1, 0, 0}, 
+                new int[] {0, 0, 0, 0}, 
+                new int[] {0, 0, 0, 0}, 
+            };
+            int[][] block31 = new int[][] {
+                new int[] {0, 1, 1, 0}, 
+                new int[] {0, 0, 0, 0}, 
+                new int[] {0, 0, 0, 0}, 
+                new int[] {0, 0, 0, 0}, 
             };
             bot1Blocks.Add(new Block(block11, 1));
             bot2Blocks.Add(new Block(block21, 1));
+            bot3Blocks.Add(new Block(block31, 1));
             List<List<Block>> blocks = new List<List<Block>>();
             blocks.Add(bot1Blocks);
             blocks.Add(bot2Blocks);
+            blocks.Add(bot3Blocks);
 
             game.bot.GetMove(game.board, blocks);
             // try {
