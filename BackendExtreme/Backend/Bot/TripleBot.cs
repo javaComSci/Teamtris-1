@@ -116,6 +116,7 @@ public class TripleBot : Bot {
                                    from block2 in blockOrientationsForBot2
                                    from block3 in blockOrientationsForBot3
                                    select new Tuple<Block, Block, Block>(block1, block2, block3)).ToList();
+        Console.WriteLine("NUMBER OF ORIENTATIONS " + allOrientations.Count);
         return allOrientations;
     }
 
@@ -193,8 +194,8 @@ public class TripleBot : Bot {
             }
         }
         
-        Console.WriteLine("ALL COMPATIBLE PIECES ON BOARD");
-        botInfoPrinter.PrintAllCompatiblePiecesTriple(board.board, allCompatiblePieces);
+        // Console.WriteLine("ALL COMPATIBLE PIECES ON BOARD");
+        // botInfoPrinter.PrintAllCompatiblePiecesTriple(board.board, allCompatiblePieces);
         return allCompatiblePieces;
     }
 
@@ -255,7 +256,7 @@ public class TripleBot : Bot {
             return null;
         }
         // Console.WriteLine("ALL ORIENTATIONS");
-        // botInfoPrinter.PrintAllOrientationsThreeBlocksAsList(allOrientations);
+        botInfoPrinter.PrintAllOrientationsThreeBlocksAsList(allOrientations);
 
         // get fit three blocks
         List<Tuple<CompatiblePiece, CompatiblePiece, CompatiblePiece>> allCompatiblePieces = GetFitThreeBlocks(board, allOrientations);

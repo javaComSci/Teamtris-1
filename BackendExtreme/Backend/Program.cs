@@ -29,7 +29,7 @@ namespace Teamtris
             Prints infoPrinter = new Prints();
             
             // CHANGE - RECIEVED FROM THE FRONTEND - REPLACEMENT
-            int numBots = 2;
+            int numBots = 3;
 
             switch(numBots) {
                 case 1: 
@@ -74,7 +74,7 @@ namespace Teamtris
                 new int[] {0, 0, 1, 0}, 
             };
             int[][] block21 = new int[][] {
-                new int[] {0, 1, 1, 0}, 
+                new int[] {0, 1, 0, 0}, 
                 new int[] {0, 0, 0, 0}, 
                 new int[] {0, 0, 0, 0}, 
                 new int[] {0, 0, 0, 0}, 
@@ -91,7 +91,7 @@ namespace Teamtris
             List<List<Block>> blocks = new List<List<Block>>();
             blocks.Add(bot1Blocks);
             blocks.Add(bot2Blocks);
-            // blocks.Add(bot3Blocks);
+            blocks.Add(bot3Blocks);
 
             game.bot.GetMove(game.board, blocks);
             // try {

@@ -35,7 +35,7 @@ public abstract class Bot {
         List<CompatiblePiece> compatiblePieces = new List<CompatiblePiece>();
 
         int[][] shiftedOverPiece = block.data;
-        botInfoPrinter.PrintJaggedArr(block.data);
+        // botInfoPrinter.PrintJaggedArr(block.data);
         int[] bottomBlocks = block.GetBottomBlocksAsJaggedArray(block.data);
 
         // Console.WriteLine("AFTER JAGGED");
@@ -173,7 +173,7 @@ public abstract class Bot {
                 }
             }
         }
-        Console.WriteLine("RETURNING IS " + compatiblePieces);
+        // Console.WriteLine("RETURNING IS " + compatiblePieces);
         return compatiblePieces;
     }
 }
