@@ -244,7 +244,7 @@ public class SingleBot : Bot {
 	 * @returns List<...> bestPiecePlacementOfCurrentBlock : contains the list of the indicies 
      * of where the piece would be on the board |
 	 */
-    public List<Tuple<int, int>> GetSingleMove(Board board, List<List<Block>> allBotBlocks, bool allRotations = false) {
+    public List<Tuple<int, int>> GetSingleMove1(Board board, List<List<Block>> allBotBlocks, bool allRotations = false) {
         List<Block> blocks = allBotBlocks[0];
         Console.WriteLine("BOARD");
         botInfoPrinter.PrintMultiDimArr(board.board);
@@ -416,10 +416,15 @@ public class SingleBot : Bot {
     }
 
     public override List<List<Tuple<int, int>>> GetMove(Board board, List<List<Block>> allBotBlocks, bool allRotations = false){
-        List<Tuple<int, int>> singleMove = GetSingleMove(board, allBotBlocks, allRotations);
+        List<Tuple<int, int>> singleMove = GetSingleMove1(board, allBotBlocks, allRotations);
         List<List<Tuple<int, int>>> allMoves = new List<List<Tuple<int, int>>>();
         allMoves.Add(singleMove);
         return allMoves;
+    }
+
+    
+    public override List<Tuple<int, int>> GetSingleMove(Board board, List<List<Block>> allBotBlocks, bool allRotations = false){
+       return GetMove(board, allBotBlocks, allRotations)[0];
     }
 }
 

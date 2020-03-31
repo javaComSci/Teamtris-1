@@ -10,4 +10,10 @@ public abstract class Bot {
         List<List<Block>> allBotBlocks, 
         bool allRotations = false
     );
+
+    public abstract List<Tuple<int, int>> GetSingleMove(
+        Board board, 
+        List<List<Block>> allBotBlocks, 
+        bool allRotations = false
+    );
 }

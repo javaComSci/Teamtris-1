@@ -428,4 +428,8 @@ public class DoubleBot : Bot {
         allMoves.Add(compatiblePiece2);
         return allMoves;
     }
+
+    public override List<Tuple<int, int>> GetSingleMove(Board board, List<List<Block>> allBotBlocks, bool allRotations = false){
+       return GetMove(board, allBotBlocks, allRotations)[0];
+    }
 }
