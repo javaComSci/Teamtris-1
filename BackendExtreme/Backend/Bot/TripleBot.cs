@@ -199,6 +199,19 @@ public class TripleBot : Bot {
     }
 
 
+    /**
+     * #function DoubleBot::GetbestFit |
+     * @author JavaComSci |
+	 * @desc gets the fit of a all three block onboard |
+     * @header public Tuple<CompatiblePiece, CompatiblePiece, CompatiblePiece> GetBestFit(List<Tuple<CompatiblePiece, CompatiblePiece, CompatiblePiece>> allCompatiblePieces)  | 
+	 * @param List<Tuple<CompatiblePiece, CompatiblePiece, CompatiblePiece>> allCompatiblePieces: all the pieces to find best fit for|
+	 * @returns List<Tuple<CompatiblePiece, CompatiblePiece, CompatiblePiece>> : contains position for three blocks |
+	 */
+     public Tuple<CompatiblePiece, CompatiblePiece, CompatiblePiece> GetBestFit(List<Tuple<CompatiblePiece, CompatiblePiece, CompatiblePiece>> allCompatiblePieces) {
+        List<Tuple<CompatiblePiece, CompatiblePiece, CompatiblePiece>> ordered = allCompatiblePieces.OrderBy(t => t.Item3).ThenBy(t => t.Item2).ThenBy(t => t.Item1).ToList();
+        Tuple<CompatiblePiece, CompatiblePiece, CompatiblePiece> bestPiece = ordered[0];
+        return bestPiece;
+     }
 
 
      /**
@@ -236,8 +249,24 @@ public class TripleBot : Bot {
 
         // get fit three blocks
         List<Tuple<CompatiblePiece, CompatiblePiece, CompatiblePiece>> allCompatiblePieces = GetFitThreeBlocks(board, allOrientations);
+        Tuple<CompatiblePiece, CompatiblePiece, CompatiblePiece> bestPieces = GetBestFit(allCompatiblePieces);
 
-        return null;
+        // printing the info
+        Console.WriteLine("BEST COMPATIBLE PIECES ON BOARD");
+        List<Tuple<CompatiblePiece, CompatiblePiece, CompatiblePiece>> bestPiecesList = new List<Tuple<CompatiblePiece, CompatiblePiece, CompatiblePiece>>();
+        bestPiecesList.Add(bestPieces);
+        botInfoPrinter.PrintAllCompatiblePieces(board.board, bestPiecesList);
+
+
+        // return setup
+        List<Tuple<int, int>> compatiblePiece1 = bestPieces.Item1.locationOnBoard;
+        List<Tuple<int, int>> compatiblePiece2 = bestPieces.Item2.locationOnBoard;
+        List<Tuple<int, int>> compatiblePiece3 = bestPieces.Item3.locationOnBoard;
+        List<List<Tuple<int, int>>> allMoves = new List<List<Tuple<int, int>>>();
+        allMoves.Add(compatiblePiece1);
+        allMoves.Add(compatiblePiece2);
+        allMoves.Add(compatiblePiece3);
+        return allMoves;
     }
 
     public override List<Tuple<int, int>> GetSingleMove(Board board, List<List<Block>> allBotBlocks, bool allRotations = false){
