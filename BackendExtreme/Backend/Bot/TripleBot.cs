@@ -224,6 +224,13 @@ public class TripleBot : Bot {
 	 * @returns List<List<Tuple<int, int>>> : contains position for both blocks |
 	 */
     public override List<List<Tuple<int, int>>> GetMove(Board board, List<List<Block>> allBotBlocks, bool allRotations = false) {
+        
+        try {
+            CheckBlockValididty(allBotBlocks);
+        } catch (Exception e) {
+            throw e;
+        }
+        
         // get each of the bot's blocks
         List<Block> bot1Blocks = allBotBlocks[0];
         List<Block> bot2Blocks = allBotBlocks[1];
@@ -244,12 +251,21 @@ public class TripleBot : Bot {
         
         // get all the orientations
         List<Tuple<Block, Block, Block>> allOrientations = GenerateAllOrientations(allBotBlocks);
+        if(allOrientations == null){
+            return null;
+        }
         // Console.WriteLine("ALL ORIENTATIONS");
         // botInfoPrinter.PrintAllOrientationsThreeBlocksAsList(allOrientations);
 
         // get fit three blocks
         List<Tuple<CompatiblePiece, CompatiblePiece, CompatiblePiece>> allCompatiblePieces = GetFitThreeBlocks(board, allOrientations);
+        if(allCompatiblePieces == null || allCompatiblePieces.Count == 0) {
+            return null;
+        }
         Tuple<CompatiblePiece, CompatiblePiece, CompatiblePiece> bestPieces = GetBestFit(allCompatiblePieces);
+         if(bestPieces == null || bestPieces.Item1 == null || bestPieces.Item2 == null || bestPieces.Item3 == null){
+            return null;
+        }
 
         // printing the info
         Console.WriteLine("BEST COMPATIBLE PIECES ON BOARD");
@@ -266,6 +282,9 @@ public class TripleBot : Bot {
         allMoves.Add(compatiblePiece1);
         allMoves.Add(compatiblePiece2);
         allMoves.Add(compatiblePiece3);
+        if(compatiblePiece1 == null || compatiblePiece2 == null || compatiblePiece3 == null) {
+            return null;
+        }
         return allMoves;
     }
 

@@ -30,6 +30,7 @@ public abstract class Bot {
         Prints botInfoPrinter = new Prints();
 
         // Console.WriteLine("GET FIT");
+        // Console.WriteLine("NUMBER OF ROWS AND COLS " + board.height + " " + board.width);
 
         List<CompatiblePiece> compatiblePieces = new List<CompatiblePiece>();
 
@@ -115,11 +116,13 @@ public abstract class Bot {
 
                     // add to the board information
                     compatibleBoard.Add(Tuple.Create(shiftedForBoardRow, shiftedForBoardCol));
+                    // Console.WriteLine("HERE " + shiftedForBoardRow + " " + shiftedForBoardCol);
                     modifiedBoardWithOnlyPieces[shiftedForBoardRow, shiftedForBoardCol] = 2;
 
+                    // Console.WriteLine("SHIFTED " + shiftedForBoardRow + " " + shiftedForBoardCol + " " + modifiedBoardWithOnlyPieces.GetLength(1));
                     // see which dots are nearby
                     // up
-                    if(shiftedForBoardRow - 1 >= 0 && board.board[shiftedForBoardRow - 1,shiftedForBoardCol] == 1) {
+                    if(shiftedForBoardRow - 1 > 0 && board.board[shiftedForBoardRow - 1,shiftedForBoardCol] == 1) {
                         dotsNearby.Add(Tuple.Create(shiftedForBoardRow - 1, shiftedForBoardCol));
                     }
                     // down
@@ -138,6 +141,11 @@ public abstract class Bot {
                     if(shiftedForBoardRow + 1 == board.height) {
                         dotsNearby.Add(Tuple.Create(shiftedForBoardRow + 1, shiftedForBoardCol));
                         dotsFillingFloor += 1;
+                    }
+
+                    // check for touching the ceiling
+                    if(shiftedForBoardRow - 1 == 0) {
+                        dotsNearby.Add(Tuple.Create(shiftedForBoardRow - 1, shiftedForBoardCol));
                     }
 
                 }
@@ -165,6 +173,7 @@ public abstract class Bot {
                 }
             }
         }
+        Console.WriteLine("RETURNING IS " + compatiblePieces);
         return compatiblePieces;
     }
 }

@@ -21,7 +21,7 @@ namespace Teamtris
         {
 
             // initialize game state
-            GameState game = new GameState(6, 6);
+            GameState game = new GameState(7, 6);
             game.players = new Dictionary<int, Player>();
             Dictionary<string, Lobby> lobbies = new Dictionary<string, Lobby>();
 
@@ -29,7 +29,7 @@ namespace Teamtris
             Prints infoPrinter = new Prints();
             
             // CHANGE - RECIEVED FROM THE FRONTEND - REPLACEMENT
-            int numBots = 3;
+            int numBots = 2;
 
             switch(numBots) {
                 case 1: 
@@ -60,12 +60,12 @@ namespace Teamtris
             // };
 
             game.board.board = new int[,]{
-                {0, 0, 0, 0, 0, 0, 1},
-                {0, 0, 1, 0, 0, 0, 1},
-                {0, 0, 1, 0, 0, 1, 1},
-                {0, 0, 1, 0, 0, 1, 1},
+                {0, 0, 1, 0, 0, 0, 0},
+                {1, 1, 1, 0, 1, 1, 1},
+                {1, 0, 1, 1, 1, 1, 1},
+                {1, 0, 1, 0, 1, 1, 1},
                 {0, 1, 1, 1, 1, 1, 1},
-                {0, 1, 1, 1, 1, 1, 1},
+                {1, 0, 1, 1, 1, 1, 1},
             };
             int[][] block11 = new int[][] {
                 new int[] {0, 0, 1, 0}, 
@@ -75,12 +75,12 @@ namespace Teamtris
             };
             int[][] block21 = new int[][] {
                 new int[] {0, 1, 1, 0}, 
-                new int[] {0, 1, 0, 0}, 
+                new int[] {0, 0, 0, 0}, 
                 new int[] {0, 0, 0, 0}, 
                 new int[] {0, 0, 0, 0}, 
             };
             int[][] block31 = new int[][] {
-                new int[] {0, 1, 1, 0}, 
+                new int[] {0, 1, 0, 0}, 
                 new int[] {0, 0, 0, 0}, 
                 new int[] {0, 0, 0, 0}, 
                 new int[] {0, 0, 0, 0}, 
@@ -91,7 +91,7 @@ namespace Teamtris
             List<List<Block>> blocks = new List<List<Block>>();
             blocks.Add(bot1Blocks);
             blocks.Add(bot2Blocks);
-            blocks.Add(bot3Blocks);
+            // blocks.Add(bot3Blocks);
 
             game.bot.GetMove(game.board, blocks);
             // try {

@@ -103,7 +103,7 @@ public class DoubleBot : Bot {
     public List<Tuple<CompatiblePiece, CompatiblePiece>> GetFitBothBlocks(Board board, List<Tuple<Block, Block, int>> blocksWithOrientations) {
         // list of all the compatible pieces that are on the board
         List<Tuple<CompatiblePiece, CompatiblePiece>> allCompatiblePieces = new List<Tuple<CompatiblePiece, CompatiblePiece>>();
-
+        
         foreach(Tuple<Block, Block, int> blockWithOrientation in blocksWithOrientations) {
             // get the fit of the current board given this first piece and orientation
             List<CompatiblePiece> compatibleFirstPieces = GetFit(board, blockWithOrientation.Item1);
@@ -116,7 +116,7 @@ public class DoubleBot : Bot {
             //         return result == 0 ? y.area.CompareTo(x.area) : result;
             //     });
 
-            // Console.WriteLine("BLOCK WITH ORIENTIATION");
+            // Console.WriteLine("FIRST PIECES");
             // botInfoPrinter.PrintCompatiblePieces(board.board, compatibleFirstPieces);
 
             // get the next pieces to fit
@@ -153,8 +153,8 @@ public class DoubleBot : Bot {
                 }
             }
         }
-        // Console.WriteLine("ALL COMPATIBLE PIECES ON BOARD");
-        // botInfoPrinter.PrintAllCompatiblePieces(board.board, allCompatiblePieces);
+        Console.WriteLine("ALL COMPATIBLE PIECES ON BOARD");
+        botInfoPrinter.PrintAllCompatiblePieces(board.board, allCompatiblePieces);
         return allCompatiblePieces;
     }
 
@@ -169,7 +169,9 @@ public class DoubleBot : Bot {
 	 * @returns List<Tuple<CompatiblePiece, CompatiblePiece>> : contains position for both blocks |
 	 */
      public Tuple<CompatiblePiece, CompatiblePiece> GetBestFit(List<Tuple<CompatiblePiece, CompatiblePiece>> allCompatiblePieces) {
-
+        if(allCompatiblePieces == null) {
+            return null;
+        }
         // sort the compatible second pieces and get the one that is the best fit
         List<CompatiblePiece> secondPieces = allCompatiblePieces.Select(t => t.Item2).ToList();
         secondPieces.Sort((x, y) => {
@@ -259,13 +261,25 @@ public class DoubleBot : Bot {
 
         // all orientations of the 2 blocks in each one going first on the board
         List<Tuple<Block, Block, int>> allOrientations = GetAllOrientations(bot1Blocks[0], bot2Blocks[0]);
+        if(allOrientations == null){
+            return null;
+        }
 
-        // Console.WriteLine("ALL ORIENTATIONS");
-        // botInfoPrinter.PrintAllOrientationsAsList(allOrientations);
+        Console.WriteLine("ALL ORIENTATIONS");
+        botInfoPrinter.PrintAllOrientationsAsList(allOrientations);
 
         // get the best fit of blocks
         List<Tuple<CompatiblePiece, CompatiblePiece>> allCompatiblePieces = GetFitBothBlocks(board, allOrientations);
+        if(allCompatiblePieces == null || allCompatiblePieces.Count == 0) {
+            Console.WriteLine("I AM RETURING WITH NO PIECES");
+            return null;
+        }
+        
         Tuple<CompatiblePiece, CompatiblePiece> bestPieces = GetBestFit(allCompatiblePieces);
+        Console.WriteLine("BEST FIETS " + bestPieces);
+        if(bestPieces == null || bestPieces.Item1 == null || bestPieces.Item2 == null){
+            return null;
+        }
 
         // printing the info
         Console.WriteLine("BEST COMPATIBLE PIECES ON BOARD");
@@ -280,6 +294,9 @@ public class DoubleBot : Bot {
         List<List<Tuple<int, int>>> allMoves = new List<List<Tuple<int, int>>>();
         allMoves.Add(compatiblePiece1);
         allMoves.Add(compatiblePiece2);
+        if(compatiblePiece1 == null || compatiblePiece2 == null) {
+            return null;
+        }
         return allMoves;
     }
 
