@@ -21,7 +21,7 @@ namespace Teamtris
         {
 
             // initialize game state
-            GameState game = new GameState(7, 6);
+            GameState game = new GameState(6, 7);
             game.players = new Dictionary<int, Player>();
             Dictionary<string, Lobby> lobbies = new Dictionary<string, Lobby>();
 

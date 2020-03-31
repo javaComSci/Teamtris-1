@@ -29,9 +29,13 @@ public class TripleBot : Bot {
 	 * @returns void : checked valididty |
 	 */
     public void CheckBlockValididty(List<List<Block>> allBotBlocks) {
-       // check to make sure that each block is valid
+        // check that there are 3 blocks
+        if((allBotBlocks.Count != 3 || allBotBlocks[0] == null || allBotBlocks[1] == null || allBotBlocks[2] == null)){
+            throw new Exception("Not enough blocks");
+        }
+        // check to make sure that each block is valid
         bool blockValid1 = allBotBlocks[0][0].CheckValidity();
-         // block is invalid
+        // block is invalid
         if(!blockValid1) {
             throw new Exception("Shape formation is incorrect");
         }
