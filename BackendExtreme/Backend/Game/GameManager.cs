@@ -79,6 +79,17 @@ public class GameManager
                     Bot bot = lobby.bot;
                     Console.WriteLine("making bot move");
 
+                    if(lobby.game.board == null) {
+                        Console.WriteLine("THE GAME BOARD IS NULL");
+                    }
+                    if(allBlocks == null) {
+                        Console.WriteLine("ALL BLOCKS IS NULL");
+                    }
+                    if(allBlocks[0][0] != null) {
+                        Console.WriteLine("THE ITEM IS EXISTING");
+                    } else {
+                        Console.WriteLine("BLOCK NO EXIST");    
+                    }
                     List<List<Tuple<int, int>>> allBobs = bot.GetMove(lobby.game.board, allBlocks);
                     List<Tuple<int, int>> bob = allBobs[0];
                     if (bob == null)
