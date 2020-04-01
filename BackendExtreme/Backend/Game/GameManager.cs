@@ -85,7 +85,7 @@ public class GameManager
                             }
                             foreach (Tuple<int, int> tup in bob)
                             {
-                                // lobby.game.board.board[tup.Item1, tup.Item2] = 1;
+                                lobby.game.board.board[tup.Item1, tup.Item2] = 1;
                             }
                         }
                         catch (Exception)
