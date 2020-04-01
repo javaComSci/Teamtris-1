@@ -97,6 +97,14 @@ class GameScreen {
         this.GameArray.ForceUpdatePlayer(e.playerID, e.shapeBlueprint)
       } else if (e.type == 100) {
         // the entire game state is getting sent here, do something cool with it
+        console.log(e)
+        for (var i = 0; i < e.board.length; i++) {
+          for (var j = 0; j < e.board[0].length; j++) {
+            if (e.board[i][j] != 0) {
+              this.GameArray.arr[i][j].SetFrozen(e.board[i][j])
+            }
+          }
+        }
       }
 
       // e.type == 11
@@ -151,6 +159,8 @@ class GameScreen {
       //a
       this.GameArray.RotateShape(this.PlayerID);
       this.GameArray.MoveShape(this.PlayerID, 0, 0, 0);
+    } else if (realKeyCode === 'i') {
+      gameState = 3
     }
   }
 }
