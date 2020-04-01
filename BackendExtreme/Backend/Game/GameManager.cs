@@ -42,7 +42,7 @@ public class GameManager
         bot1Blocks.Add(new Block(block11, 1));
         bot2Blocks.Add(new Block(block21, 1));
         bot3Blocks.Add(new Block(block31, 1));
-        List<List<Block>> blocks = new List<List<Block>>();
+        List<List<Block>> allBlocks = new List<List<Block>>();
         allBlocks.Add(bot1Blocks);
         allBlocks.Add(bot2Blocks);
         allBlocks.Add(bot3Blocks);
