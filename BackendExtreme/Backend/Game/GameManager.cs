@@ -22,22 +22,22 @@ public class GameManager
         List<Block> bot3Blocks = new List<Block>();
 
         int[][] block11 = new int[][] {
-            new int[] {0, 0, 1, 0}, 
-            new int[] {0, 0, 1, 0}, 
-            new int[] {0, 0, 1, 0}, 
-            new int[] {0, 0, 1, 0}, 
+            new int[] {0, 0, 1, 0},
+            new int[] {0, 0, 1, 0},
+            new int[] {0, 0, 1, 0},
+            new int[] {0, 0, 1, 0},
         };
         int[][] block21 = new int[][] {
-            new int[] {0, 1, 0, 0}, 
-            new int[] {0, 0, 0, 0}, 
-            new int[] {0, 0, 0, 0}, 
-            new int[] {0, 0, 0, 0}, 
+            new int[] {0, 1, 0, 0},
+            new int[] {0, 0, 0, 0},
+            new int[] {0, 0, 0, 0},
+            new int[] {0, 0, 0, 0},
         };
         int[][] block31 = new int[][] {
-            new int[] {0, 1, 0, 0}, 
-            new int[] {0, 0, 0, 0}, 
-            new int[] {0, 0, 0, 0}, 
-            new int[] {0, 0, 0, 0}, 
+            new int[] {0, 1, 0, 0},
+            new int[] {0, 0, 0, 0},
+            new int[] {0, 0, 0, 0},
+            new int[] {0, 0, 0, 0},
         };
         bot1Blocks.Add(new Block(block11, 1));
         bot2Blocks.Add(new Block(block21, 1));
@@ -76,22 +76,21 @@ public class GameManager
                 Lobby lobby = lobbies[lobbyID];
                 if (lobby.lobbyState == LobbyState.PLAYING)
                 {
-                    foreach (Bot bot in lobby.bots)
+                    Bot bot = lobby.bot;
+                    Console.WriteLine("making bot move");
+
+                    List<List<Tuple<int, int>>> allBobs = bot.GetMove(lobby.game.board, allBlocks);
+                    List<Tuple<int, int>> bob = allBobs[0];
+                    if (bob == null)
                     {
-                        Console.WriteLine("making bot move");
-
-                        List<List<Tuple<int, int>>> allBobs = bot.GetMove(lobby.game.board, allBlocks);
-                        List<Tuple<int, int>> bob = allBobs[0];
-                        if (bob == null)
-                        {
-                            Console.WriteLine("no place to place piece");
-                        }
-                        foreach (Tuple<int, int> tup in bob)
-                        {
-                            lobby.game.board.board[tup.Item1, tup.Item2] = 1;
-                        }
-
+                        Console.WriteLine("no place to place piece");
                     }
+                    foreach (Tuple<int, int> tup in bob)
+                    {
+                        lobby.game.board.board[tup.Item1, tup.Item2] = 1;
+                    }
+
+
                     // update board
                     for (int j = 0; j < lobby.players.Count; j++)
                     {
