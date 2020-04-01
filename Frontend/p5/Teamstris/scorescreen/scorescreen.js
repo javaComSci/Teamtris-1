@@ -176,14 +176,17 @@ class ScoreScreen {
         // this.team.lobbyToken = "1234";
         // this.team.score = 401;
         // this.team.time = 30;
+        this.team = team;
         if(this.team == undefined) {
             // socket.send(JSON.stringify({"type": "7", "data": data}));
             socketScoreWithNoTeamName.send(JSON.stringify({"type": "11"}));
             /* Test */
         } else {
-            console.log(this.team.playersInTeam)
-            teamMembers = this.team.playersInTeam.map(player => player.username);
-            console.log(teamMembers)
+            console.log("GHOING")
+            var teamMembers = [];
+            for(var i = 0; i < this.team.playersInTeam.length; i++) {
+                teamMembers.push(this.team.playersInTeam[i].username)
+            }
             var data = JSON.stringify({
                 "teamName": this.team.teamName, 
                 "playerNames": teamMembers,
