@@ -19,13 +19,13 @@ class GameArray {
 
         this.NumPlayers = NumPlayers
         this.ShapeArray = new Array(this.NumPlayers)
-        this.tempShape = [[0,1,0,0],
+        this.startShape = [[0,1,0,0],
                         [0,0,0,0],
                         [0,0,0,0],
                         [0,0,0,0]]
         //this.ShapeArray[this.ID-1] = this.InstantiateShape(this.ID,null,0,this.OffsetByID(this.ID), false)
-        this.ShapeArray[0] = this.InstantiateShape(1,this.tempShape,0,5, false)
-        this.ShapeArray[1] = this.InstantiateShape(2,this.tempShape,0,10,false)
+        this.ShapeArray[0] = this.InstantiateShape(1,this.startShape,0,5, false)
+        this.ShapeArray[1] = this.InstantiateShape(2,this.startShape,0,10,false)
         // this.ShapeArray[2] = this.InstantiateShape(3,null,0,15,false)
         // this.ShapeArray[3] = this.InstantiateShape(4,null,0,20,false)
         //this.PlaceShape(this.ShapeArray[1])

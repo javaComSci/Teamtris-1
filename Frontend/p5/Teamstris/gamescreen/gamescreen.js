@@ -15,7 +15,7 @@ class GameScreen {
     this.NumPlayers = PlayerCount;
 
     // ID of the current player
-    this.PlayerID = 1;
+    this.PlayerID = 2;
 
     // size of the game board, determined by this.NumPlayers.
     this.BoardSquareSize = [20, 5 + 5 * this.NumPlayers];
@@ -95,13 +95,12 @@ class GameScreen {
         }
       } else if (e.type == 11) {
         this.GameArray.ForceUpdatePlayer(e.playerID, e.shapeBlueprint)
-      } else if (e.type == 100) {
-        // the entire game state is getting sent here, do something cool with it
-        console.log(e)
-        for (var i = 0; i < e.board.length; i++) {
-          for (var j = 0; j < e.board[0].length; j++) {
-            if (e.board[i][j] != 0) {
-              this.GameArray.arr[i][j].SetFrozen(e.board[i][j])
+      } else if (e.type == 100) { // force update based on game board
+        var newBoard = e.board.board
+        for (var i = 0; i < newBoard.length; i++) {
+          for (var j = 0; j < newBoard[0].length; j++) {
+            if (newBoard[i][j] != 0) {
+              this.GameArray.arr[i][j].SetFrozen(newBoard[i][j])
             }
           }
         }
