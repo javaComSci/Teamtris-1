@@ -61,6 +61,7 @@ class GameArray {
      * @return void
      */
     ForceUpdatePlayer(ID, shapeBlueprint) {
+        this.ShapeArray[ID-1].Freeze()
         this.ShapeArray[ID-1] = this.InstantiateShape(ID,shapeBlueprint,0,this.OffsetByID(ID), false)
     }
 
@@ -548,6 +549,9 @@ class GameArray {
                 // if this spot is not empty, then we cannot spawn a square here
                 if (!this.arr[iOffset][jOffset].IsEmpty()) {
                     //console.log("GAME OVER")
+                    team.score = Math.random() * 5000
+                    team.time = Math.random() * 200
+                    gameState = 3
                 } else {
                 // Always place the shape as if it were in a bounding box
                 //this.PlaceSquare(iOffset,jOffset,NewShape.ID,NewShape.Color)
@@ -642,6 +646,8 @@ class GameArray {
         if (!team) {
             return
         }
+        team.score = Math.random() * 5000
+        team.time = Math.random() * 200
         var data = JSON.stringify({"lobbyID":team.lobbyToken.toLowerCase(),"playerID":ID,"shapeIndices": boardIndices, "move": action})
         socket.send(JSON.stringify({"type": "6", "data": data}))
     }
