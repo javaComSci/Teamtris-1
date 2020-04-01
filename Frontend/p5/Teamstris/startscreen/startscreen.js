@@ -312,7 +312,7 @@ class StartScreen {
 			case 1:
 				if (this.drawTokenBox() == true) { // Checks to see if you clicked on the accept button
 					/** Need to check token @todo */
-					var randomID = Math.floor(Math.random() * 100);
+					var randomID = 1
 					var data = JSON.stringify({"lobbyID":this.TokenBoxText,"name": this.usernameText,"playerID": randomID})
 					socket.send(JSON.stringify({"type": "0", "data": data}))
 					socket.onmessage = (event) => {
