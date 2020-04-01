@@ -17,32 +17,36 @@ public class GameManager
     {
         this.lobbies = lobbies;
         thread = new Thread(stateUpdate);
-        int[][] b1 = new int[][] {
-                new int[] {1, 1, 0, 0},
-                new int[] {1, 1, 0, 0},
-                new int[] {0, 0, 0, 0},
-                new int[] {0, 0, 0, 0},
-            };
-        int[][] b2 = new int[][] {
-                new int[] {1, 1, 0, 0},
-                new int[] {1, 1, 0, 0},
-                new int[] {0, 0, 0, 0},
-                new int[] {0, 0, 0, 0},
-            };
-        int[][] b3 = new int[][] {
-                new int[] {0, 0, 0, 0},
-                new int[] {1, 0, 0, 0},
-                new int[] {0, 0, 0, 0},
-                new int[] {0, 0, 0, 0},
-            };
+        List<Block> bot1Blocks = new List<Block>();
+        List<Block> bot2Blocks = new List<Block>();
+        List<Block> bot3Blocks = new List<Block>();
 
-        Block block1 = new Block(b1, 1);
-        Block block2 = new Block(b2, 1);
-        Block block3 = new Block(b3, 1);
+        int[][] block11 = new int[][] {
+            new int[] {0, 0, 1, 0}, 
+            new int[] {0, 0, 1, 0}, 
+            new int[] {0, 0, 1, 0}, 
+            new int[] {0, 0, 1, 0}, 
+        };
+        int[][] block21 = new int[][] {
+            new int[] {0, 1, 0, 0}, 
+            new int[] {0, 0, 0, 0}, 
+            new int[] {0, 0, 0, 0}, 
+            new int[] {0, 0, 0, 0}, 
+        };
+        int[][] block31 = new int[][] {
+            new int[] {0, 1, 0, 0}, 
+            new int[] {0, 0, 0, 0}, 
+            new int[] {0, 0, 0, 0}, 
+            new int[] {0, 0, 0, 0}, 
+        };
+        bot1Blocks.Add(new Block(block11, 1));
+        bot2Blocks.Add(new Block(block21, 1));
+        bot3Blocks.Add(new Block(block31, 1));
+        List<List<Block>> blocks = new List<List<Block>>();
+        allBlocks.Add(bot1Blocks);
+        allBlocks.Add(bot2Blocks);
+        allBlocks.Add(bot3Blocks);
 
-        blocks = new List<Block>();
-
-        blocks.Add(block1);
         data = new int[][] {
                 new int[] {0, 0, 1, 0},
                 new int[] {0, 0, 1, 0},
@@ -75,6 +79,7 @@ public class GameManager
                     foreach (Bot bot in lobby.bots)
                     {
                         Console.WriteLine("making bot move");
+
                         List<List<Tuple<int, int>>> allBobs = bot.GetMove(lobby.game.board, allBlocks);
                         List<Tuple<int, int>> bob = allBobs[0];
                         if (bob == null)

@@ -106,7 +106,7 @@ namespace Teamtris
             // players.Add("hi");
             // players.Add(null);
             // players.Add(null);
-            // ScoresInfo scoresInfo = new ScoresInfo("Team HI", players, 1, 60);
+            // ScoresInfo scoresInfo = new ScoresInfo("Team HIHIOWE", players, 1, 6000);
             // long id = SQLConnection.UpdateTeamScore(scoresInfo, 10);   
             // Console.WriteLine("ID " + id);
             // Tuple<List<ScoresInfo>, ScoresInfo> retrievedInfo = SQLConnection.GetTopTeamsAndCurrentTeam(id);
