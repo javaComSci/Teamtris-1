@@ -23,9 +23,13 @@ class GameArray {
                         [0,0,0,0],
                         [0,0,0,0],
                         [0,0,0,0]]
+
+        for (var i = 1; i < this.ShapeArray.length+1; i++) {
+            this.ShapeArray[i-1] = this.InstantiateShape(i,null,0,this.OffsetByID(i), false)
+        }
         //this.ShapeArray[this.ID-1] = this.InstantiateShape(this.ID,null,0,this.OffsetByID(this.ID), false)
-        this.ShapeArray[0] = this.InstantiateShape(1,this.startShape,0,5, false)
-        this.ShapeArray[1] = this.InstantiateShape(2,this.startShape,0,10,false)
+        //this.ShapeArray[0] = this.InstantiateShape(1,this.startShape,0,5, false)
+        //this.ShapeArray[1] = this.InstantiateShape(2,this.startShape,0,10,false)
         // this.ShapeArray[2] = this.InstantiateShape(3,null,0,15,false)
         // this.ShapeArray[3] = this.InstantiateShape(4,null,0,20,false)
         //this.PlaceShape(this.ShapeArray[1])
@@ -549,8 +553,8 @@ class GameArray {
                 // if this spot is not empty, then we cannot spawn a square here
                 if (!this.arr[iOffset][jOffset].IsEmpty()) {
                     //console.log("GAME OVER")
-                    team.score = Math.random() * 5000
-                    team.time = Math.random() * 200
+                    team.score = 5000
+                    team.time = 200
                     gameState = 3
                 } else {
                 // Always place the shape as if it were in a bounding box
@@ -646,8 +650,8 @@ class GameArray {
         if (!team) {
             return
         }
-        team.score = Math.random() * 5000
-        team.time = Math.random() * 200
+        team.score = 5000
+        team.time = 200
         var data = JSON.stringify({"lobbyID":team.lobbyToken.toLowerCase(),"playerID":ID,"shapeIndices": boardIndices, "move": action})
         socket.send(JSON.stringify({"type": "6", "data": data}))
     }
