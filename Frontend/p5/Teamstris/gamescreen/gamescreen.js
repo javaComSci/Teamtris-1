@@ -4,6 +4,7 @@
 class GameScreen {
   constructor(
     playerCount,
+    playerID,
     xOffset = 0,
     yOffset = 0,
     CustomWindowWidth = windowWidth,
@@ -15,7 +16,7 @@ class GameScreen {
     this.NumPlayers = playerCount;
 
     // ID of the current player
-    this.PlayerID = player.id;
+    this.PlayerID = playerID;
 
     // size of the game board, determined by this.NumPlayers.
     this.BoardSquareSize = [20, 5 + 5 * this.NumPlayers];
