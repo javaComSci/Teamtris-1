@@ -416,6 +416,7 @@ public class SingleBot : Bot {
     }
 
     public override List<List<Tuple<int, int>>> GetMove(Board board, List<List<Block>> allBotBlocks, bool allRotations = false){
+        Console.WriteLine("IN GET MOVE");
         List<Tuple<int, int>> singleMove = GetSingleMove1(board, allBotBlocks, allRotations);
         List<List<Tuple<int, int>>> allMoves = new List<List<Tuple<int, int>>>();
         allMoves.Add(singleMove);
