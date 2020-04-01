@@ -90,6 +90,10 @@ public class GameManager
                     } else {
                         Console.WriteLine("BLOCK NO EXIST");    
                     }
+
+                    if(bot == null) {
+                        Console.WriteLine("BOT IS NULL");
+                    }
                     List<List<Tuple<int, int>>> allBobs = bot.GetMove(lobby.game.board, allBlocks);
                     List<Tuple<int, int>> bob = allBobs[0];
                     if (bob == null)
