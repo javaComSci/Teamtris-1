@@ -43,7 +43,7 @@ public class SQLConnection
             MySqlCommand command = conn.CreateCommand();
 
             // text for command with parameterization
-            command.CommandText = "INSERT INTO Scores(TeamName, Player1, Player2, Player3, Player4, TeamScore, TimePlayed) VALUES(@teamName, @player1, @player2, @player3, @player4, @teamScore, @timePlayed)";
+            command.CommandText = "INSERT IGNORE INTO Scores(TeamName, Player1, Player2, Player3, Player4, TeamScore, TimePlayed) VALUES(@teamName, @player1, @player2, @player3, @player4, @teamScore, @timePlayed)";
             
             // add all the params
             command.Parameters.AddWithValue("@teamName", scoresInfo.teamName);
