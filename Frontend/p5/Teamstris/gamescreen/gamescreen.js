@@ -159,7 +159,7 @@ class GameScreen {
       //a
       this.GameArray.RotateShape(this.PlayerID);
       this.GameArray.MoveShape(this.PlayerID, 0, 0, 0);
-    } else if (realKeyCode === 'i') {
+    } else if (realKeyCode === 73) {
       gameState = 3
     }
   }
