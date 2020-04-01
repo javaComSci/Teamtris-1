@@ -3,19 +3,19 @@
  */
 class GameScreen {
   constructor(
+    playerCount,
     xOffset = 0,
     yOffset = 0,
     CustomWindowWidth = windowWidth,
-    CustomWindowHeight = windowHeight,
-    PlayerCount = team.numPlayers
+    CustomWindowHeight = windowHeight
   ) {
     if (gamescreen_constructor) console.log("Creating GameScreen Object");
 
     // number of players in the game (real and bot inclusive)
-    this.NumPlayers = PlayerCount;
+    this.NumPlayers = playerCount;
 
     // ID of the current player
-    this.PlayerID = player.ID;
+    this.PlayerID = player.id;
 
     // size of the game board, determined by this.NumPlayers.
     this.BoardSquareSize = [20, 5 + 5 * this.NumPlayers];
@@ -58,6 +58,10 @@ class GameScreen {
 
     // number of milliseconds between every update
     this.GameSpeed = 200;
+  }
+
+  SetPlayerCount() {
+    this.NumPlayers = team.numPlayers
   }
 
   /**
