@@ -101,7 +101,7 @@ public class GameManager
                         Prints botInfoPrinter = new Prints();
                         Console.WriteLine("BEFORE BOT BOARD");
                         botInfoPrinter.PrintMultiDimArr(modifiedBoard.board);
-                        List<List<Tuple<int, int>>> allBobs = bot.GetMove(lobby.game.board, allBlocks);
+                        List<List<Tuple<int, int>>> allBobs = bot.GetMove(modifiedBoard, allBlocks);
                         List<Tuple<int, int>> bob = allBobs[0];
                         if (bob == null)
                         {
