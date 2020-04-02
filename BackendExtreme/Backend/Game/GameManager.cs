@@ -70,11 +70,11 @@ public class GameManager
     {
         while (true)
         {
-            Console.WriteLine("im in state update");
             Thread.Sleep(1000); // tick rate
             foreach (string lobbyID in lobbies.Keys)
             {
                 Lobby lobby = lobbies[lobbyID];
+                Console.WriteLine("im here");
                 if (lobby.lobbyState == LobbyState.PLAYING)
                 {
                     if (lobby.bot != null)
