@@ -111,6 +111,14 @@ public class LobbyManager : WebSocketBehavior
                 Lobby lobby = lobbies[playerInputPacket.lobbyID];
                 int[,] board = lobby.game.board.board;
                 int[,] newBoard = new int[board.GetLength(0), board.GetLength(1)];
+
+                for (int i = 0; i < board.GetLength(0); i++)
+                {
+                    for (int j = 0; j < board.GetLength(1); j++)
+                    {
+                        newBoard[i, j] = board[i, j];
+                    }
+                }
                 update.shapeIndices = playerInputPacket.shapeIndices;
                 foreach (int[] pos in playerInputPacket.shapeIndices)
                 {
@@ -158,6 +166,7 @@ public class LobbyManager : WebSocketBehavior
                     }
                 }
                 lobby.game.board.board = newBoard;
+
                 foreach (Player player in lobby.players)
                 {
                     if (player.socketID != ID)
