@@ -26,7 +26,7 @@ namespace Teamtris
             Dictionary<string, Lobby> lobbies = new Dictionary<string, Lobby>();
 
             // // printing
-            // Prints infoPrinter = new Prints();
+            Prints infoPrinter = new Prints();
             
             // // CHANGE - RECIEVED FROM THE FRONTEND - REPLACEMENT
             // int numBots = 3;
@@ -107,9 +107,8 @@ namespace Teamtris
             // players.Add(null);
             // players.Add(null);
             // ScoresInfo scoresInfo = new ScoresInfo("Team HIHIOWE", players, 1, 6000);
-            // long id = SQLConnection.UpdateTeamScore(scoresInfo, 10);   
-            // Console.WriteLine("ID " + id);
-            // Tuple<List<ScoresInfo>, ScoresInfo> retrievedInfo = SQLConnection.GetTopTeamsAndCurrentTeam(id);
+            // SQLConnection.AddTeamScore(scoresInfo);   
+            // Tuple<List<ScoresInfo>, ScoresInfo> retrievedInfo = SQLConnection.GetTopTeamsAndCurrentTeam("Team HIHIOWE");
             // Console.WriteLine("Top teams");
             // infoPrinter.PrintScoreList(retrievedInfo.Item1);
             // Console.WriteLine("Current team");
