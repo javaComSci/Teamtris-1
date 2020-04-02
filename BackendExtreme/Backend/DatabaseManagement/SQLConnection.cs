@@ -27,12 +27,12 @@ public class SQLConnection
      * @param int score: Score of team |
      * @param int timeInSeconds: Time played of team |
      */
-    public static long AddTeamScore(ScoresInfo scoresInfo) {
+    public static void AddTeamScore(ScoresInfo scoresInfo) {
         // create connection
         MySqlConnection conn = new MySqlConnection(connString);
 
         // id of the team that has just inserted
-        long imageId = -1;
+        // long imageId = -1;
 
         try
         {
@@ -58,7 +58,7 @@ public class SQLConnection
             command.ExecuteNonQuery();
 
             // get the id of the last inserted score for the team that has just placed in the scores
-            imageId = command.LastInsertedId;
+            // imageId = command.LastInsertedId;
 
         }
         catch (Exception ex)
@@ -69,8 +69,8 @@ public class SQLConnection
         // close the connection
         conn.Close();
 
-        // return the image id that has just been inserted
-        return imageId;
+        // // return the image id that has just been inserted
+        // return imageId;
     }
 
     /**
@@ -130,7 +130,7 @@ public class SQLConnection
      * @desc Connects to the database in order to obtain team results |
      * @param long teamId: Id of team |
      */
-    public static Tuple<List<ScoresInfo>, ScoresInfo> GetTopTeamsAndCurrentTeam(long id) {
+    public static Tuple<List<ScoresInfo>, ScoresInfo> GetTopTeamsAndCurrentTeam(string teamName) {
         // create connection
         MySqlConnection conn = new MySqlConnection(connString);
 
@@ -151,7 +151,7 @@ public class SQLConnection
             // text for command with top teams
             // command.CommandText = "SELECT * FROM Scores ORDER BY TeamScore DESC LIMIT 10";
             command.CommandText = "SELECT * FROM (SELECT *, rank() OVER (ORDER BY TeamScore DESC) as Ranking FROM Scores) AS ScoresRanked WHERE Ranking < 11 OR Id = @teamId";
-            command.Parameters.AddWithValue("@teamId", id);
+            command.Parameters.AddWithValue("@TeamName", teamName);
             // create a reader to read the high scores
             MySqlDataReader reader1 = command.ExecuteReader();
 
@@ -165,7 +165,7 @@ public class SQLConnection
 
                     // put the information read into the score info object
                     int teamId = Convert.ToInt32(reader1[0]);
-                    String teamName = Convert.ToString(reader1[1]);
+                    string t = Convert.ToString(reader1[1]);
                     List<String> playerNames = new List<String>();
                     if(reader1[2] != DBNull.Value) {
                         playerNames.Add(Convert.ToString(reader1[2]));
@@ -188,7 +188,7 @@ public class SQLConnection
                     team.rank = ranking;
 
                     // current team looking at
-                    if(teamId == id) {
+                    if(teamName.Equals(t)) {
                         // current team
                         currentTeam = team;
                     }
