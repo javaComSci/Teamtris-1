@@ -200,7 +200,7 @@ class GameArray {
     FreezeIndices(arr) {
         for (var i = 0; i < arr.length; i++) {
             console.log(arr[i])
-            this.GetSquare(arr[i][0],arr[i][1]).Freeze(arr[i][2])
+            this.GetSquare(arr[i][0],arr[i][1]).SetFrozen(arr[i][2])
         }
     }
 
