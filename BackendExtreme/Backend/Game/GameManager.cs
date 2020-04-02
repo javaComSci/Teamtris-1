@@ -81,6 +81,17 @@ public class GameManager
                         Bot bot = lobby.bot;
                         Console.WriteLine("making bot move");
 
+                        Board modifiedBoard = new Board(lobby.game.board.height, lobby.game.board.width);
+                        for (int i = 0; i < lobby.game.board.height; i++) {
+                            for(int j = 0; j < lobby.game.board.width; j++) {
+                                if(lobby.game.board.board[i,j] >= 1) {
+                                    modifiedBoard.board[i,j] = 1;
+                                } else {
+                                    modifiedBoard.board[i,j] = 0;
+                                }   
+                            }    
+                        }
+
                         List<List<Tuple<int, int>>> allBobs = bot.GetMove(lobby.game.board, allBlocks);
                         List<Tuple<int, int>> bob = allBobs[0];
                         if (bob == null)
