@@ -76,9 +76,9 @@ class GameScreen {
     if (gamescreen_draw) console.log("Drawing on GameScreen");
     this.TimeStepUpdate(); // perform a timestep update if necessary
     this.GameArray.Draw(this.GridTranslation[0], this.GridTranslation[1]);
-    textSize(32);
-    fill(0, 255, 255);
-    text("Score: " + 69, this.GridTranslation[0], this.GridTranslation[1]*(1-this.SquareScalingFactor));
+    // textSize(32);
+    // fill(0, 255, 255);
+    // text("Score: " + 69, this.GridTranslation[0], this.GridTranslation[1]*(1-this.SquareScalingFactor));
     
     // text('word', 10, 60);
     // fill(0, 102, 153, 51);

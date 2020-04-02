@@ -184,10 +184,8 @@ class GameArray {
      */
     RemoveShapeByID(ID) {
         var Shape = this.ShapeArray[ID-1]
-        for (var i = 0; i < Shape.Squares.length; i++) {
-            var s = Shape.Squares[i]
-            this.arr[s.i][s.j].SetEmpty()
-        }
+        Shape.RemoveShape()
+        Shape.ResetSquares()
     }
 
     /** 
