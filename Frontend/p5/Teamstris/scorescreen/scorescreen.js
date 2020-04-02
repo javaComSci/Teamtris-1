@@ -108,7 +108,7 @@ class ScoreScreen {
         fill(255);
         textSize(windowHeight/40);
         if(this.scoreArray.length > 0){
-            for(var i = 1; i < 11; i++){
+            for(var i = 1; i < this.scoreArray.length+1; i++){
                 text(i + ".",posOfNum.x, (posOfNum.y + (i * yHeight/12.2)));
                 text(this.scoreArray[i-1].teamName,posOfNum.x + windowWidth/10, (posOfNum.y + (i * yHeight/12.2)));
                 text(this.scoreArray[i-1].teamScore,posOfNum.x + windowWidth/5, (posOfNum.y + (i * yHeight/12.2)));
@@ -187,6 +187,7 @@ class ScoreScreen {
             for(var i = 0; i < this.team.playersInTeam.length; i++) {
                 teamMembers.push(this.team.playersInTeam[i].username)
             }
+            teamMembers.sort()
             var data = JSON.stringify({
                 "teamName": this.team.teamName, 
                 "playerNames": teamMembers,
