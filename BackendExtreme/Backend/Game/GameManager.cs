@@ -76,38 +76,38 @@ public class GameManager
                 Lobby lobby = lobbies[lobbyID];
                 if (lobby.lobbyState == LobbyState.PLAYING)
                 {
-                    // if (lobby.bot != null)
-                    // {
-                    //     Bot bot = lobby.bot;
-                    //     Console.WriteLine("making bot move");
+                    if (lobby.bot != null)
+                    {
+                        Bot bot = lobby.bot;
+                        Console.WriteLine("making bot move");
 
-                    //     Board modifiedBoard = new Board(lobby.game.board.height, lobby.game.board.width);
-                    //     for (int i = 0; i < lobby.game.board.height; i++) {
-                    //         for(int j = 0; j < lobby.game.board.width; j++) {
-                    //             if(lobby.game.board.board[i,j] >= 1) {
-                    //                 Console.WriteLine("THE INDEX IS " + i + " " + j + " " + lobby.game.board.board[i,j]);
-                    //                 modifiedBoard.board[i,j] = 1;
-                    //             } else {
-                    //                 modifiedBoard.board[i,j] = 0;
-                    //             }   
-                    //         }    
-                    //     }
+                        Board modifiedBoard = new Board(lobby.game.board.height, lobby.game.board.width);
+                        for (int i = 0; i < lobby.game.board.height; i++) {
+                            for(int j = 0; j < lobby.game.board.width; j++) {
+                                if(lobby.game.board.board[i,j] >= 1) {
+                                    Console.WriteLine("THE INDEX IS " + i + " " + j + " " + lobby.game.board.board[i,j]);
+                                    modifiedBoard.board[i,j] = 1;
+                                } else {
+                                    modifiedBoard.board[i,j] = 0;
+                                }   
+                            }    
+                        }
 
-                    //     List<List<Tuple<int, int>>> allBobs = bot.GetMove(lobby.game.board, allBlocks);
-                    //     List<Tuple<int, int>> bob = allBobs[0];
-                    //     if (bob == null)
-                    //     {
-                    //         Console.WriteLine("no place to place piece");
-                    //         return;
-                    //     }
-                    //     else
-                    //     {
-                    //         foreach (Tuple<int, int> tup in bob)
-                    //         {
-                    //             lobby.game.board.board[tup.Item1, tup.Item2] = 1;
-                    //         }
-                    //     }
-                    // }
+                        List<List<Tuple<int, int>>> allBobs = bot.GetMove(lobby.game.board, allBlocks);
+                        List<Tuple<int, int>> bob = allBobs[0];
+                        if (bob == null)
+                        {
+                            Console.WriteLine("no place to place piece");
+                            return;
+                        }
+                        else
+                        {
+                            foreach (Tuple<int, int> tup in bob)
+                            {
+                                lobby.game.board.board[tup.Item1, tup.Item2] = 1;
+                            }
+                        }
+                    }
 
 
                     // update board
