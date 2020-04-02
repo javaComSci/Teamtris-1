@@ -242,11 +242,9 @@ public class SQLConnection
                 while(reader1.Read()) {
 
                     // put the information read into the score info object
-                    String teamName = Convert.ToString(reader1[0]);
+                    int teamId = Convert.ToInt32(reader1[0]);
+                    String t = Convert.ToString(reader1[1]);
                     List<String> playerNames = new List<String>();
-                    if(reader1[1] != DBNull.Value) {
-                        playerNames.Add(Convert.ToString(reader1[1]));
-                    }
                     if(reader1[2] != DBNull.Value) {
                         playerNames.Add(Convert.ToString(reader1[2]));
                     }
@@ -256,11 +254,14 @@ public class SQLConnection
                     if(reader1[4] != DBNull.Value) {
                         playerNames.Add(Convert.ToString(reader1[4]));
                     }
-                    int teamScore = Convert.ToInt32(reader1[5]);
-                    int timePlayed = Convert.ToInt32(reader1[6]);
+                    if(reader1[5] != DBNull.Value) {
+                        playerNames.Add(Convert.ToString(reader1[5]));
+                    }
+                    int teamScore = Convert.ToInt32(reader1[6]);
+                    int timePlayed = Convert.ToInt32(reader1[7]);
 
                     // add the top team to the list of top teams
-                    ScoresInfo team = new ScoresInfo(teamName, playerNames, teamScore, timePlayed);
+                    ScoresInfo team = new ScoresInfo(t, playerNames, teamScore, timePlayed);
 
                     topTeams.Add(team);
                 }
