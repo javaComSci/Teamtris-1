@@ -27,12 +27,6 @@ class GameArray {
         for (var i = 1; i < this.ShapeArray.length+1; i++) {
             this.ShapeArray[i-1] = this.InstantiateShape(i,this.startShape,0,this.OffsetByID(i), false)
         }
-        //this.ShapeArray[this.ID-1] = this.InstantiateShape(this.ID,null,0,this.OffsetByID(this.ID), false)
-        //this.ShapeArray[0] = this.InstantiateShape(1,this.startShape,0,5, false)
-        //this.ShapeArray[1] = this.InstantiateShape(2,this.startShape,0,10,false)
-        // this.ShapeArray[2] = this.InstantiateShape(3,null,0,15,false)
-        // this.ShapeArray[3] = this.InstantiateShape(4,null,0,20,false)
-        //this.PlaceShape(this.ShapeArray[1])
 
         // allows easy determination of when to freeze an object
         this.CollisionType = {
@@ -65,7 +59,13 @@ class GameArray {
      * @return void
      */
     ForceUpdatePlayer(ID, shapeBlueprint) {
-        this.ShapeArray[ID-1].Freeze()
+        if (ID == this.ID) {
+            console.log("I SHOULDNT BE HERE")
+            return
+        }
+
+        //this.ShapeArray[ID-1].Freeze(false)
+        this.ShapeArray[ID-1].RemoveShape()
         this.ShapeArray[ID-1] = this.InstantiateShape(ID,shapeBlueprint,0,this.OffsetByID(ID), false)
     }
 
@@ -185,7 +185,7 @@ class GameArray {
     RemoveShapeByID(ID) {
         var Shape = this.ShapeArray[ID-1]
         Shape.RemoveShape()
-        Shape.ResetSquares()
+        //Shape.ResetSquares()
     }
 
     /** 
@@ -351,6 +351,10 @@ class GameArray {
      * @return void
      */
     FreezeShape(ID, sendToServer=true) {
+        if (ID == this.ID) {
+            console.log("I SHOULDNT BE HERE 2")
+            return
+        }
         this.ShapeArray[ID-1].Freeze(sendToServer)
     }
 
