@@ -86,7 +86,6 @@ public class GameManager
                         if (bob == null)
                         {
                             Console.WriteLine("no place to place piece");
-                            thread.Abort();
                             return;
                         }
                         else
