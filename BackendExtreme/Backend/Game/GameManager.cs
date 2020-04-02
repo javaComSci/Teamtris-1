@@ -87,9 +87,12 @@ public class GameManager
                         {
                             Console.WriteLine("no place to place piece");
                         }
-                        foreach (Tuple<int, int> tup in bob)
+                        else
                         {
-                            lobby.game.board.board[tup.Item1, tup.Item2] = 1;
+                            foreach (Tuple<int, int> tup in bob)
+                            {
+                                lobby.game.board.board[tup.Item1, tup.Item2] = 1;
+                            }
                         }
                     }
 
