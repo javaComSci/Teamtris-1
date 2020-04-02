@@ -5,6 +5,7 @@ class GameScreen {
   constructor(
     playerCount,
     playerID,
+    botCount,
     xOffset = 0,
     yOffset = 0,
     CustomWindowWidth = windowWidth,
@@ -14,12 +15,13 @@ class GameScreen {
 
     // number of players in the game (real and bot inclusive)
     this.NumPlayers = playerCount;
+    this.NumBots = botCount
 
     // ID of the current player
     this.PlayerID = playerID;
 
     // size of the game board, determined by this.NumPlayers.
-    this.BoardSquareSize = [20, 5 + 5 * this.NumPlayers];
+    this.BoardSquareSize = [20, 5 + 5 * (this.NumPlayers + this.NumBots)];
 
     // length of the edge of each of the squares on the game board
     this.SquareEdgeLength = Math.min(
