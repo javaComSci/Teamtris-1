@@ -586,8 +586,8 @@ class GameArray {
                 // if this spot is not empty, then we cannot spawn a square here
                 if (!this.arr[iOffset][jOffset].IsEmpty()) {
                     //console.log("GAME OVER")
-                    //var data = JSON.stringify({"lobbyID":team.lobbyToken.toLowerCase(),"playerID":ID,"shapeIndices": boardIndices, "move": action})
-                    socket.send(JSON.stringify({"type": "666"}))
+                    var data = JSON.stringify({"lobbyID":team.lobbyToken.toLowerCase()})
+                    socket.send(JSON.stringify({"type": "666", "data": data}))
                     // team.score = 5000
                     // team.time = 200
                     // gameState = 3
