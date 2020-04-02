@@ -74,7 +74,6 @@ public class GameManager
             foreach (string lobbyID in lobbies.Keys)
             {
                 Lobby lobby = lobbies[lobbyID];
-                Console.WriteLine("im here");
                 if (lobby.lobbyState == LobbyState.PLAYING)
                 {
                     if (lobby.bot != null)
