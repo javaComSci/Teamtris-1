@@ -88,7 +88,7 @@ public class GameManager
                             {
                                 if (lobby.game.board.board[i, j] >= 1)
                                 {
-                                    Console.WriteLine("THE INDEX IS " + i + " " + j + " " + lobby.game.board.board[i, j]);
+                                    // Console.WriteLine("THE INDEX IS " + i + " " + j + " " + lobby.game.board.board[i, j]);
                                     modifiedBoard.board[i, j] = 1;
                                 }
                                 else
