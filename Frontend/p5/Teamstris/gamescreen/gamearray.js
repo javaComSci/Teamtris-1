@@ -338,7 +338,9 @@ class GameArray {
      * @return void
      */
     CheckFreeze(Shape, down, ColType) {
-        if (down == 1 && (ColType == this.CollisionType.OutOfBounds || ColType == this.CollisionType.FrozenObject)) {
+        if (Shape.ID == this.ID && down == 1 && (ColType == this.CollisionType.OutOfBounds || ColType == this.CollisionType.FrozenObject)) {
+            console.log("freezing shape: ")
+            console.log(Shape)
             var r = Shape.Freeze() // r is a set of rows to be checked
             if (Shape.ID == this.ID) {
                 this.ShapeArray[Shape.ID - 1] = this.InstantiateShape(Shape.ID,null,0,Shape.ID*5,false)

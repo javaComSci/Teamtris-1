@@ -103,6 +103,7 @@ class GameScreen {
           this.GameArray.ForceMoveShape(e.playerID, 0, 0, 0);
         } else if (e.move == "freeze") {
           console.log("received freeze")
+          console.log("playerID to freeze: " + e.playerID)
           this.GameArray.FreezeShape(e.playerID, false)
         }
       } else if (e.type == 11) {
@@ -113,7 +114,7 @@ class GameScreen {
         for (var i = 0; i < newBoard.length; i++) {
           for (var j = 0; j < newBoard[0].length; j++) {
             if (newBoard[i][j] != 0) {
-              //this.GameArray.arr[i][j].SetFrozen(newBoard[i][j])
+              this.GameArray.arr[i][j].SetFrozen(newBoard[i][j])
             }
           }
         }
