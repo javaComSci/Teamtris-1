@@ -323,8 +323,8 @@ class GameArray {
      * 
      * @return void
      */
-    FreezeShape(ID) {
-        this.ShapeArray[ID-1].Freeze()
+    FreezeShape(ID, sendToServer=true) {
+        this.ShapeArray[ID-1].Freeze(sendToServer)
     }
 
     /** 
