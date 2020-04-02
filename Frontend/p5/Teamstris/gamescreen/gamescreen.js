@@ -5,7 +5,7 @@ class GameScreen {
   constructor(
     playerCount,
     playerID,
-    botCount,
+    botCount = 0,
     xOffset = 0,
     yOffset = 0,
     CustomWindowWidth = windowWidth,
@@ -16,6 +16,7 @@ class GameScreen {
     // number of players in the game (real and bot inclusive)
     this.NumPlayers = playerCount;
     this.NumBots = botCount
+    console.log(botCount)
 
     // ID of the current player
     this.PlayerID = playerID;
@@ -118,7 +119,7 @@ class GameScreen {
         for (var i = 0; i < newBoard.length; i++) {
           for (var j = 0; j < newBoard[0].length; j++) {
             if (newBoard[i][j] != 0) {
-              // console.log(i,j)
+              console.log(i,j)
               // console.log(this.GameArray.arr[i][j])
               this.GameArray.arr[i][j].SetFrozen(newBoard[i][j])
             }
