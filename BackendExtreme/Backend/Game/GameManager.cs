@@ -74,6 +74,7 @@ public class GameManager
             foreach (string lobbyID in lobbies.Keys)
             {
                 Lobby lobby = lobbies[lobbyID];
+                Console.WriteLine("im here");
                 if (lobby.lobbyState == LobbyState.PLAYING)
                 {
                     if (lobby.bot != null)
@@ -82,15 +83,20 @@ public class GameManager
                         Console.WriteLine("making bot move");
 
                         Board modifiedBoard = new Board(lobby.game.board.height, lobby.game.board.width);
-                        for (int i = 0; i < lobby.game.board.height; i++) {
-                            for(int j = 0; j < lobby.game.board.width; j++) {
-                                if(lobby.game.board.board[i,j] >= 1) {
-                                    Console.WriteLine("THE INDEX IS " + i + " " + j + " " + lobby.game.board.board[i,j]);
-                                    modifiedBoard.board[i,j] = 1;
-                                } else {
-                                    modifiedBoard.board[i,j] = 0;
-                                }   
-                            }    
+                        for (int i = 0; i < lobby.game.board.height; i++)
+                        {
+                            for (int j = 0; j < lobby.game.board.width; j++)
+                            {
+                                if (lobby.game.board.board[i, j] >= 1)
+                                {
+                                    Console.WriteLine("THE INDEX IS " + i + " " + j + " " + lobby.game.board.board[i, j]);
+                                    modifiedBoard.board[i, j] = 1;
+                                }
+                                else
+                                {
+                                    modifiedBoard.board[i, j] = 0;
+                                }
+                            }
                         }
 
                         List<List<Tuple<int, int>>> allBobs = bot.GetMove(lobby.game.board, allBlocks);
