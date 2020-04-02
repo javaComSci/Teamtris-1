@@ -136,6 +136,8 @@ class GameScreen {
 
           }
         }
+      } else if (e.type == 666) {
+        gameState = 3
       }
 
       // e.type == 11
