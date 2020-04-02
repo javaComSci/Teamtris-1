@@ -65,7 +65,7 @@ class GameArray {
         }
 
         //this.ShapeArray[ID-1].Freeze(false)
-        this.ShapeArray[ID-1].RemoveShape()
+        //this.ShapeArray[ID-1].RemoveShape()
         this.ShapeArray[ID-1] = this.InstantiateShape(ID,shapeBlueprint,0,this.OffsetByID(ID), false)
     }
 

@@ -116,6 +116,7 @@ class GameScreen {
           //this.GameArray.ForceMoveShape(e.playerID, 0, 0, 0);
         }
       } else if (e.type == 11) {
+        // when a player gets a new shape, we force update to re-make the shape on the fronted
         this.GameArray.ForceUpdatePlayer(e.playerID, e.shapeBlueprint)
       } else if (e.type == 100) { 
         // force update based on game board
