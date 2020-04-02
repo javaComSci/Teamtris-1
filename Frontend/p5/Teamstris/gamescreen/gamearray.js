@@ -8,7 +8,7 @@ class GameArray {
         this.column_count = columns
         this.arr = new Array(this.row_count)
         for (var r = 0; r < this.row_count; r++) {
-            this.arr[r] = new Array(columns)
+            this.arr[r] = new Array(this.column_count)
         }
 
         // ID of the local player
