@@ -16,7 +16,6 @@ class GameScreen {
     // number of players in the game (real and bot inclusive)
     this.NumPlayers = playerCount;
     this.NumBots = botCount
-    console.log(botCount)
 
     // ID of the current player
     this.PlayerID = playerID;
@@ -106,22 +105,25 @@ class GameScreen {
           this.GameArray.RotateShape(e.playerID, false);
           this.GameArray.ForceMoveShape(e.playerID, 0, 0, 0);
         } else if (e.move == "freeze") {
-          //this.GameArray.FreezeShape(e.playerID, false)
+          // console.log("freezing someone: ")
+          // console.log(e.playerID)
+          if (e.playerID == this.PlayerID) {
+            console.log("fake news")
+            return
+          }
           this.GameArray.RemoveShapeByID(e.playerID)
           this.GameArray.FreezeIndices(e.shapeIndices)
-          //console.log("froozed")
+          //this.GameArray.ForceMoveShape(e.playerID, 0, 0, 0);
         }
       } else if (e.type == 11) {
         this.GameArray.ForceUpdatePlayer(e.playerID, e.shapeBlueprint)
-      } else if (e.type == 100) { // force update based on game board
+      } else if (e.type == 100) { 
+        // force update based on game board
         var newBoard = e.board.board
-        //console.log(newBoard)
         for (var i = 0; i < newBoard.length; i++) {
           for (var j = 0; j < newBoard[0].length; j++) {
             if (newBoard[i][j] != 0) {
-              console.log(i,j)
-              // console.log(this.GameArray.arr[i][j])
-              this.GameArray.arr[i][j].SetFrozen(newBoard[i][j])
+              this.GameArray.GetSquare(i,j).SetFrozen(newBoard[i][j])
             }
           }
         }
