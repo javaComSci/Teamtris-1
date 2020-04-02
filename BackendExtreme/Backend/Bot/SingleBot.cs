@@ -24,7 +24,7 @@ public class SingleBot : Bot {
 	 */
     public SingleBot() {
         // create a board for this bot
-        Console.WriteLine("I AM A SINGLE BOT");
+        // Console.WriteLine("I AM A SINGLE BOT");
         botInfoPrinter = new Prints();
     }
 
@@ -179,7 +179,7 @@ public class SingleBot : Bot {
 
                     // see which dots are nearby
                     // up
-                    if(shiftedForBoardRow - 1 >= 0 && board.board[shiftedForBoardRow - 1,shiftedForBoardCol] == 1) {
+                    if(shiftedForBoardRow - 1 > 0 && board.board[shiftedForBoardRow - 1,shiftedForBoardCol] == 1) {
                         dotsNearby.Add(Tuple.Create(shiftedForBoardRow - 1, shiftedForBoardCol));
                     }
                     // down
@@ -198,6 +198,11 @@ public class SingleBot : Bot {
                     if(shiftedForBoardRow + 1 == board.height) {
                         dotsNearby.Add(Tuple.Create(shiftedForBoardRow + 1, shiftedForBoardCol));
                         dotsFillingFloor += 1;
+                    }
+
+                    // check for touching the ceiling
+                    if(shiftedForBoardRow - 1 == 0) {
+                        dotsNearby.Add(Tuple.Create(shiftedForBoardRow - 1, shiftedForBoardCol));
                     }
 
                 }
@@ -248,8 +253,8 @@ public class SingleBot : Bot {
         List<Block> blocks = allBotBlocks[0];
         Console.WriteLine("BOARD");
         botInfoPrinter.PrintMultiDimArr(board.board);
-        Console.WriteLine("PIECE");
-        botInfoPrinter.PrintJaggedArr(blocks[0].data);
+        // Console.WriteLine("PIECE");
+        // botInfoPrinter.PrintJaggedArr(blocks[0].data);
 
         // get the max height of each column of the baord 
         board.FindMaxHeights();
@@ -409,8 +414,8 @@ public class SingleBot : Bot {
 
         // Console.WriteLine("BEST PIECE FOR BOARD");
         // botInfoPrinter.PrintPositions(bestPiecePlacementOfCurrentBlock);
-        Console.WriteLine("BOARD WITH PIECE");
-        botInfoPrinter.PrintBoardWithPiece(board.board, bestPiecePlacementOfCurrentBlock);
+        // Console.WriteLine("BOARD WITH PIECE");
+        // botInfoPrinter.PrintBoardWithPiece(board.board, bestPiecePlacementOfCurrentBlock);
 
         return bestPiecePlacementOfCurrentBlock;
     }
