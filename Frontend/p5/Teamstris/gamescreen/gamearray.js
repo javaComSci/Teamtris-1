@@ -25,7 +25,7 @@ class GameArray {
                         [0,0,0,0]]
 
         for (var i = 1; i < this.ShapeArray.length+1; i++) {
-            this.ShapeArray[i-1] = this.InstantiateShape(i,null,0,this.OffsetByID(i), false)
+            this.ShapeArray[i-1] = this.InstantiateShape(i,this.startShape,0,this.OffsetByID(i), false)
         }
         //this.ShapeArray[this.ID-1] = this.InstantiateShape(this.ID,null,0,this.OffsetByID(this.ID), false)
         //this.ShapeArray[0] = this.InstantiateShape(1,this.startShape,0,5, false)
