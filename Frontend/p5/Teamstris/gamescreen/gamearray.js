@@ -176,6 +176,34 @@ class GameArray {
     }
 
     /** 
+     * @description Sets all squares of this shape to be empty
+     * 
+     * @param ID - Shape ID
+     * 
+     * @return void
+     */
+    RemoveShapeByID(ID) {
+        var Shape = this.ShapeArray[ID-1]
+        for (var i = 0; i < Shape.Squares.length; i++) {
+            var s = Shape.Squares[i]
+            this.arr[s.i][s.j].SetEmpty()
+        }
+    }
+
+    /** 
+     * @description Freezes all indices [[row, col, powercube],...]
+     * 
+     * @param arr - Uses the above format
+     * 
+     * @return void
+     */
+    FreezeIndices(arr) {
+        for (var i = 0; i < arr.length; i++) {
+            this.GetSquare(arr[i][0],arr[j][1]).Freeze(arr[i][2])
+        }
+    }
+
+    /** 
      * @description Sets all provided squares to empty
      * 
      * @param Shape - An array of squares
