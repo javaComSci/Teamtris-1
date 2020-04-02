@@ -75,11 +75,12 @@ class GameScreen {
     this.TimeStepUpdate(); // perform a timestep update if necessary
     this.GameArray.Draw(this.GridTranslation[0], this.GridTranslation[1]);
     textSize(32);
-    text('word', 10, 30);
-    fill(0, 102, 153);
-    text('word', 10, 60);
-    fill(0, 102, 153, 51);
-    text('word', 10, 90);
+    fill(0, 255, 255);
+    text("Score: " + 69, this.GridTranslation[0], this.GridTranslation[1]*(1-this.SquareScalingFactor));
+    
+    // text('word', 10, 60);
+    // fill(0, 102, 153, 51);
+    // text('word', 10, 90);
   }
 
   /**
@@ -105,15 +106,18 @@ class GameScreen {
           //this.GameArray.FreezeShape(e.playerID, false)
           this.GameArray.RemoveShapeByID(e.playerID)
           this.GameArray.FreezeIndices(e.shapeIndices)
+          //console.log("froozed")
         }
       } else if (e.type == 11) {
         this.GameArray.ForceUpdatePlayer(e.playerID, e.shapeBlueprint)
       } else if (e.type == 100) { // force update based on game board
         var newBoard = e.board.board
-        console.log(newBoard)
+        //console.log(newBoard)
         for (var i = 0; i < newBoard.length; i++) {
           for (var j = 0; j < newBoard[0].length; j++) {
             if (newBoard[i][j] != 0) {
+              // console.log(i,j)
+              // console.log(this.GameArray.arr[i][j])
               this.GameArray.arr[i][j].SetFrozen(newBoard[i][j])
             }
           }

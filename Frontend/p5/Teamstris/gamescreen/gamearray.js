@@ -199,7 +199,8 @@ class GameArray {
      */
     FreezeIndices(arr) {
         for (var i = 0; i < arr.length; i++) {
-            this.GetSquare(arr[i][0],arr[j][1]).Freeze(arr[i][2])
+            console.log(arr[i])
+            this.GetSquare(arr[i][0],arr[i][1]).Freeze(arr[i][2])
         }
     }
 
