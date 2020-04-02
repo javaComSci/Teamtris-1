@@ -88,7 +88,7 @@ public class GameManager
                             {
                                 if (lobby.game.board.board[i, j] >= 1)
                                 {
-                                    Console.WriteLine("THE INDEX IS " + i + " " + j + " " + lobby.game.board.board[i, j]);
+                                    // Console.WriteLine("THE INDEX IS " + i + " " + j + " " + lobby.game.board.board[i, j]);
                                     modifiedBoard.board[i, j] = 1;
                                 }
                                 else
@@ -98,7 +98,10 @@ public class GameManager
                             }
                         }
 
-                        List<List<Tuple<int, int>>> allBobs = bot.GetMove(lobby.game.board, allBlocks);
+                        Prints botInfoPrinter = new Prints();
+                        Console.WriteLine("BEFORE BOT BOARD");
+                        botInfoPrinter.PrintMultiDimArr(modifiedBoard.board);
+                        List<List<Tuple<int, int>>> allBobs = bot.GetMove(modifiedBoard, allBlocks);
                         List<Tuple<int, int>> bob = allBobs[0];
                         if (bob == null)
                         {
