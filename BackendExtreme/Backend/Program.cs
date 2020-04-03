@@ -21,79 +21,76 @@ namespace Teamtris
         {
 
             // // initialize game state
-            // GameState game = new GameState(6, 7);
-            // game.players = new Dictionary<int, Player>();
+            GameState game = new GameState(6, 7);
+            game.players = new Dictionary<int, Player>();
             Dictionary<string, Lobby> lobbies = new Dictionary<string, Lobby>();
 
             // // printing
             Prints infoPrinter = new Prints();
             
             // // CHANGE - RECIEVED FROM THE FRONTEND - REPLACEMENT
-            // int numBots = 3;
+            int numBots = 2;
 
-            // switch(numBots) {
-            //     case 1: 
-            //         game.bot = new SingleBot();
-            //         break;
-            //     case 2:
-            //         game.bot = new DoubleBot();
-            //         break;
-            //     case 3:
-            //         game.bot = new TripleBot();
-            //         break;
-            //     default:
-            //         game.bot = null;
-            //         break;
-            // }
+            switch(numBots) {
+                case 1: 
+                    game.bot = new SingleBot();
+                    break;
+                case 2:
+                    game.bot = new DoubleBot();
+                    break;
+                case 3:
+                    game.bot = new TripleBot();
+                    break;
+                default:
+                    game.bot = null;
+                    break;
+            }
             
 
-            // List<Block> bot1Blocks = new List<Block>();
-            // List<Block> bot2Blocks = new List<Block>();
-            // List<Block> bot3Blocks = new List<Block>();
-            // // game.board.board =  new int[,]{
-            // //     {0, 0, 0, 0, 0, 0},
-            // //     {0, 0, 0, 0, 0, 0},
-            // //     {0, 0, 0, 0, 0, 0},
-            // //     {0, 0, 0, 0, 0, 1},
-            // //     {0, 0, 0, 1, 1, 1},
-            // //     {1, 0, 1, 1, 1, 1}
-            // // };
+            List<Block> bot1Blocks = new List<Block>();
+            List<Block> bot2Blocks = new List<Block>();
+            List<Block> bot3Blocks = new List<Block>();
+            RandomPiece randomPiece = new RandomPiece();
+            
+            // game.board.board =  new int[,]{
+            //     {0, 0, 0, 0, 0, 0},
+            //     {0, 0, 0, 0, 0, 0},
+            //     {0, 0, 0, 0, 0, 0},
+            //     {0, 0, 0, 0, 0, 1},
+            //     {0, 0, 0, 1, 1, 1},
+            //     {1, 0, 1, 1, 1, 1}
+            // };
 
-            // game.board.board = new int[,]{
-            //     {0, 0, 1, 0, 0, 0, 0},
-            //     {1, 1, 1, 0, 1, 1, 1},
-            //     {1, 0, 1, 1, 1, 1, 1},
-            //     {1, 0, 1, 0, 1, 1, 1},
-            //     {0, 1, 1, 1, 1, 1, 1},
-            //     {1, 0, 1, 1, 1, 1, 1},
-            // };
-            // int[][] block11 = new int[][] {
-            //     new int[] {0, 0, 1, 0}, 
-            //     new int[] {0, 0, 1, 0}, 
-            //     new int[] {0, 0, 1, 0}, 
-            //     new int[] {0, 0, 1, 0}, 
-            // };
-            // int[][] block21 = new int[][] {
-            //     new int[] {0, 1, 0, 0}, 
-            //     new int[] {0, 0, 0, 0}, 
-            //     new int[] {0, 0, 0, 0}, 
-            //     new int[] {0, 0, 0, 0}, 
-            // };
-            // int[][] block31 = new int[][] {
-            //     new int[] {0, 1, 0, 0}, 
-            //     new int[] {0, 0, 0, 0}, 
-            //     new int[] {0, 0, 0, 0}, 
-            //     new int[] {0, 0, 0, 0}, 
-            // };
-            // bot1Blocks.Add(new Block(block11, 1));
-            // bot2Blocks.Add(new Block(block21, 1));
-            // bot3Blocks.Add(new Block(block31, 1));
-            // List<List<Block>> blocks = new List<List<Block>>();
-            // blocks.Add(bot1Blocks);
-            // blocks.Add(bot2Blocks);
-            // blocks.Add(bot3Blocks);
+            game.board.board = new int[,]{
+                {0, 0, 1, 0, 0, 0, 0},
+                {1, 1, 1, 0, 1, 1, 1},
+                {1, 0, 1, 1, 1, 1, 1},
+                {1, 0, 1, 0, 1, 1, 1},
+                {0, 1, 1, 1, 1, 1, 1},
+                {1, 0, 1, 1, 1, 1, 1},
+            };
+            int[][] block11 = randomPiece.GenerateRandomPiece();
+            int[][] block21 = new int[][] {
+                new int[] {0, 1, 0, 0}, 
+                new int[] {0, 0, 0, 0}, 
+                new int[] {0, 0, 0, 0}, 
+                new int[] {0, 0, 0, 0}, 
+            };
+            int[][] block31 = new int[][] {
+                new int[] {0, 1, 0, 0}, 
+                new int[] {0, 0, 0, 0}, 
+                new int[] {0, 0, 0, 0}, 
+                new int[] {0, 0, 0, 0}, 
+            };
+            bot1Blocks.Add(new Block(block11, 1));
+            bot2Blocks.Add(new Block(block21, 1));
+            bot3Blocks.Add(new Block(block31, 1));
+            List<List<Block>> blocks = new List<List<Block>>();
+            blocks.Add(bot1Blocks);
+            blocks.Add(bot2Blocks);
+            blocks.Add(bot3Blocks);
 
-            // game.bot.GetMove(game.board, blocks);
+            game.bot.GetMove(game.board, blocks);
             // try {
             //     game.bot.GetMove(game.board, blocks);
             // } catch (Exception e) {
