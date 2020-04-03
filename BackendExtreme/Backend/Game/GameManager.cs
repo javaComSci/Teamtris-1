@@ -11,37 +11,60 @@ public class GameManager
     private Thread thread;
     private List<Block> blocks;
 
+    RandomPiece randomPiece;
+
     public List<List<Block>> allBlocks;
     private int[][] data;
     public GameManager(Dictionary<string, Lobby> lobbies)
     {
         this.lobbies = lobbies;
         thread = new Thread(stateUpdate);
+        // List<Block> bot1Blocks = new List<Block>();
+        // List<Block> bot2Blocks = new List<Block>();
+        // List<Block> bot3Blocks = new List<Block>();
+
+        // int[][] block11 = new int[][] {
+        //     new int[] {0, 0, 1, 0},
+        //     new int[] {0, 0, 1, 0},
+        //     new int[] {0, 0, 1, 0},
+        //     new int[] {0, 0, 1, 0},
+        // };
+        // int[][] block21 = new int[][] {
+        //     new int[] {0, 1, 0, 0},
+        //     new int[] {0, 0, 0, 0},
+        //     new int[] {0, 0, 0, 0},
+        //     new int[] {0, 0, 0, 0},
+        // };
+        // int[][] block31 = new int[][] {
+        //     new int[] {0, 1, 0, 0},
+        //     new int[] {0, 0, 0, 0},
+        //     new int[] {0, 0, 0, 0},
+        //     new int[] {0, 0, 0, 0},
+        // };
+        // bot1Blocks.Add(new Block(block11, 1));
+        // bot2Blocks.Add(new Block(block21, 1));
+        // bot3Blocks.Add(new Block(block31, 1));
+        // allBlocks = new List<List<Block>>();
+        // allBlocks.Add(bot1Blocks);
+        // allBlocks.Add(bot2Blocks);
+        // allBlocks.Add(bot3Blocks);
+
+
         List<Block> bot1Blocks = new List<Block>();
         List<Block> bot2Blocks = new List<Block>();
         List<Block> bot3Blocks = new List<Block>();
 
-        int[][] block11 = new int[][] {
-            new int[] {0, 0, 1, 0},
-            new int[] {0, 0, 1, 0},
-            new int[] {0, 0, 1, 0},
-            new int[] {0, 0, 1, 0},
-        };
-        int[][] block21 = new int[][] {
-            new int[] {0, 1, 0, 0},
-            new int[] {0, 0, 0, 0},
-            new int[] {0, 0, 0, 0},
-            new int[] {0, 0, 0, 0},
-        };
-        int[][] block31 = new int[][] {
-            new int[] {0, 1, 0, 0},
-            new int[] {0, 0, 0, 0},
-            new int[] {0, 0, 0, 0},
-            new int[] {0, 0, 0, 0},
-        };
-        bot1Blocks.Add(new Block(block11, 1));
-        bot2Blocks.Add(new Block(block21, 1));
-        bot3Blocks.Add(new Block(block31, 1));
+        randomPiece = new RandomPiece();
+
+        for(int i = 0; i < 100; i++) {
+            int[][] block11 = randomPiece.GenerateRandomPiece();
+            int[][] block21 = randomPiece.GenerateRandomPiece();
+            int[][] block31 = randomPiece.GenerateRandomPiece();
+            bot1Blocks.Add(new Block(block11, 1));
+            bot2Blocks.Add(new Block(block21, 1));
+            bot3Blocks.Add(new Block(block31, 1));
+        }
+        
         allBlocks = new List<List<Block>>();
         allBlocks.Add(bot1Blocks);
         allBlocks.Add(bot2Blocks);
@@ -80,7 +103,6 @@ public class GameManager
                     {
                         Bot bot = lobby.bot;
                         Console.WriteLine("making bot move");
-
                         Board modifiedBoard = new Board(lobby.game.board.height, lobby.game.board.width);
                         for (int i = 0; i < lobby.game.board.height; i++)
                         {
@@ -99,8 +121,15 @@ public class GameManager
                         }
 
                         Prints botInfoPrinter = new Prints();
-                        Console.WriteLine("BEFORE BOT BOARD");
-                        botInfoPrinter.PrintMultiDimArr(modifiedBoard.board);
+                        // Console.WriteLine("BEFORE BOT BOARD");
+                        // botInfoPrinter.PrintMultiDimArr(modifiedBoard.board);
+                        allBlocks[0].RemoveAt(0);
+                        allBlocks[0].Add(new Block(randomPiece.GenerateRandomPiece(), 1));
+                        allBlocks[1].RemoveAt(0);
+                        allBlocks[1].Add(new Block(randomPiece.GenerateRandomPiece(), 1));
+                        allBlocks[2].RemoveAt(0);
+                        allBlocks[2].Add(new Block(randomPiece.GenerateRandomPiece(), 1));
+
                         List<List<Tuple<int, int>>> allBobs = bot.GetMove(modifiedBoard, allBlocks);
                         List<Tuple<int, int>> bob = allBobs[0];
                         if (bob == null)
