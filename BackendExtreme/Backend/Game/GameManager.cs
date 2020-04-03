@@ -95,6 +95,7 @@ public class GameManager
         while (true)
         {
             Thread.Sleep(1000); // tick rate
+            if (lobbies.Keys.Count == 0) continue;
             foreach (string lobbyID in lobbies.Keys)
             {
                 Lobby lobby = lobbies[lobbyID];
