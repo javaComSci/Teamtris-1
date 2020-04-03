@@ -95,107 +95,114 @@ public class GameManager
         while (true)
         {
             Thread.Sleep(1000); // tick rate
-            if (lobbies.Keys.Count == 0) continue;
-            foreach (string lobbyID in lobbies.Keys)
+            try
             {
-                Lobby lobby = lobbies[lobbyID];
-                if (lobby.lobbyState == LobbyState.PLAYING)
+                foreach (string lobbyID in lobbies.Keys)
                 {
-                    if (lobby.bot != null)
+                    Lobby lobby = lobbies[lobbyID];
+                    if (lobby.lobbyState == LobbyState.PLAYING)
                     {
-                        Bot bot = lobby.bot;
-                        Console.WriteLine("making bot move");
-                        Board modifiedBoard = new Board(lobby.game.board.height, lobby.game.board.width);
-                        for (int i = 0; i < lobby.game.board.height; i++)
+                        if (lobby.bot != null)
                         {
-                            for (int j = 0; j < lobby.game.board.width; j++)
+                            Bot bot = lobby.bot;
+                            Console.WriteLine("making bot move");
+                            Board modifiedBoard = new Board(lobby.game.board.height, lobby.game.board.width);
+                            for (int i = 0; i < lobby.game.board.height; i++)
                             {
-                                if (lobby.game.board.board[i, j] >= 1)
+                                for (int j = 0; j < lobby.game.board.width; j++)
                                 {
-                                    // Console.WriteLine("THE INDEX IS " + i + " " + j + " " + lobby.game.board.board[i, j]);
-                                    modifiedBoard.board[i, j] = 1;
-                                }
-                                else
-                                {
-                                    modifiedBoard.board[i, j] = 0;
+                                    if (lobby.game.board.board[i, j] >= 1)
+                                    {
+                                        // Console.WriteLine("THE INDEX IS " + i + " " + j + " " + lobby.game.board.board[i, j]);
+                                        modifiedBoard.board[i, j] = 1;
+                                    }
+                                    else
+                                    {
+                                        modifiedBoard.board[i, j] = 0;
+                                    }
                                 }
                             }
-                        }
 
-                        Prints botInfoPrinter = new Prints();
-                        // Console.WriteLine("BEFORE BOT BOARD");
-                        // botInfoPrinter.PrintMultiDimArr(modifiedBoard.board);
-                        allBlocks[0].RemoveAt(0);
-                        allBlocks[0].Add(new Block(randomPiece.GenerateRandomPiece(), 1));
-                        allBlocks[1].RemoveAt(0);
-                        allBlocks[1].Add(new Block(randomPiece.GenerateRandomPiece(), 1));
-                        allBlocks[2].RemoveAt(0);
-                        allBlocks[2].Add(new Block(randomPiece.GenerateRandomPiece(), 1));
+                            Prints botInfoPrinter = new Prints();
+                            // Console.WriteLine("BEFORE BOT BOARD");
+                            // botInfoPrinter.PrintMultiDimArr(modifiedBoard.board);
+                            allBlocks[0].RemoveAt(0);
+                            allBlocks[0].Add(new Block(randomPiece.GenerateRandomPiece(), 1));
+                            allBlocks[1].RemoveAt(0);
+                            allBlocks[1].Add(new Block(randomPiece.GenerateRandomPiece(), 1));
+                            allBlocks[2].RemoveAt(0);
+                            allBlocks[2].Add(new Block(randomPiece.GenerateRandomPiece(), 1));
 
-                        List<List<Tuple<int, int>>> allBobs = bot.GetMove(modifiedBoard, allBlocks);
-                        List<Tuple<int, int>> bob = allBobs[0];
-                        if (bob == null)
-                        {
-                            Console.WriteLine("no place to place piece");
-                            return;
-                        }
-                        else
-                        {
-                            bool moveValid = true;
-                            foreach (Tuple<int, int> tup in bob)
+                            List<List<Tuple<int, int>>> allBobs = bot.GetMove(modifiedBoard, allBlocks);
+                            List<Tuple<int, int>> bob = allBobs[0];
+                            if (bob == null)
                             {
-                                foreach (Player player in lobby.players)
+                                Console.WriteLine("no place to place piece");
+                                return;
+                            }
+                            else
+                            {
+                                bool moveValid = true;
+                                foreach (Tuple<int, int> tup in bob)
                                 {
-                                    if (player.currentBlockPosition != null)
+                                    foreach (Player player in lobby.players)
                                     {
-                                        for (int i = 0; i < player.currentBlockPosition.Length; i++)
+                                        if (player.currentBlockPosition != null)
                                         {
-                                            if (tup.Item1 == player.currentBlockPosition[i][0] && tup.Item2 == player.currentBlockPosition[i][1])
+                                            for (int i = 0; i < player.currentBlockPosition.Length; i++)
                                             {
-                                                moveValid = false;
+                                                if (tup.Item1 == player.currentBlockPosition[i][0] && tup.Item2 == player.currentBlockPosition[i][1])
+                                                {
+                                                    moveValid = false;
+                                                }
                                             }
                                         }
                                     }
                                 }
-                            }
-                            if (moveValid)
-                            {
-                                foreach (Tuple<int, int> tup in bob)
+                                if (moveValid)
                                 {
-                                    lobby.game.board.board[tup.Item1, tup.Item2] = 1;
+                                    foreach (Tuple<int, int> tup in bob)
+                                    {
+                                        lobby.game.board.board[tup.Item1, tup.Item2] = 1;
+                                    }
                                 }
                             }
                         }
-                    }
 
 
-                    // update board
-                    for (int j = 0; j < lobby.players.Count; j++)
-                    {
-                        if (lobby.players[j].currentBlock == null)
+                        // update board
+                        for (int j = 0; j < lobby.players.Count; j++)
                         {
-                            // spawn block
-                            // lobby.players[j].currentBlock = new Block(data, 5);
-                            // lobby.players[j].currentBlockPosition = new Tuple<int, int>(5, 5);
-                        }
-                        else
-                        {
-                            if (checkCollision(lobby.players[j], lobby.game.board))
+                            if (lobby.players[j].currentBlock == null)
                             {
-                                // place block
-                                // set player's current block to null
+                                // spawn block
+                                // lobby.players[j].currentBlock = new Block(data, 5);
+                                // lobby.players[j].currentBlockPosition = new Tuple<int, int>(5, 5);
                             }
-                            // block falls 1 space
-                            // lobby.players[j].currentBlockPosition = new Tuple<int, int>(lobby.players[j].currentBlockPosition.Item1 - 1, lobby.players[j].currentBlockPosition.Item2);
+                            else
+                            {
+                                if (checkCollision(lobby.players[j], lobby.game.board))
+                                {
+                                    // place block
+                                    // set player's current block to null
+                                }
+                                // block falls 1 space
+                                // lobby.players[j].currentBlockPosition = new Tuple<int, int>(lobby.players[j].currentBlockPosition.Item1 - 1, lobby.players[j].currentBlockPosition.Item2);
+                            }
                         }
-                    }
-                    lobby.game.current_time += 1;
-                    // send game state to all players in lobby
-                    for (int j = 0; j < lobby.players.Count; j++)
-                    {
-                        lobby.players[j].webSocket.Send(JsonConvert.SerializeObject(lobby.game));
+                        lobby.game.current_time += 1;
+                        // send game state to all players in lobby
+                        for (int j = 0; j < lobby.players.Count; j++)
+                        {
+                            lobby.players[j].webSocket.Send(JsonConvert.SerializeObject(lobby.game));
+                        }
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("bad thing HAPPENED!!!!!!");
+                Console.WriteLine(e);
             }
         }
     }
