@@ -546,7 +546,7 @@ class GameArray {
                     var ts = this.ShapeArray[s]
                     var boardIndices = []
                     for (var j = 0; j < ts.Squares.length; j++) {
-                        boardIndices.push([this.Squares[j].i + down, this.Squares[j].j - left + right, this.Squares[j].PowerCubeType])                    }
+                        boardIndices.push([ts.Squares[j].i + down, ts.Squares[j].j - left + right, ts.Squares[j].PowerCubeType])                    }
                     this.SendAction(this.ID, boardIndices,"down","69")
                 }
             } else {
