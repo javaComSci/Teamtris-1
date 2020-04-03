@@ -56,7 +56,8 @@ public class GameManager
 
         randomPiece = new RandomPiece();
 
-        for(int i = 0; i < 100; i++) {
+        for (int i = 0; i < 100; i++)
+        {
             int[][] block11 = randomPiece.GenerateRandomPiece();
             int[][] block21 = randomPiece.GenerateRandomPiece();
             int[][] block31 = randomPiece.GenerateRandomPiece();
@@ -64,7 +65,7 @@ public class GameManager
             bot2Blocks.Add(new Block(block21, 1));
             bot3Blocks.Add(new Block(block31, 1));
         }
-        
+
         allBlocks = new List<List<Block>>();
         allBlocks.Add(bot1Blocks);
         allBlocks.Add(bot2Blocks);
@@ -144,11 +145,14 @@ public class GameManager
                             {
                                 foreach (Player player in lobby.players)
                                 {
-                                    for (int i = 0; i < player.currentBlockPosition.Length; i++)
+                                    if (player.currentBlockPosition != null)
                                     {
-                                        if (tup.Item1 == player.currentBlockPosition[i][0] && tup.Item2 == player.currentBlockPosition[i][1])
+                                        for (int i = 0; i < player.currentBlockPosition.Length; i++)
                                         {
-                                            moveValid = false;
+                                            if (tup.Item1 == player.currentBlockPosition[i][0] && tup.Item2 == player.currentBlockPosition[i][1])
+                                            {
+                                                moveValid = false;
+                                            }
                                         }
                                     }
                                 }
@@ -184,7 +188,7 @@ public class GameManager
                             // lobby.players[j].currentBlockPosition = new Tuple<int, int>(lobby.players[j].currentBlockPosition.Item1 - 1, lobby.players[j].currentBlockPosition.Item2);
                         }
                     }
-                    lobby.game.current_time = DateTime.Now.Millisecond;
+                    lobby.game.current_time += 1;
                     // send game state to all players in lobby
                     for (int j = 0; j < lobby.players.Count; j++)
                     {
