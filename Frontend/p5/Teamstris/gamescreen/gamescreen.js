@@ -3,8 +3,8 @@
  */
 class GameScreen {
   constructor(
-    playerCount,
-    playerID,
+    playerCount = 1,
+    playerID = 1,
     botCount = 0,
     xOffset = 0,
     yOffset = 0,
