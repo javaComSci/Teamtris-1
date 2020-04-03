@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using WebSocketSharp;
 using WebSocketSharp.Server;
+using System.Linq;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
@@ -95,114 +96,107 @@ public class GameManager
         while (true)
         {
             Thread.Sleep(1000); // tick rate
-            try
+            
+            foreach (string lobbyID in lobbies.Keys.ToList())
             {
-                foreach (string lobbyID in lobbies.Keys)
+                Lobby lobby = lobbies[lobbyID];
+                if (lobby.lobbyState == LobbyState.PLAYING)
                 {
-                    Lobby lobby = lobbies[lobbyID];
-                    if (lobby.lobbyState == LobbyState.PLAYING)
+                    if (lobby.bot != null)
                     {
-                        if (lobby.bot != null)
+                        Bot bot = lobby.bot;
+                        Console.WriteLine("making bot move");
+                        Board modifiedBoard = new Board(lobby.game.board.height, lobby.game.board.width);
+                        for (int i = 0; i < lobby.game.board.height; i++)
                         {
-                            Bot bot = lobby.bot;
-                            Console.WriteLine("making bot move");
-                            Board modifiedBoard = new Board(lobby.game.board.height, lobby.game.board.width);
-                            for (int i = 0; i < lobby.game.board.height; i++)
+                            for (int j = 0; j < lobby.game.board.width; j++)
                             {
-                                for (int j = 0; j < lobby.game.board.width; j++)
+                                if (lobby.game.board.board[i, j] >= 1)
                                 {
-                                    if (lobby.game.board.board[i, j] >= 1)
-                                    {
-                                        // Console.WriteLine("THE INDEX IS " + i + " " + j + " " + lobby.game.board.board[i, j]);
-                                        modifiedBoard.board[i, j] = 1;
-                                    }
-                                    else
-                                    {
-                                        modifiedBoard.board[i, j] = 0;
-                                    }
+                                    // Console.WriteLine("THE INDEX IS " + i + " " + j + " " + lobby.game.board.board[i, j]);
+                                    modifiedBoard.board[i, j] = 1;
+                                }
+                                else
+                                {
+                                    modifiedBoard.board[i, j] = 0;
                                 }
                             }
+                        }
 
-                            Prints botInfoPrinter = new Prints();
-                            // Console.WriteLine("BEFORE BOT BOARD");
-                            // botInfoPrinter.PrintMultiDimArr(modifiedBoard.board);
-                            allBlocks[0].RemoveAt(0);
-                            allBlocks[0].Add(new Block(randomPiece.GenerateRandomPiece(), 1));
-                            allBlocks[1].RemoveAt(0);
-                            allBlocks[1].Add(new Block(randomPiece.GenerateRandomPiece(), 1));
-                            allBlocks[2].RemoveAt(0);
-                            allBlocks[2].Add(new Block(randomPiece.GenerateRandomPiece(), 1));
+                        Prints botInfoPrinter = new Prints();
+                        // Console.WriteLine("BEFORE BOT BOARD");
+                        // botInfoPrinter.PrintMultiDimArr(modifiedBoard.board);
+                        allBlocks[0].RemoveAt(0);
+                        allBlocks[0].Add(new Block(randomPiece.GenerateRandomPiece(), 1));
+                        allBlocks[1].RemoveAt(0);
+                        allBlocks[1].Add(new Block(randomPiece.GenerateRandomPiece(), 1));
+                        allBlocks[2].RemoveAt(0);
+                        allBlocks[2].Add(new Block(randomPiece.GenerateRandomPiece(), 1));
 
-                            List<List<Tuple<int, int>>> allBobs = bot.GetMove(modifiedBoard, allBlocks);
-                            List<Tuple<int, int>> bob = allBobs[0];
-                            if (bob == null)
+                        List<List<Tuple<int, int>>> allBobs = bot.GetMove(modifiedBoard, allBlocks);
+                        List<Tuple<int, int>> bob = allBobs[0];
+                        if (bob == null)
+                        {
+                            Console.WriteLine("no place to place piece");
+                            return;
+                        }
+                        else
+                        {
+                            bool moveValid = true;
+                            foreach (Tuple<int, int> tup in bob)
                             {
-                                Console.WriteLine("no place to place piece");
-                                return;
-                            }
-                            else
-                            {
-                                bool moveValid = true;
-                                foreach (Tuple<int, int> tup in bob)
+                                foreach (Player player in lobby.players)
                                 {
-                                    foreach (Player player in lobby.players)
+                                    if (player.currentBlockPosition != null)
                                     {
-                                        if (player.currentBlockPosition != null)
+                                        for (int i = 0; i < player.currentBlockPosition.Length; i++)
                                         {
-                                            for (int i = 0; i < player.currentBlockPosition.Length; i++)
+                                            if (tup.Item1 == player.currentBlockPosition[i][0] && tup.Item2 == player.currentBlockPosition[i][1])
                                             {
-                                                if (tup.Item1 == player.currentBlockPosition[i][0] && tup.Item2 == player.currentBlockPosition[i][1])
-                                                {
-                                                    moveValid = false;
-                                                }
+                                                moveValid = false;
                                             }
                                         }
                                     }
                                 }
-                                if (moveValid)
+                            }
+                            if (moveValid)
+                            {
+                                foreach (Tuple<int, int> tup in bob)
                                 {
-                                    foreach (Tuple<int, int> tup in bob)
-                                    {
-                                        lobby.game.board.board[tup.Item1, tup.Item2] = 1;
-                                    }
+                                    lobby.game.board.board[tup.Item1, tup.Item2] = 1;
                                 }
                             }
-                        }
-
-
-                        // update board
-                        for (int j = 0; j < lobby.players.Count; j++)
-                        {
-                            if (lobby.players[j].currentBlock == null)
-                            {
-                                // spawn block
-                                // lobby.players[j].currentBlock = new Block(data, 5);
-                                // lobby.players[j].currentBlockPosition = new Tuple<int, int>(5, 5);
-                            }
-                            else
-                            {
-                                if (checkCollision(lobby.players[j], lobby.game.board))
-                                {
-                                    // place block
-                                    // set player's current block to null
-                                }
-                                // block falls 1 space
-                                // lobby.players[j].currentBlockPosition = new Tuple<int, int>(lobby.players[j].currentBlockPosition.Item1 - 1, lobby.players[j].currentBlockPosition.Item2);
-                            }
-                        }
-                        lobby.game.current_time += 1;
-                        // send game state to all players in lobby
-                        for (int j = 0; j < lobby.players.Count; j++)
-                        {
-                            lobby.players[j].webSocket.Send(JsonConvert.SerializeObject(lobby.game));
                         }
                     }
+
+
+                    // update board
+                    for (int j = 0; j < lobby.players.Count; j++)
+                    {
+                        if (lobby.players[j].currentBlock == null)
+                        {
+                            // spawn block
+                            // lobby.players[j].currentBlock = new Block(data, 5);
+                            // lobby.players[j].currentBlockPosition = new Tuple<int, int>(5, 5);
+                        }
+                        else
+                        {
+                            if (checkCollision(lobby.players[j], lobby.game.board))
+                            {
+                                // place block
+                                // set player's current block to null
+                            }
+                            // block falls 1 space
+                            // lobby.players[j].currentBlockPosition = new Tuple<int, int>(lobby.players[j].currentBlockPosition.Item1 - 1, lobby.players[j].currentBlockPosition.Item2);
+                        }
+                    }
+                    lobby.game.current_time += 1;
+                    // send game state to all players in lobby
+                    for (int j = 0; j < lobby.players.Count; j++)
+                    {
+                        lobby.players[j].webSocket.Send(JsonConvert.SerializeObject(lobby.game));
+                    }
                 }
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("bad thing HAPPENED!!!!!!");
-                Console.WriteLine(e);
             }
         }
     }
