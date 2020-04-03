@@ -188,7 +188,7 @@ public class GameManager
                             // lobby.players[j].currentBlockPosition = new Tuple<int, int>(lobby.players[j].currentBlockPosition.Item1 - 1, lobby.players[j].currentBlockPosition.Item2);
                         }
                     }
-                    lobby.game.current_time = DateTime.Now.Millisecond;
+                    lobby.game.current_time += 1;
                     // send game state to all players in lobby
                     for (int j = 0; j < lobby.players.Count; j++)
                     {
