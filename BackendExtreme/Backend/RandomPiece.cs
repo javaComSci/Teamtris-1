@@ -11,7 +11,7 @@ using MySql.Data.MySqlClient;
 public class RandomPiece {
 
     public int GetSquarePriority(int i, int j, int[][] piece) {
-        Console.WriteLine("HERE WITH " + i + " " + j);
+        // Console.WriteLine("HERE WITH " + i + " " + j);
         if(i < 0 || i >= 4 || j < 0 || j >= 4) {
             return 0;
         }
@@ -36,9 +36,9 @@ public class RandomPiece {
 
         Random random = new Random();
         int startIndex = random.Next(0, gen.Length);
-        Console.WriteLine("THE INDEX IS " + startIndex);
+        // Console.WriteLine("THE INDEX IS " + startIndex);
         int count = gen[startIndex];
-        Console.WriteLine("COUNT IS " + count);
+        // Console.WriteLine("COUNT IS " + count);
 
         int i = random.Next(0, 4);
         int j = random.Next(0, 4);
@@ -62,21 +62,21 @@ public class RandomPiece {
                     bestVal = values[v];
                 }
                 if(values[v].Item1 >= maxVal) {
-                    Console.WriteLine("HERE " + maxVal + " " + values[v].Item2);
+                    // Console.WriteLine("HERE " + maxVal + " " + values[v].Item2);
                     maxVal = values[v].Item1;
                     bestVal = values[v];
                 }
             }
             if(maxVal == 1) {
-                Console.WriteLine("MAX VAL " + maxVal);
+                // Console.WriteLine("MAX VAL " + maxVal);
                 piece[bestVal.Item2][bestVal.Item3] = 1;
                 count = count - 1;
             } else {
                 break;
             }
         }
-        Console.WriteLine("PIECE ");
-        botInfoPrinter.PrintJaggedArr(piece);
+        // Console.WriteLine("PIECE ");
+        // botInfoPrinter.PrintJaggedArr(piece);
         return piece;   
     }
 }
