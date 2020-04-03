@@ -121,7 +121,6 @@ class GameScreen {
       } else if (e.type == 100) { 
         // force update based on game board
         var newBoard = e.board.board
-        console.log(newBoard)
         for (var i = 0; i < newBoard.length; i++) {
           for (var j = 0; j < newBoard[0].length; j++) {
             // remove local squares if they conflict with the main board
