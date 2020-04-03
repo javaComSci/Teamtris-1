@@ -139,9 +139,26 @@ public class GameManager
                         }
                         else
                         {
+                            bool moveValid = true;
                             foreach (Tuple<int, int> tup in bob)
                             {
-                                lobby.game.board.board[tup.Item1, tup.Item2] = 1;
+                                foreach (Player player in lobby.players)
+                                {
+                                    for (int i = 0; i < player.currentBlockPosition.Length; i++)
+                                    {
+                                        if (tup.Item1 == player.currentBlockPosition[i][0] && tup.Item2 == player.currentBlockPosition[i][1])
+                                        {
+                                            moveValid = false;
+                                        }
+                                    }
+                                }
+                            }
+                            if (moveValid)
+                            {
+                                foreach (Tuple<int, int> tup in bob)
+                                {
+                                    lobby.game.board.board[tup.Item1, tup.Item2] = 1;
+                                }
                             }
                         }
                     }
