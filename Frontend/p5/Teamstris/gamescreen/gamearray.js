@@ -14,6 +14,9 @@ class GameArray {
         // ID of the local player
         this.ID = ID
 
+        // global time
+        this.totalGameTime = 0
+
         this.SquareEdgeLength = SquareEdgeLength
         this.InstantiateSquares()
 
@@ -25,7 +28,7 @@ class GameArray {
                         [0,0,0,0]]
 
         for (var i = 1; i < this.ShapeArray.length+1; i++) {
-            this.ShapeArray[i-1] = this.InstantiateShape(i,this.startShape,0,this.OffsetByID(i), false)
+            this.ShapeArray[i-1] = this.InstantiateShape(i,this.startShape,0,this.OffsetByID(i), false, this.totalGameTime)
         }
 
         // allows easy determination of when to freeze an object
@@ -374,7 +377,7 @@ class GameArray {
             console.log(Shape)
             var r = Shape.Freeze() // r is a set of rows to be checked
             if (Shape.ID == this.ID) {
-                this.ShapeArray[Shape.ID - 1] = this.InstantiateShape(Shape.ID,null,0,Shape.ID*5,false)
+                this.ShapeArray[Shape.ID - 1] = this.InstantiateShape(Shape.ID,null,0,Shape.ID*5,false, this.totalGameTime)
             }
             for (var row of Array.from(r.values())) {
                 this.CheckAndRemoveRow(row)
@@ -539,6 +542,13 @@ class GameArray {
             var ColType = this.IsValidMovement(this.ShapeArray[s],left,right,down)
             if (ColType == this.CollisionType.NoCollision) {
                 this.ShapeArray[s].MoveShape(this.arr,left,right,down,false)
+                if (this.ShapeArray[s].ID == this.ID) {
+                    var ts = this.ShapeArray[s]
+                    var boardIndices = []
+                    for (var j = 0; j < ts.Squares.length; j++) {
+                        boardIndices.push([ts.Squares[j].i + down, ts.Squares[j].j - left + right, ts.Squares[j].PowerCubeType])                    }
+                    this.SendAction(this.ID, boardIndices,"down","69")
+                }
             } else {
                 // if shape cannot move, decide if it is removed from owners control
                 this.CheckFreeze(this.ShapeArray[s],down, ColType)
@@ -557,10 +567,10 @@ class GameArray {
      * 
      * @return Shape
      */
-    InstantiateShape(ID, ShapeBlueprint=null, RowOffset=0, ColOffset=0, RandomOffset=false) {
+    InstantiateShape(ID, ShapeBlueprint=null, RowOffset=0, ColOffset=0, RandomOffset=false, time=1) {
         var NewShape;
         if (ShapeBlueprint == null) {
-            NewShape = new Shape(ID)
+            NewShape = new Shape(ID, null, "rand", time)
         } else {
             NewShape = new Shape(ID, ShapeBlueprint)
         }
@@ -681,14 +691,14 @@ class GameArray {
      * 
      * @return void
      */
-    SendAction(ID, boardIndices, action) {
+    SendAction(ID, boardIndices, action, type="6") {
         if (!team) {
             return
         }
         team.score = 5000
         team.time = 200
         var data = JSON.stringify({"lobbyID":team.lobbyToken.toLowerCase(),"playerID":ID,"shapeIndices": boardIndices, "move": action})
-        socket.send(JSON.stringify({"type": "6", "data": data}))
+        socket.send(JSON.stringify({"type": type, "data": data}))
     }
 }
 

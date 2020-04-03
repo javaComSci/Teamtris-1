@@ -61,6 +61,9 @@ class GameScreen {
 
     // number of milliseconds between every update
     this.GameSpeed = 200;
+
+    // total time in game
+    this.totalGameTime = 0;
   }
 
   SetPlayerCount() {
@@ -136,6 +139,9 @@ class GameScreen {
 
           }
         }
+
+        this.totalGameTime = e.currentTime
+        this.GameArray.totalGameTime = this.totalGameTime
       } else if (e.type == 666) {
         gameState = 3
       }
