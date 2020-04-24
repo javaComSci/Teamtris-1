@@ -153,8 +153,8 @@ public class DoubleBot : Bot {
                 }
             }
         }
-        Console.WriteLine("ALL COMPATIBLE PIECES ON BOARD");
-        botInfoPrinter.PrintAllCompatiblePieces(board.board, allCompatiblePieces);
+        // Console.WriteLine("ALL COMPATIBLE PIECES ON BOARD");
+        // botInfoPrinter.PrintAllCompatiblePieces(board.board, allCompatiblePieces);
         return allCompatiblePieces;
     }
 
