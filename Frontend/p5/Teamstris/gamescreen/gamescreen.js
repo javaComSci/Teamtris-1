@@ -40,9 +40,11 @@ class GameScreen {
     // base of the edge length of each square, we center the grid.
     this.WidthTranslation =
       (this.CustomWindowWidth - this.SquareEdgeLength * this.BoardSquareSize[1]) / 2;
+
+    // push the grid closer to the bottom of the screen
     this.HeightTranslation =
-      (this.CustomWindowHeight - this.SquareEdgeLength * this.BoardSquareSize[0]) /
-      2;
+      (this.CustomWindowHeight - this.SquareEdgeLength * this.BoardSquareSize[0]) / 1.1;
+
     this.GridTranslation = [
       xOffset + this.WidthTranslation,
       yOffset + this.HeightTranslation
@@ -86,14 +88,66 @@ class GameScreen {
     if (gamescreen_draw) console.log("Drawing on GameScreen");
     this.TimeStepUpdate(); // perform a timestep update if necessary
     this.GameArray.Draw(this.GridTranslation[0], this.GridTranslation[1]);
-    textSize(32);
-    fill(0, 255, 255);
-    console.log(this.gameScore, this.gameArrayScore)
-    text("Score: " + (this.gameScore + this.GameArray.gameArrayScore), this.CustomWindowWidth*0.1, this.CustomWindowHeight*0.05);
-    
+
+    // draw score
+    this.DrawScore()
+
+    // draw sidebar
+    this.DrawSidebar()
+
     // text('word', 10, 60);
     // fill(0, 102, 153, 51);
     // text('word', 10, 90);
+  }
+
+  /**
+   * @description Draws the scoring for the game
+   *
+   * @return void
+   */
+  DrawScore() {
+    textSize(32);
+    fill(0, 255, 255);
+    text("Score: " + (this.gameScore + this.GameArray.gameArrayScore), this.CustomWindowWidth*0.1, this.CustomWindowHeight*0.05);
+  }
+
+  /**
+   * @description Draws the sidebar displaying next shapes
+   *
+   * @return void
+   */
+  DrawSidebar() {
+    push();
+
+    rectMode(CORNER)
+
+    var DisplayShapes = this.GameArray.DisplayArray
+    if (DisplayShapes == null) {
+      return;
+    }
+
+    var scaleFactor = 0.6
+    push();
+    for (var i = 0; i < Math.min(DisplayShapes.length, 2); i++) {
+      var widthOffset = (this.GridTranslation[0] / 2) - this.SquareEdgeLength*2*scaleFactor
+      var heightOffset = this.GridTranslation[1] + this.SquareEdgeLength * this.BoardSquareSize[0] * (0.2 * (i+1))
+      translate(widthOffset, heightOffset);
+      DisplayShapes[i].DrawOnSidebar(this.SquareEdgeLength*scaleFactor)
+    }
+    pop();
+
+    push();
+    for (var i = 2; i < DisplayShapes.length; i++) {
+      var widthOffset = (((this.GridTranslation[0] + this.BoardSquareSize[1] * this.SquareEdgeLength)
+                        + this.CustomWindowWidth) / 2)
+                        - this.SquareEdgeLength*2*scaleFactor
+      var heightOffset = this.GridTranslation[1] + this.SquareEdgeLength * this.BoardSquareSize[0] * (0.2 * (i+1))
+      translate(widthOffset, heightOffset);
+      DisplayShapes[i].DrawOnSidebar(this.SquareEdgeLength*scaleFactor)
+    }
+    pop();
+
+    pop();
   }
 
   /**

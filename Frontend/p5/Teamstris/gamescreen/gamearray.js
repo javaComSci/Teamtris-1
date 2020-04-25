@@ -31,6 +31,12 @@ class GameArray {
             this.ShapeArray[i-1] = this.InstantiateShape(i,this.startShape,0,this.OffsetByID(i), false, this.totalGameTime)
         }
 
+        // create the array of shapes that will be displayed
+        this.DisplayArray = new Array(this.NumPlayers)
+        for (var i = 1; i < this.ShapeArray.length+1; i++) {
+            this.DisplayArray[i-1] = new Shape(i, null, "rand", this.totalGameTime)
+        }
+
         // allows easy determination of when to freeze an object
         this.CollisionType = {
             OutOfBounds : 1,
@@ -367,19 +373,23 @@ class GameArray {
      * @description Check to see if a shape should be frozen and removed from the owner's control.
      * It will replace the shape with a new one if the current shape is frozen
      * 
-     * @param Shape - A Shape object
+     * @param ShapeP - A Shape object being passed
      * @param down - integer representing how far down the shape should move
      * @param ColType - Collision type of the objects current collision
      * 
      * @return void
      */
-    CheckFreeze(Shape, down, ColType) {
-        if (Shape.ID == this.ID && down == 1 && (ColType == this.CollisionType.OutOfBounds || ColType == this.CollisionType.FrozenObject)) {
+    CheckFreeze(ShapeP, down, ColType) {
+        if (ShapeP.ID == this.ID && down == 1 && (ColType == this.CollisionType.OutOfBounds || ColType == this.CollisionType.FrozenObject)) {
             console.log("freezing shape: ")
-            console.log(Shape)
-            var r = Shape.Freeze() // r is a set of rows to be checked
-            if (Shape.ID == this.ID) {
-                this.ShapeArray[Shape.ID - 1] = this.InstantiateShape(Shape.ID,null,0,Shape.ID*5,false, this.totalGameTime)
+            console.log(ShapeP)
+            var r = ShapeP.Freeze() // r is a set of rows to be checked
+            if (ShapeP.ID == this.ID) {
+                //this.ShapeArray[Shape.ID - 1] = this.InstantiateShape(Shape.ID,null,0,Shape.ID*5,false, this.totalGameTime)
+                var NewBlueprint = this.DisplayArray[this.ID-1].ShapeBlueprint
+                this.ShapeArray[this.ID - 1] = this.InstantiateShape(this.ID,NewBlueprint,0,this.ID*5,false, this.totalGameTime)
+                var NewShape = new Shape(this.ID, null, "rand", this.totalGameTime)
+                this.DisplayArray[this.ID-1] = NewShape;
             }
             for (var row of Array.from(r.values())) {
                 this.CheckAndRemoveRow(row)
@@ -644,7 +654,6 @@ class GameArray {
         stroke("pink")
         strokeWeight(strokeW)
         rect(0-strokeW/2, 0-strokeW/2, this.SquareEdgeLength*this.column_count+strokeW, this.SquareEdgeLength*this.row_count+strokeW,10)
-
         
         pop();
     }
