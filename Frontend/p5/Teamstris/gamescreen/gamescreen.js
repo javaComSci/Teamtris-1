@@ -88,7 +88,8 @@ class GameScreen {
     this.GameArray.Draw(this.GridTranslation[0], this.GridTranslation[1]);
     textSize(32);
     fill(0, 255, 255);
-    text("Score: " + this.gameScore, this.CustomWindowWidth*0.1, this.CustomWindowHeight*0.05);
+    console.log(this.gameScore, this.gameArrayScore)
+    text("Score: " + (this.gameScore + this.GameArray.gameArrayScore), this.CustomWindowWidth*0.1, this.CustomWindowHeight*0.05);
     
     // text('word', 10, 60);
     // fill(0, 102, 153, 51);

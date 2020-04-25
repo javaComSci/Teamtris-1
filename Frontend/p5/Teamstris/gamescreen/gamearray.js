@@ -39,6 +39,8 @@ class GameArray {
             NoCollision : 4
         }
 
+        this.gameArrayScore = 0;
+
         //console.log(this.CollisionType)
     }//end constructor
 
@@ -418,15 +420,18 @@ class GameArray {
         //console.log(square.PowerCubeType)
         switch(square.PowerCubeType) {
             case square.PowerCubeTypes.DEFAULT:
+                this.gameArrayScore += 1
                 square.SetApplied()
                 square.SetEmpty()
-                break
+                break;
             case square.PowerCubeTypes.DESTROYCOL:
+                this.gameArrayScore += 5
                 square.SetApplied()
                 square.SetEmpty()
                 this.RemoveCol(square.j)
                 break;
             case square.PowerCubeTypes.DESTROYAREA:
+                this.gameArrayScore += 5
                 square.SetApplied()
                 square.SetEmpty()
                 this.RemoveArea(square.i,square.j)
