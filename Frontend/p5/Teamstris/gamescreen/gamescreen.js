@@ -23,10 +23,14 @@ class GameScreen {
     // size of the game board, determined by this.NumPlayers.
     this.BoardSquareSize = [20, 5 + 5 * (this.NumPlayers + this.NumBots)];
 
+    // Screen dimensions
+    this.CustomWindowHeight = CustomWindowHeight
+    this.CustomWindowWidth = CustomWindowWidth
+
     // length of the edge of each of the squares on the game board
     this.SquareEdgeLength = Math.min(
-      CustomWindowHeight / this.BoardSquareSize[0],
-      CustomWindowWidth / this.BoardSquareSize[1]
+      this.CustomWindowHeight / this.BoardSquareSize[0],
+      this.CustomWindowWidth / this.BoardSquareSize[1]
     );
 
     // scales the length of the edges to the desired ratio of the screen.
@@ -35,9 +39,9 @@ class GameScreen {
 
     // base of the edge length of each square, we center the grid.
     this.WidthTranslation =
-      (CustomWindowWidth - this.SquareEdgeLength * this.BoardSquareSize[1]) / 2;
+      (this.CustomWindowWidth - this.SquareEdgeLength * this.BoardSquareSize[1]) / 2;
     this.HeightTranslation =
-      (CustomWindowHeight - this.SquareEdgeLength * this.BoardSquareSize[0]) /
+      (this.CustomWindowHeight - this.SquareEdgeLength * this.BoardSquareSize[0]) /
       2;
     this.GridTranslation = [
       xOffset + this.WidthTranslation,
@@ -64,6 +68,9 @@ class GameScreen {
 
     // total time in game
     this.totalGameTime = 0;
+
+    // game score
+    this.gameScore = 0;
   }
 
   SetPlayerCount() {
@@ -79,9 +86,9 @@ class GameScreen {
     if (gamescreen_draw) console.log("Drawing on GameScreen");
     this.TimeStepUpdate(); // perform a timestep update if necessary
     this.GameArray.Draw(this.GridTranslation[0], this.GridTranslation[1]);
-    // textSize(32);
-    // fill(0, 255, 255);
-    // text("Score: " + 69, this.GridTranslation[0], this.GridTranslation[1]*(1-this.SquareScalingFactor));
+    textSize(32);
+    fill(0, 255, 255);
+    text("Score: " + this.gameScore, this.CustomWindowWidth*0.1, this.CustomWindowHeight*0.05);
     
     // text('word', 10, 60);
     // fill(0, 102, 153, 51);
@@ -163,6 +170,7 @@ class GameScreen {
     if (this.PreviousTime != TruncUpdate) {
       if (gamescreen_updateflag) console.log("Updating Game");
       this.PreviousTime = TruncUpdate;
+      this.gameScore += 1;
       return true;
     } else {
       return false;
