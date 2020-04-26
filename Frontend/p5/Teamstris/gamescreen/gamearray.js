@@ -722,17 +722,22 @@ class GameArray {
 
     }
 
-    DrawGhost(ID, RowTranslation, ColTranslation) {
+    /** 
+     * @description Draws the ghost of the shape attached to the provided ID. The ghost is the location
+     * a hard drop will place the shape if performed.
+     * 
+     * @param ID - ID of the shape being hard-dropped
+     * 
+     * @return void
+     */
+    DrawGhost(ID) {
         
         var PlayerShape = this.ShapeArray[ID-1];
 
         for (var i = 1; i < this.row_count; i++) {
             var collision_type = this.IsValidMovement(PlayerShape, 0,0,i)
             if (collision_type == this.CollisionType.FrozenObject || collision_type == this.CollisionType.OutOfBounds) {
-                push();
-                //translate(RowTranslation, ColTranslation);
-                PlayerShape.DrawAtOffset(100, this.SquareEdgeLength, i-1)
-                pop();
+                PlayerShape.DrawAtOffset(130, this.SquareEdgeLength, i-1)
                 return
             }
         }
