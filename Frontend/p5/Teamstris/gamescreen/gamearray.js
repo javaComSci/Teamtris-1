@@ -458,6 +458,7 @@ class GameArray {
      * @return void
      */
     RemoveRow(row, removeAll=false) {
+        this.gameArrayScore += 10;
         for (var j = 0; j < this.column_count; j++) {
             var s = this.GetSquare(row,j)
             if (removeAll) {
@@ -655,6 +656,9 @@ class GameArray {
         strokeWeight(strokeW)
         rect(0-strokeW/2, 0-strokeW/2, this.SquareEdgeLength*this.column_count+strokeW, this.SquareEdgeLength*this.row_count+strokeW,10)
         
+        // Draw ghost
+        this.DrawGhost(this.ID, RowTranslation, ColTranslation);
+        
         pop();
     }
 
@@ -692,6 +696,44 @@ class GameArray {
             if (this.OnBoard(i,j)) {
                 this.GetSquare(i, j).SetFrozen(Squares[s][0].PowerCubeType);
                 Squares[s][0].SetEmpty();
+            }
+        }
+    }
+
+    /** 
+     * @description Shifts the square of the provided ID down as far as possible
+     * 
+     * @param ID - ID of the shape being hard-dropped
+     * 
+     * @return void
+     */
+    HardDrop(ID) {
+        var PlayerShape = this.ShapeArray[ID-1];
+
+        var validMovementDist = 0;
+        for (var i = 1; i < this.row_count; i++) {
+            var collision_type = this.IsValidMovement(PlayerShape, 0,0,i)
+            if (collision_type == this.CollisionType.FrozenObject || collision_type == this.CollisionType.OutOfBounds) {
+                this.MoveShape(ID, 0, 0, validMovementDist);
+                return
+            }
+            validMovementDist = i;
+        }
+
+    }
+
+    DrawGhost(ID, RowTranslation, ColTranslation) {
+        
+        var PlayerShape = this.ShapeArray[ID-1];
+
+        for (var i = 1; i < this.row_count; i++) {
+            var collision_type = this.IsValidMovement(PlayerShape, 0,0,i)
+            if (collision_type == this.CollisionType.FrozenObject || collision_type == this.CollisionType.OutOfBounds) {
+                push();
+                //translate(RowTranslation, ColTranslation);
+                PlayerShape.DrawAtOffset(100, this.SquareEdgeLength, i-1)
+                pop();
+                return
             }
         }
     }

@@ -132,7 +132,7 @@ class GameScreen {
       var widthOffset = (this.GridTranslation[0] / 2) - this.SquareEdgeLength*2*scaleFactor
       var heightOffset = this.GridTranslation[1] + this.SquareEdgeLength * this.BoardSquareSize[0] * (0.2 * (i+1))
       translate(widthOffset, heightOffset);
-      DisplayShapes[i].DrawOnSidebar(this.SquareEdgeLength*scaleFactor)
+      DisplayShapes[i].DrawShape(this.SquareEdgeLength*scaleFactor)
     }
     pop();
 
@@ -143,7 +143,7 @@ class GameScreen {
                         - this.SquareEdgeLength*2*scaleFactor
       var heightOffset = this.GridTranslation[1] + this.SquareEdgeLength * this.BoardSquareSize[0] * (0.2 * (i+1))
       translate(widthOffset, heightOffset);
-      DisplayShapes[i].DrawOnSidebar(this.SquareEdgeLength*scaleFactor)
+      DisplayShapes[i].DrawShape(this.SquareEdgeLength*scaleFactor)
     }
     pop();
 
@@ -204,12 +204,17 @@ class GameScreen {
 
         this.totalGameTime = e.currentTime
         this.GameArray.totalGameTime = this.totalGameTime
+        this.UpdateGameSpeed()
       } else if (e.type == 666) {
         gameState = 3
       }
 
       // e.type == 11
     };
+  }
+
+  UpdateGameSpeed() {
+    this.GameSpeed = 200 * (1 + Math.log(this.totalGameTime))
   }
 
   // receive generated shape for other players
@@ -251,18 +256,19 @@ class GameScreen {
    * @return void
    */
   keyPressedGame(realKeyCode = keyCode) {
-    if (realKeyCode === LEFT_ARROW) {
+    if (realKeyCode === LEFT_ARROW || realKeyCode == 65) { // < or a
       this.GameArray.MoveShape(this.PlayerID, 1, 0, 0);
-    } else if (realKeyCode === RIGHT_ARROW) {
+    } else if (realKeyCode === RIGHT_ARROW || realKeyCode == 68) { // > or d
       this.GameArray.MoveShape(this.PlayerID, 0, 1, 0);
-    } else if (realKeyCode === DOWN_ARROW) {
+    } else if (realKeyCode === DOWN_ARROW || realKeyCode == 83) { // down or s
       this.GameArray.MoveShape(this.PlayerID, 0, 0, 1);
-    } else if (realKeyCode === 65) {
-      //a
+    } else if (realKeyCode === 82) { // r
       this.GameArray.RotateShape(this.PlayerID);
       this.GameArray.MoveShape(this.PlayerID, 0, 0, 0);
     } else if (realKeyCode === 73) {
       gameState = 3
+    } else if (realKeyCode == 32) { // SPACEBAR
+      this.GameArray.HardDrop(this.PlayerID);
     }
   }
 }
