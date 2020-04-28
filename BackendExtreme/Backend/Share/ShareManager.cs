@@ -35,7 +35,7 @@ public class ShareManager : WebSocketBehavior
         SharePacket sharePacket = JsonConvert.DeserializeObject<SharePacket>(packet.data);
         Tuple<List<ScoresInfo>, ScoresInfo> filledInfo = FillScoresInfo(sharePacket.teamName); 
 
-        CreateDetails(filledInfo);
+        CreateDetails(filledInfo, null);
     }
 
     public Tuple<List<ScoresInfo>, ScoresInfo> FillScoresInfo(string teamName) {
@@ -43,29 +43,31 @@ public class ShareManager : WebSocketBehavior
         return retrievedInfo;
     }
 
-    public void CreateDetails(Tuple<List<ScoresInfo>, ScoresInfo> filledInfo) {
+    public string CreateDetails(Tuple<List<ScoresInfo>, ScoresInfo> filledInfo, Bitmap b) {
         ScoresInfo myTeam = filledInfo.Item2;
         string teamName = myTeam.teamName;
         int score = myTeam.teamScore;
         string scoreInfo = "Best achieving score: " + score;
 
-        PointF firstLocation = new PointF(120f, 200f);
-        PointF secondLocation = new PointF(120f, 240f);
+        PointF firstLocation = new PointF(320f, 400f);
+        PointF secondLocation = new PointF(320f, 490f);
 
-        Bitmap bitmap = new System.Drawing.Bitmap("canvas.png");
+        Bitmap bitmap;
+        if(b == null) {
+            bitmap = new System.Drawing.Bitmap("canvas.png");
+        } else {
+            bitmap = b;
+        }
+        
 
         using(Graphics graphics = Graphics.FromImage(bitmap))
-        {
-            using (Font arialFont =  new Font("Arial", 20))
             {
-                graphics.DrawString(teamName, arialFont, Brushes.Red, firstLocation);
-                int i = teamName.Length;
-                while(i < scoreInfo.Length - 2) {
-                    graphics.DrawString(".", arialFont, Brushes.Red, new PointF((120 + teamName.Length * 8) + (10 * i), 200f));
-                    i++;
+                using (Font arialFont =  new Font("Arial", 50))
+                {
+                    graphics.DrawString(teamName, arialFont, Brushes.Red, firstLocation);
+                    int i = teamName.Length;
+                    graphics.DrawString(scoreInfo, arialFont, Brushes.Blue, secondLocation);
                 }
-                graphics.DrawString(scoreInfo, arialFont, Brushes.Blue, secondLocation);
-            }
         }
 
         // string imageFilePath = "canvas.bmp";
@@ -86,11 +88,14 @@ public class ShareManager : WebSocketBehavior
         bImage.Save(ms, ImageFormat.Jpeg);
         byte[] byteImage = ms.ToArray();
         var encodedImage= Convert.ToBase64String(byteImage); 
+        // Console.WriteLine("ENCODED IMAGE " +  encodedImage);
 
         ImgPacket imgPacket= new ImgPacket();
         imgPacket.data = encodedImage;
         var convertedInfo = JsonConvert.SerializeObject(imgPacket);
         Send(convertedInfo);
+
+        return encodedImage;
     }
 }
 

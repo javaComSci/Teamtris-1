@@ -1,3 +1,4 @@
+var base64ToImage = import('base64-to-image');
 /**
  * #class ScoreScreen |
  * @author Steven Dellamore, JavaComSci |
@@ -27,6 +28,7 @@ class ScoreScreen {
 
         this.scoreScreenRequest = false;
         this.currentTeamsRank = -1;
+        this.shareButtonDisplayed = false;
 
         buttonList.push(new Buttons(windowWidth/2.5, windowHeight / 2.6, windowWidth / 7, windowHeight / 12, 3, "black"));
         buttonList[buttonList.length - 1].text = "Home"; // Text to put in the button
@@ -108,6 +110,17 @@ class ScoreScreen {
         fill(255);
         textSize(windowHeight/40);
         if(this.scoreArray.length > 0){
+            // if(!this.shareButtonDisplayed){
+            //     buttonList.push(new Buttons(windowWidth/2.5, windowHeight / 3.5, windowWidth / 7, windowHeight / 12, 3, "black"));
+            //     buttonList[buttonList.length - 1].text = "Share"; // Text to put in the button
+            //     buttonList[buttonList.length - 1].hoverColor = "blue"; // What color to make the button on mouse hover
+            //     buttonList[buttonList.length - 1].id = "share"; // ID of the button
+            //     buttonList[buttonList.length - 1].round = 5;
+            //     buttonList[buttonList.length - 1].borderWeight = 2;
+            //     buttonList[buttonList.length - 1].border = 255;
+            //     buttonList[buttonList.length - 1].textColor = 255;
+            //     this.shareButtonDisplayed = true;
+            // }
             for(var i = 1; i < this.scoreArray.length+1; i++){
                 text(i + ".",posOfNum.x, (posOfNum.y + (i * yHeight/12.2)));
                 text(this.scoreArray[i-1].teamName,posOfNum.x + windowWidth/10, (posOfNum.y + (i * yHeight/12.2)));
@@ -120,6 +133,17 @@ class ScoreScreen {
                 text('-',posOfNum.x + windowWidth/5, (posOfNum.y + (11 * yHeight/12)));
                 text('-',posOfNum.x + windowWidth/4, (posOfNum.y + (11 * yHeight/12)));
             } else {
+                if(!this.shareButtonDisplayed){
+                    buttonList.push(new Buttons(windowWidth/2.5, windowHeight / 3.5, windowWidth / 7, windowHeight / 12, 3, "black"));
+                    buttonList[buttonList.length - 1].text = "Share"; // Text to put in the button
+                    buttonList[buttonList.length - 1].hoverColor = "blue"; // What color to make the button on mouse hover
+                    buttonList[buttonList.length - 1].id = "share"; // ID of the button
+                    buttonList[buttonList.length - 1].round = 5;
+                    buttonList[buttonList.length - 1].borderWeight = 2;
+                    buttonList[buttonList.length - 1].border = 255;
+                    buttonList[buttonList.length - 1].textColor = 255;
+                    this.shareButtonDisplayed = true;
+                }
                 text(this.currentTeamsRank,posOfNum.x, (posOfNum.y + (11 * yHeight/12)));
                 text(this.team.teamName,posOfNum.x + windowWidth/10, (posOfNum.y + (11 * yHeight/12)));
                 text(this.team.score,posOfNum.x + windowWidth/5, (posOfNum.y + (11 * yHeight/12)));
@@ -141,6 +165,34 @@ class ScoreScreen {
         if(ClickedLoop() == "back") {
             mStartScreen = new StartScreen();
             gameState = 0;
+        }
+        if(ClickedLoop() == "share") {
+            socketShare.onmessage = (event) => {
+                var e = JSON.parse(event.data);
+                console.log("SHARE DATA BELOW");
+                console.log(e);
+                // var img;
+                // var raw = new Image();
+                // raw.src='data:' + e.data; // base64 data here
+                // img = loadImage('data:image/png;base64, ' + e.data);
+                // img = loadImage('data:image/png;base64, ' + e.data);
+                // var img = loadImage('data:image/jpg;base64,'+e.data);
+                // img.save('photo', 'jpg')
+                var img;
+                var raw = new Image();
+                raw.src='data:image/jpeg;base64,' + e.data; // base64 data here
+                raw.onload = function() {
+                    img = createImage(raw.width, raw.height);
+                    img.drawingContext.drawImage(raw, 0, 0);
+                    // image(img, 0, 0); // draw the image, etc here
+                    img.save('Score', 'jpg')
+                }
+            };
+            var data = JSON.stringify({
+                "teamName": this.team.teamName, 
+                // "teamName": "FEA",
+            });
+            socketShare.send(JSON.stringify({"type": "123431", "data": data}));
         }
     }
 
