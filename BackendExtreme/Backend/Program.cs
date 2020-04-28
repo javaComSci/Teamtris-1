@@ -158,6 +158,53 @@ namespace Teamtris
             // }
 
 
+            // string teamName = "AHHHH";
+            // int score = 50;
+            // string scoreInfo = "Best achieving score: " + score;
+
+            // PointF firstLocation = new PointF(320f, 400f);
+            // PointF secondLocation = new PointF(320f, 490f);
+
+            // Bitmap b = null;
+            // Bitmap bitmap;
+            // if(b == null) {
+            //     bitmap = new System.Drawing.Bitmap("canvas.png");
+            // } else {
+            //     bitmap = b;
+            // }
+            
+
+            // using(Graphics graphics = Graphics.FromImage(bitmap))
+            // {
+            //     using (Font arialFont =  new Font("Arial", 50))
+            //     {
+            //         graphics.DrawString(teamName, arialFont, Brushes.Red, firstLocation);
+            //         int i = teamName.Length;
+            //         graphics.DrawString(scoreInfo, arialFont, Brushes.Blue, secondLocation);
+            //     }
+            // }
+
+            // string imageFilePath = "canvas.bmp";
+            // string outputFileName = imageFilePath;
+            // using (MemoryStream memory = new MemoryStream())
+            // {
+            //     using (FileStream fs = new FileStream(outputFileName, FileMode.Create, FileAccess.ReadWrite))
+            //     {
+            //         bitmap.Save(memory, ImageFormat.Jpeg);
+            //         byte[] bytes = memory.ToArray();
+            //         fs.Write(bytes, 0, bytes.Length);
+            //     }
+            // }
+
+
+            // Bitmap bImage = bitmap;
+            // System.IO.MemoryStream ms = new MemoryStream();
+            // bImage.Save(ms, ImageFormat.Jpeg);
+            // byte[] byteImage = ms.ToArray();
+            // var encodedImage= Convert.ToBase64String(byteImage); 
+            // Console.WriteLine("ENCODED IMAGE " +  encodedImage);
+
+
             // create localhost web socket server on port 5202
             var wssv = new WebSocketServer("ws://0.0.0.0:5202");
             wssv.Start();
