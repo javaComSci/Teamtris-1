@@ -93,7 +93,7 @@ class GameScreen {
     this.DrawScore()
 
     // draw sidebar
-    //this.DrawSidebar()
+    this.DrawSidebar()
 
     // text('word', 10, 60);
     // fill(0, 102, 153, 51);
