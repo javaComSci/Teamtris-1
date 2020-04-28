@@ -93,7 +93,7 @@ class GameScreen {
     this.DrawScore()
 
     // draw sidebar
-    this.DrawSidebar()
+    //this.DrawSidebar()
 
     // text('word', 10, 60);
     // fill(0, 102, 153, 51);
@@ -122,7 +122,7 @@ class GameScreen {
     rectMode(CORNER)
     var scaleFactor = 0.6
     var DisplayShape = this.GameArray.DisplayShape
-    var widthOffset = this.GridTranslation[0] * 0.5
+    var widthOffset = this.GridTranslation[0] * 0.3
     var heightOffset = this.GridTranslation[1]
     translate(widthOffset, heightOffset);
     DisplayShape.DrawShape(this.SquareEdgeLength*scaleFactor)
@@ -275,8 +275,6 @@ class GameScreen {
     } else if (realKeyCode === 82) { // r
       this.GameArray.RotateShape(this.PlayerID);
       this.GameArray.MoveShape(this.PlayerID, 0, 0, 0);
-    } else if (realKeyCode === 73) {
-      gameState = 3
     } else if (realKeyCode == 32) { // SPACEBAR
       this.GameArray.HardDrop(this.PlayerID);
     }

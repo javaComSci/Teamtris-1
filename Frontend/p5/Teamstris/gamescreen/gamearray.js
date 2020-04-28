@@ -37,7 +37,7 @@ class GameArray {
         //     this.DisplayArray[i-1] = new Shape(i, null, "rand", this.totalGameTime)
         // }
 
-        this.DisplayShape = new Shape(this.ID, null, "rand", this.totalGameTime)
+        //this.DisplayShape = new Shape(this.ID, null, "rand", this.totalGameTime)
 
         // allows easy determination of when to freeze an object
         this.CollisionType = {
@@ -383,15 +383,13 @@ class GameArray {
      */
     CheckFreeze(ShapeP, down, ColType) {
         if (ShapeP.ID == this.ID && down == 1 && (ColType == this.CollisionType.OutOfBounds || ColType == this.CollisionType.FrozenObject)) {
-            console.log("freezing shape: ")
-            console.log(ShapeP)
             var r = ShapeP.Freeze() // r is a set of rows to be checked
             if (ShapeP.ID == this.ID) {
                 //this.ShapeArray[Shape.ID - 1] = this.InstantiateShape(Shape.ID,null,0,Shape.ID*5,false, this.totalGameTime)
-                var NewBlueprint = this.DisplayShape.ShapeBlueprint
-                this.ShapeArray[this.ID - 1] = this.InstantiateShape(this.ID,NewBlueprint,0,this.ID*5,false, this.totalGameTime)
-                var NewShape = new Shape(this.ID, null, "rand", this.totalGameTime)
-                this.DisplayShape = NewShape;
+                //var NewBlueprint = this.DisplayShape.ShapeBlueprint
+                this.ShapeArray[this.ID - 1] = this.InstantiateShape(this.ID,null,0,this.ID*5,false, this.totalGameTime)
+                //var NewShape = new Shape(this.ID, null, "rand", this.totalGameTime)
+                //this.DisplayShape = NewShape;
             }
             for (var row of Array.from(r.values())) {
                 this.CheckAndRemoveRow(row)
