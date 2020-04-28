@@ -120,35 +120,41 @@ class GameScreen {
     push();
 
     rectMode(CORNER)
-
-    var DisplayShapes = this.GameArray.DisplayArray
-    if (DisplayShapes == null) {
-      return;
-    }
-
     var scaleFactor = 0.6
+    var DisplayShape = this.GameArray.DisplayShape
+    var widthOffset = this.GridTranslation[0] * 0.5
+    var heightOffset = this.GridTranslation[1]
+    translate(widthOffset, heightOffset);
+    DisplayShape.DrawShape(this.SquareEdgeLength*scaleFactor)
+
+    // var DisplayShapes = this.GameArray.DisplayArray
+    // if (DisplayShapes == null) {
+    //   return;
+    // }
+
+    // var scaleFactor = 0.6
     
-    for (var i = 0; i < Math.min(DisplayShapes.length, 2); i++) {
-      push();
-      var widthOffset = (this.GridTranslation[0] / 2) - this.SquareEdgeLength*2*scaleFactor
-      var heightOffset = this.GridTranslation[1] + this.SquareEdgeLength * this.BoardSquareSize[0] * (0.2 * (i+1))
-      translate(widthOffset, heightOffset);
-      DisplayShapes[i].DrawShape(this.SquareEdgeLength*scaleFactor)
-      pop();
-    }
+    // for (var i = 0; i < Math.min(DisplayShapes.length, 2); i++) {
+    //   push();
+    //   var widthOffset = (this.GridTranslation[0] / 2) - this.SquareEdgeLength*2*scaleFactor
+    //   var heightOffset = this.GridTranslation[1] + this.SquareEdgeLength * this.BoardSquareSize[0] * (0.2 * (i+1))
+    //   translate(widthOffset, heightOffset);
+    //   DisplayShapes[i].DrawShape(this.SquareEdgeLength*scaleFactor)
+    //   pop();
+    // }
     
 
     
-    for (var i = 2; i < DisplayShapes.length; i++) {
-      push();
-      var widthOffset = (((this.GridTranslation[0] + this.BoardSquareSize[1] * this.SquareEdgeLength)
-                        + this.CustomWindowWidth) / 2)
-                        - this.SquareEdgeLength*2*scaleFactor
-      var heightOffset = this.GridTranslation[1] + this.SquareEdgeLength * this.BoardSquareSize[0] * (0.2 * (i+1))
-      translate(widthOffset, heightOffset);
-      DisplayShapes[i].DrawShape(this.SquareEdgeLength*scaleFactor)
-      pop();
-    }
+    // for (var i = 2; i < DisplayShapes.length; i++) {
+    //   push();
+    //   var widthOffset = (((this.GridTranslation[0] + this.BoardSquareSize[1] * this.SquareEdgeLength)
+    //                     + this.CustomWindowWidth) / 2)
+    //                     - this.SquareEdgeLength*2*scaleFactor
+    //   var heightOffset = this.GridTranslation[1] + this.SquareEdgeLength * this.BoardSquareSize[0] * (0.2 * (i+1))
+    //   translate(widthOffset, heightOffset);
+    //   DisplayShapes[i].DrawShape(this.SquareEdgeLength*scaleFactor)
+    //   pop();
+    // }
     
 
     pop();
