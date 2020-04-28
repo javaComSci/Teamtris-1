@@ -167,6 +167,7 @@ class ScoreScreen {
             gameState = 0;
         }
         if(ClickedLoop() == "share") {
+            console.log("SHARERE")
             socketShare.onmessage = (event) => {
                 var e = JSON.parse(event.data);
                 console.log("SHARE DATA BELOW");
