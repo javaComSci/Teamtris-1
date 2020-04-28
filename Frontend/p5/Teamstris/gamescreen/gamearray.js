@@ -37,7 +37,7 @@ class GameArray {
         //     this.DisplayArray[i-1] = new Shape(i, null, "rand", this.totalGameTime)
         // }
 
-        this.DisplayShape = new Shape(this.ID, null, "rand", this.totalGameTime)
+        this.DisplayShape = new Shape(this.ID, null, "rand", this.totalGameTime, false)
 
         // allows easy determination of when to freeze an object
         this.CollisionType = {
