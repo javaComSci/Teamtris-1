@@ -186,7 +186,7 @@ class GameScreen {
       } else if (e.type == 100) { 
         // force update based on game board
         var newBoard = e.board.board
-        console.log(newBoard)
+        //console.log(newBoard)
         for (var i = 0; i < newBoard.length; i++) {
           for (var j = 0; j < newBoard[0].length; j++) {
             // remove local squares if they conflict with the main board
@@ -202,7 +202,7 @@ class GameScreen {
           }
         }
 
-        this.totalGameTime = e.currentTime
+        this.totalGameTime = e.current_time
         this.GameArray.totalGameTime = this.totalGameTime
         this.UpdateGameSpeed()
       } else if (e.type == 666) {
