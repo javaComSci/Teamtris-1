@@ -388,6 +388,7 @@ class GameArray {
                 //this.ShapeArray[Shape.ID - 1] = this.InstantiateShape(Shape.ID,null,0,Shape.ID*5,false, this.totalGameTime)
                 var NewBlueprint = this.DisplayShape.ShapeBlueprint
                 this.ShapeArray[this.ID - 1] = this.InstantiateShape(this.ID,NewBlueprint,0,this.ID*5,false, this.totalGameTime)
+                //(this.ShapeArray[this.ID - 1]).SendNewShape(this.ID, NewBlueprint)
                 var NewShape = new Shape(this.ID, null, "rand", this.totalGameTime, false)
                 this.DisplayShape = NewShape;
             }

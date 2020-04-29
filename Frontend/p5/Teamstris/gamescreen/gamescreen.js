@@ -192,6 +192,7 @@ class GameScreen {
         }
       } else if (e.type == 11) {
         // when a player gets a new shape, we force update to re-make the shape on the fronted
+        console.log(e.playerID, e.shapeBlueprint)
         this.GameArray.ForceUpdatePlayer(e.playerID, e.shapeBlueprint)
       } else if (e.type == 100) { 
         // force update based on game board
