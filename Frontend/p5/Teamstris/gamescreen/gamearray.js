@@ -23,12 +23,20 @@ class GameArray {
         this.NumPlayers = NumPlayers
         this.ShapeArray = new Array(this.NumPlayers)
         this.startShape = [[0,1,0,0],
-                        [0,0,0,0],
-                        [0,0,0,0],
-                        [0,0,0,0]]
+                            [0,0,0,0],
+                            [0,0,0,0],
+                            [0,0,0,0]]
+        this.blankShape = [[0,0,0,0],
+                            [0,0,0,0],
+                            [0,0,0,0],
+                            [0,0,0,0]]
+
+        this.ShapeArray[this.ID-1] = this.InstantiateShape(this.ID,this.startShape,0,this.OffsetByID(this.ID), false, this.totalGameTime)
 
         for (var i = 1; i < this.ShapeArray.length+1; i++) {
-            this.ShapeArray[i-1] = this.InstantiateShape(i,this.startShape,0,this.OffsetByID(i), false, this.totalGameTime)
+            if (i != this.ID) {
+                this.ShapeArray[i-1] = this.InstantiateShape(i,this.blankShape,0,this.OffsetByID(i), false, this.totalGameTime)
+            }
         }
 
         // create the array of shapes that will be displayed
