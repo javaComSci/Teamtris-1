@@ -13,6 +13,7 @@ using System.Linq;
  */
 public class SingleBot : Bot {
     Prints botInfoPrinter;
+    int shapeColor;
 
 	/**
      * #function SingleBot::SingleBot |
@@ -25,6 +26,7 @@ public class SingleBot : Bot {
     public SingleBot() {
         // create a board for this bot
         // Console.WriteLine("I AM A SINGLE BOT");
+        shapeColor = 1;
         botInfoPrinter = new Prints();
     }
 
@@ -264,6 +266,10 @@ public class SingleBot : Bot {
 
         int blockCount = 0;
 
+        if(blocks.Count >= 1) {
+            shapeColor = blocks[0].color; 
+        }
+
         // test out each of the pieces
         foreach(Block block in blocks) {
 
@@ -431,6 +437,10 @@ public class SingleBot : Bot {
     
     public override List<Tuple<int, int>> GetSingleMove(Board board, List<List<Block>> allBotBlocks, bool allRotations = false){
        return GetMove(board, allBotBlocks, allRotations)[0];
+    }
+
+    public int getBlockColor(){
+        return shapeColor;
     }
 }
 
