@@ -66,7 +66,7 @@ class GameScreen {
     this.PreviousTime = 0;
 
     // number of milliseconds between every update
-    this.GameSpeed = 300;
+    this.GameSpeed = 500;
 
     // total time in game
     this.totalGameTime = 0;
@@ -192,7 +192,6 @@ class GameScreen {
         }
       } else if (e.type == 11) {
         // when a player gets a new shape, we force update to re-make the shape on the fronted
-        console.log(e.playerID, e.shapeBlueprint)
         this.GameArray.ForceUpdatePlayer(e.playerID, e.shapeBlueprint)
       } else if (e.type == 100) { 
         // force update based on game board
@@ -225,8 +224,7 @@ class GameScreen {
   }
 
   UpdateGameSpeed() {
-    this.GameSpeed = Math.max(50, this.GameSpeed - (Math.log(this.totalGameTime)))
-    console.log(this.GameSpeed)
+    this.GameSpeed = Math.max(100, this.GameSpeed - (Math.log(this.totalGameTime)))
   }
 
   // receive generated shape for other players
