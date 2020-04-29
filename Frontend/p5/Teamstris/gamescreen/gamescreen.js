@@ -66,7 +66,7 @@ class GameScreen {
     this.PreviousTime = 0;
 
     // number of milliseconds between every update
-    this.GameSpeed = 200;
+    this.GameSpeed = 300;
 
     // total time in game
     this.totalGameTime = 0;
@@ -225,7 +225,8 @@ class GameScreen {
   }
 
   UpdateGameSpeed() {
-    this.GameSpeed = 200 * (1 + Math.log(this.totalGameTime))
+    this.GameSpeed = Math.max(50, this.GameSpeed - (Math.log(this.totalGameTime)))
+    console.log(this.GameSpeed)
   }
 
   // receive generated shape for other players
