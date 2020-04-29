@@ -35,7 +35,7 @@ namespace Teamtris
             Prints infoPrinter = new Prints();
             
             // // CHANGE - RECIEVED FROM THE FRONTEND - REPLACEMENT
-            int numBots = 2;
+            int numBots = 1;
 
             switch(numBots) {
                 case 1: 
@@ -75,28 +75,30 @@ namespace Teamtris
                 {0, 0, 0, 1, 0, 1, 1},
                 {1, 0, 1, 1, 1, 1, 1},
             };
-            int[][] block11 = new int[][] {
-                new int[] {0, 0, 0, 0}, 
-                new int[] {0, 1, 1, 0}, 
-                new int[] {0, 1, 0, 0}, 
-                new int[] {0, 0, 0, 0}, 
-            };
-            int[][] block21 = new int[][] {
-                new int[] {0, 0, 0, 0}, 
-                new int[] {0, 1, 0, 0}, 
-                new int[] {0, 1, 0, 0}, 
-                new int[] {0, 1, 0, 0}, 
-            };
-            int[][] block31 = randomPiece.GenerateRandomPiece();
-            bot1Blocks.Add(new Block(block11, 1));
-            bot2Blocks.Add(new Block(block21, 1));
+            // int[][] block11 = new int[][] {
+            //     new int[] {0, 0, 0, 0}, 
+            //     new int[] {0, 1, 1, 0}, 
+            //     new int[] {0, 1, 0, 0}, 
+            //     new int[] {0, 0, 0, 0}, 
+            // };
+            // int[][] block21 = new int[][] {
+            //     new int[] {0, 0, 0, 0}, 
+            //     new int[] {0, 1, 0, 0}, 
+            //     new int[] {0, 1, 0, 0}, 
+            //     new int[] {0, 1, 0, 0}, 
+            // };
+            // int[][] block11 = randomPiece.GenerateRandomPiece();
+            // int[][] block21 = randomPiece.GenerateRandomPiece();
+            // int[][] block31 = randomPiece.GenerateRandomPiece();
+            // bot1Blocks.Add(new Block(block11, 1));
+            // bot2Blocks.Add(new Block(block21, 1));
             // bot3Blocks.Add(new Block(block31, 1));
-            List<List<Block>> blocks = new List<List<Block>>();
-            blocks.Add(bot1Blocks);
-            blocks.Add(bot2Blocks);
+            // List<List<Block>> blocks = new List<List<Block>>();
+            // blocks.Add(bot1Blocks);
+            // blocks.Add(bot2Blocks);
             // blocks.Add(bot3Blocks);
 
-            game.bot.GetMove(game.board, blocks);
+            // game.bot.GetMove(game.board, blocks);
             // try {
             //     game.bot.GetMove(game.board, blocks);
             // } catch (Exception e) {

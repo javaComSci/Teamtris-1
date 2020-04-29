@@ -253,8 +253,8 @@ public class SingleBot : Bot {
         List<Block> blocks = allBotBlocks[0];
         Console.WriteLine("BOARD");
         botInfoPrinter.PrintMultiDimArr(board.board);
-        // Console.WriteLine("PIECE");
-        // botInfoPrinter.PrintJaggedArr(blocks[0].data);
+        Console.WriteLine("RECIEVED PIECE");
+        botInfoPrinter.PrintJaggedArr(blocks[0].data);
 
         // get the max height of each column of the baord 
         board.FindMaxHeights();
@@ -414,8 +414,8 @@ public class SingleBot : Bot {
 
         // Console.WriteLine("BEST PIECE FOR BOARD");
         // botInfoPrinter.PrintPositions(bestPiecePlacementOfCurrentBlock);
-        // Console.WriteLine("BOARD WITH PIECE");
-        // botInfoPrinter.PrintBoardWithPiece(board.board, bestPiecePlacementOfCurrentBlock);
+        Console.WriteLine("BOARD WITH PIECE");
+        botInfoPrinter.PrintBoardWithPiece(board.board, bestPiecePlacementOfCurrentBlock);
 
         return bestPiecePlacementOfCurrentBlock;
     }
