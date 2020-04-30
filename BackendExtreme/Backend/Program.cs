@@ -27,7 +27,7 @@ namespace Teamtris
         {
 
             // // initialize game state
-            GameState game = new GameState(6, 7);
+            GameState game = new GameState(6, 8);
             game.players = new Dictionary<int, Player>();
             Dictionary<string, Lobby> lobbies = new Dictionary<string, Lobby>();
 
@@ -67,26 +67,40 @@ namespace Teamtris
             //     {1, 0, 1, 1, 1, 1}
             // };
 
+            // game.board.board = new int[,]{
+            //     {0, 0, 0, 0, 0, 0, 0},
+            //     {0, 0, 0, 0, 0, 0, 0},
+            //     {0, 0, 0, 0, 0, 0, 0},
+            //     {0, 0, 0, 0, 0, 1, 1},
+            //     {0, 0, 0, 1, 0, 1, 1},
+            //     {1, 0, 1, 1, 1, 1, 1},
+            // };
             game.board.board = new int[,]{
-                {0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 0, 0},
-                {0, 0, 0, 0, 0, 1, 1},
-                {0, 0, 0, 1, 0, 1, 1},
-                {1, 0, 1, 1, 1, 1, 1},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 0, 0, 0},
+                {0, 0, 0, 0, 0, 1, 1, 0},
+                {0, 0, 0, 1, 0, 1, 1, 0},
+                {0, 0, 0, 1, 1, 1, 1, 1},
             };
-            // int[][] block11 = new int[][] {
-            //     new int[] {0, 0, 0, 0}, 
-            //     new int[] {0, 1, 1, 0}, 
-            //     new int[] {0, 1, 0, 0}, 
-            //     new int[] {0, 0, 0, 0}, 
-            // };
-            // int[][] block21 = new int[][] {
-            //     new int[] {0, 0, 0, 0}, 
-            //     new int[] {0, 1, 0, 0}, 
-            //     new int[] {0, 1, 0, 0}, 
-            //     new int[] {0, 1, 0, 0}, 
-            // };
+            int[][] block11 = new int[][] {
+                new int[] {0, 0, 0, 0}, 
+                new int[] {0, 1, 1, 0}, 
+                new int[] {0, 1, 0, 0}, 
+                new int[] {0, 0, 0, 0}, 
+            };
+            int[][] block21 = new int[][] {
+                new int[] {0, 0, 0, 0}, 
+                new int[] {0, 1, 0, 0}, 
+                new int[] {1, 1, 0, 0}, 
+                new int[] {0, 1, 0, 0}, 
+            };
+            int[][] block31 = new int[][] {
+                new int[] {0, 0, 0, 0}, 
+                new int[] {0, 1, 0, 0}, 
+                new int[] {0, 1, 0, 0}, 
+                new int[] {0, 1, 0, 0}, 
+            };
             // int[][] block11 = randomPiece.GenerateRandomPiece();
             // int[][] block21 = randomPiece.GenerateRandomPiece();
             // int[][] block31 = randomPiece.GenerateRandomPiece();
