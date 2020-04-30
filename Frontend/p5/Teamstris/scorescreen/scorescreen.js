@@ -248,63 +248,63 @@ class ScoreScreen {
                     "rank": 1
                 })
                 this.scoreArray.push({
-                    "teamName": "Test2",
+                    "teamName": "Test22",
                     "playerNames": ["a", "b", "c", "d"],
                     "teamScore": 788,
                     "timePlayed": 168,
                     "rank": 1
                 })
                 this.scoreArray.push({
-                    "teamName": "Test3",
+                    "teamName": "Tes33",
                     "playerNames": ["a", "b", "c", "d"],
                     "teamScore": 768,
                     "timePlayed": 160,
                     "rank": 1
                 })
                 this.scoreArray.push({
-                    "teamName": "Test4",
+                    "teamName": "ILikedogs",
                     "playerNames": ["a", "b", "c", "d"],
                     "teamScore": 755,
                     "timePlayed": 158,
                     "rank": 1
                 })
                 this.scoreArray.push({
-                    "teamName": "Test5",
+                    "teamName": "DogsAreCool",
                     "playerNames": ["a", "b", "c", "d"],
                     "teamScore": 745,
                     "timePlayed": 155,
                     "rank": 1
                 })
                 this.scoreArray.push({
-                    "teamName": "Test6",
+                    "teamName": "RichL",
                     "playerNames": ["a", "b", "c", "d"],
                     "teamScore": 735,
                     "timePlayed": 145,
                     "rank": 1
                 })
                 this.scoreArray.push({
-                    "teamName": "Test7",
+                    "teamName": "IndL",
                     "playerNames": ["a", "b", "c", "d"],
                     "teamScore": 704,
                     "timePlayed": 140,
                     "rank": 1
                 })
                 this.scoreArray.push({
-                    "teamName": "Test8",
+                    "teamName": "Test999",
                     "playerNames": ["a", "b", "c", "d"],
                     "teamScore": 700,
                     "timePlayed": 139,
                     "rank": 1
                 })
                 this.scoreArray.push({
-                    "teamName": "Test9",
+                    "teamName": "lol",
                     "playerNames": ["a", "b", "c", "d"],
                     "teamScore": 689,
                     "timePlayed": 130,
                     "rank": 1
                 })
                 this.scoreArray.push({
-                    "teamName": "Test10",
+                    "teamName": "t",
                     "playerNames": ["a", "b", "c", "d"],
                     "teamScore": 680,
                     "timePlayed": 115,
