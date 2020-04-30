@@ -126,15 +126,27 @@ public class GameManager
                         Prints botInfoPrinter = new Prints();
                         // Console.WriteLine("BEFORE BOT BOARD");
                         // botInfoPrinter.PrintMultiDimArr(modifiedBoard.board);
-                        allBlocks[0].RemoveAt(0);
+                        if(allBlocks[0].Count >= 1) {
+                            allBlocks[0].RemoveAt(0);
+                        }
                         allBlocks[0].Add(new Block(randomPiece.GenerateRandomPiece(), 1));
-                        allBlocks[1].RemoveAt(0);
+                        if(allBlocks[1].Count >= 1) {
+                            allBlocks[1].RemoveAt(0);
+                        }
                         allBlocks[1].Add(new Block(randomPiece.GenerateRandomPiece(), 1));
-                        allBlocks[2].RemoveAt(0);
+                        if(allBlocks[2].Count >= 1) {
+                            allBlocks[2].RemoveAt(0);
+                        }
                         allBlocks[2].Add(new Block(randomPiece.GenerateRandomPiece(), 1));
 
-                        List<List<Tuple<int, int>>> allBobs = bot.GetMove(modifiedBoard, allBlocks);
-                        List<Tuple<int, int>> bob = allBobs[0];
+                        List<Tuple<int, int>> bob;
+                        try {
+                            List<List<Tuple<int, int>>> allBobs = bot.GetMove(modifiedBoard, allBlocks);
+                            bob = allBobs[0];
+                        } catch(Exception e) {
+                            bob = null;
+                        }
+                        
                         if (bob == null)
                         {
                             Console.WriteLine("no place to place piece");

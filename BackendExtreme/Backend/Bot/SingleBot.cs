@@ -13,6 +13,7 @@ using System.Linq;
  */
 public class SingleBot : Bot {
     Prints botInfoPrinter;
+    int shapeColor;
 
 	/**
      * #function SingleBot::SingleBot |
@@ -25,6 +26,7 @@ public class SingleBot : Bot {
     public SingleBot() {
         // create a board for this bot
         // Console.WriteLine("I AM A SINGLE BOT");
+        shapeColor = 1;
         botInfoPrinter = new Prints();
     }
 
@@ -253,8 +255,8 @@ public class SingleBot : Bot {
         List<Block> blocks = allBotBlocks[0];
         Console.WriteLine("BOARD");
         botInfoPrinter.PrintMultiDimArr(board.board);
-        // Console.WriteLine("PIECE");
-        // botInfoPrinter.PrintJaggedArr(blocks[0].data);
+        Console.WriteLine("RECIEVED PIECE");
+        botInfoPrinter.PrintJaggedArr(blocks[0].data);
 
         // get the max height of each column of the baord 
         board.FindMaxHeights();
@@ -263,6 +265,10 @@ public class SingleBot : Bot {
         Dictionary<Block, List<Tuple<int, List<Tuple<int, int>>, int, int>>> allBlocksPossible = new Dictionary<Block, List<Tuple<int, List<Tuple<int, int>>, int, int>>>();
 
         int blockCount = 0;
+
+        if(blocks.Count >= 1) {
+            shapeColor = blocks[0].color; 
+        }
 
         // test out each of the pieces
         foreach(Block block in blocks) {
@@ -414,8 +420,8 @@ public class SingleBot : Bot {
 
         // Console.WriteLine("BEST PIECE FOR BOARD");
         // botInfoPrinter.PrintPositions(bestPiecePlacementOfCurrentBlock);
-        // Console.WriteLine("BOARD WITH PIECE");
-        // botInfoPrinter.PrintBoardWithPiece(board.board, bestPiecePlacementOfCurrentBlock);
+        Console.WriteLine("BOARD WITH PIECE");
+        botInfoPrinter.PrintBoardWithPiece(board.board, bestPiecePlacementOfCurrentBlock);
 
         return bestPiecePlacementOfCurrentBlock;
     }
@@ -431,6 +437,10 @@ public class SingleBot : Bot {
     
     public override List<Tuple<int, int>> GetSingleMove(Board board, List<List<Block>> allBotBlocks, bool allRotations = false){
        return GetMove(board, allBotBlocks, allRotations)[0];
+    }
+
+    public int getBlockColor(){
+        return shapeColor;
     }
 }
 
