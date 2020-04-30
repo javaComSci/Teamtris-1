@@ -145,7 +145,12 @@ public class GameManager
                             List<List<Tuple<int, int>>> allBobs = singleBot.GetMove(modifiedBoard, allBlocks);
                             bob = allBobs[0];
 
+                            if(bot is DoubleBot){
+                                Console.WriteLine("GETTING DOUBLE BOT MOVES!");
+                            }
+
                             if(bot is DoubleBot || bot is TripleBot) {
+                                Console.WriteLine("I AM A DOUBLE BOT!!");
                                 int[,] newBoard = new int[modifiedBoard.board.GetLength(0),modifiedBoard.board.GetLength(1)];
 
                                 for(int i = 0; i < modifiedBoard.board.GetLength(0); i++){
