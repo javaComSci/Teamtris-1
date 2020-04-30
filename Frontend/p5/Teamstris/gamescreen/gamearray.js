@@ -31,12 +31,8 @@ class GameArray {
                             [0,0,0,0],
                             [0,0,0,0]]
 
-        this.ShapeArray[this.ID-1] = this.InstantiateShape(this.ID,this.startShape,0,this.OffsetByID(this.ID), false, this.totalGameTime)
-
         for (var i = 1; i < this.ShapeArray.length+1; i++) {
-            if (i != this.ID) {
-                this.ShapeArray[i-1] = this.InstantiateShape(i,this.blankShape,0,this.OffsetByID(i), false, this.totalGameTime)
-            }
+            this.ShapeArray[i-1] = this.InstantiateShape(i,this.startShape,0,this.OffsetByID(i), false, this.totalGameTime)
         }
 
         // create the array of shapes that will be displayed
@@ -56,6 +52,7 @@ class GameArray {
         }
 
         this.gameArrayScore = 0;
+        this.totalGameScore = 0;
 
         //console.log(this.CollisionType)
     }//end constructor
@@ -86,8 +83,23 @@ class GameArray {
         }
 
         //this.ShapeArray[ID-1].Freeze(false)
+        //var new_shape = new Shape(ID, shapeBlueprint, "rand", this.totalGameTime, false);
         //this.ShapeArray[ID-1].RemoveShape()
-        this.ShapeArray[ID-1] = this.InstantiateShape(ID,shapeBlueprint,0,this.OffsetByID(ID), false)
+        if (!this.checkSquaresFrozen(this.ShapeArray[ID-1].Squares)) {
+            this.ShapeArray[ID-1].RemoveShape()
+        }
+        var new_shape = this.InstantiateShape(ID, shapeBlueprint, 0, this.OffsetByID(ID), false, this.totalGameTime)
+        this.ShapeArray[ID-1] = new_shape;
+        //this.PlaceShape(this.ShapeArray[ID-1])
+    }
+
+    checkSquaresFrozen(s) {
+        for (var i = 0; i < s.length; i++) {
+            if (s[i].IsFrozen()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /** 
@@ -174,10 +186,10 @@ class GameArray {
      * 
      * @return void
      */
-    PlaceShape(Shape) {
+    PlaceShape(ShapeP) {
         //Shape.RemoveShape()
-        for (var i = 0; i < Shape.Squares.length; i++) {
-            var s = Shape.Squares[i]
+        for (var i = 0; i < (ShapeP.Squares).length; i++) {
+            var s = ShapeP.Squares[i]
             this.arr[s.i][s.j].ChangeOwner(s.ID,s.Color,this.arr[s.i][s.j].PowerCubeType)
         }
     }
@@ -393,10 +405,11 @@ class GameArray {
         if (ShapeP.ID == this.ID && down == 1 && (ColType == this.CollisionType.OutOfBounds || ColType == this.CollisionType.FrozenObject)) {
             var r = ShapeP.Freeze() // r is a set of rows to be checked
             if (ShapeP.ID == this.ID) {
+                console.log("sending freeze to the server")
                 //this.ShapeArray[Shape.ID - 1] = this.InstantiateShape(Shape.ID,null,0,Shape.ID*5,false, this.totalGameTime)
                 var NewBlueprint = this.DisplayShape.ShapeBlueprint
-                this.ShapeArray[this.ID - 1] = this.InstantiateShape(this.ID,NewBlueprint,0,this.ID*5,false, this.totalGameTime)
-                //(this.ShapeArray[this.ID - 1]).SendNewShape(this.ID, NewBlueprint)
+                this.ShapeArray[this.ID - 1] = this.InstantiateShape(this.ID,NewBlueprint,0,this.OffsetByID(this.ID),false, this.totalGameTime)
+                this.ShapeArray[this.ID - 1].SendNewShape(this.ID, NewBlueprint)
                 var NewShape = new Shape(this.ID, null, "rand", this.totalGameTime, false)
                 this.DisplayShape = NewShape;
             }
@@ -595,9 +608,9 @@ class GameArray {
     InstantiateShape(ID, ShapeBlueprint=null, RowOffset=0, ColOffset=0, RandomOffset=false, time=1) {
         var NewShape;
         if (ShapeBlueprint == null) {
-            NewShape = new Shape(ID, null, "rand", time)
+            NewShape = new Shape(ID, null, "rand", time, false)
         } else {
-            NewShape = new Shape(ID, ShapeBlueprint)
+            NewShape = new Shape(ID, ShapeBlueprint, "rand", time, false)
         }
 
         // set a random column offset
@@ -621,21 +634,21 @@ class GameArray {
                 // if this spot is not empty, then we cannot spawn a square here
                 if (!this.arr[iOffset][jOffset].IsEmpty()) {
                     //console.log("GAME OVER")
+                    team.score = this.totalGameScore
+                    team.time = this.totalGameTime
                     var data = JSON.stringify({"lobbyID":team.lobbyToken.toLowerCase()})
                     socket.send(JSON.stringify({"type": "666", "data": data}))
-                    // team.score = 5000
-                    // team.time = 200
-                    // gameState = 3
                 } else {
-                // Always place the shape as if it were in a bounding box
-                //this.PlaceSquare(iOffset,jOffset,NewShape.ID,NewShape.Color)
-                var newSquare = this.GetSquare(iOffset,jOffset)
-                newSquare.SetPowerCube(NewShape.ShapeBlueprint[i][j])
-                NewShape.AddSquare(newSquare)
+                    // Always place the shape as if it were in a bounding box
+                    //this.PlaceSquare(iOffset,jOffset,NewShape.ID,NewShape.Color)
+                    var newSquare = this.GetSquare(iOffset,jOffset)
+                    newSquare.SetPowerCube(NewShape.ShapeBlueprint[i][j])
+                    NewShape.AddSquare(newSquare)
                 }
             }
             }
         }
+        console.log(NewShape.Squares)
         //console.log(NewShape)
         return NewShape
     }
@@ -765,8 +778,6 @@ class GameArray {
         if (!team) {
             return
         }
-        team.score = 5000
-        team.time = 200
         var data = JSON.stringify({"lobbyID":team.lobbyToken.toLowerCase(),"playerID":ID,"shapeIndices": boardIndices, "move": action})
         socket.send(JSON.stringify({"type": type, "data": data}))
     }
