@@ -93,6 +93,13 @@ class GameArray {
         //this.PlaceShape(this.ShapeArray[ID-1])
     }
 
+    /** 
+     * @description Checks if all the squares in the provided list are frozen
+     * 
+     * @param s - squares
+     * 
+     * @return boolean
+     */
     checkSquaresFrozen(s) {
         for (var i = 0; i < s.length; i++) {
             if (s[i].IsFrozen()) {

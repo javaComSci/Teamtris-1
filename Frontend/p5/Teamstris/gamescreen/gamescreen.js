@@ -193,6 +193,10 @@ class GameScreen {
 
       // e.type == 11
     };
+
+    socket.onclose = event => {
+      gameState = 3;
+    };
   }
 
   UpdateGameSpeed() {
@@ -252,5 +256,6 @@ class GameScreen {
     }
   }
 }
+
 /* This export is used for testing*/
 module.exports = [GameScreen];
