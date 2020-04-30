@@ -32,7 +32,7 @@ public class RandomPiece {
                 new int[] {0, 0, 0, 0}, 
                 new int[] {0, 0, 0, 0}, 
             };
-        int[] gen = {2,3,4};
+        int[] gen = {2,2,2,3,3,3,4,4,5,5};
 
         Random random = new Random();
         int startIndex = random.Next(0, gen.Length);
