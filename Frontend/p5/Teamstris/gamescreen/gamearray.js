@@ -520,8 +520,8 @@ class GameArray {
      * @return void
      */
     RemoveArea(i,j, dim=2) {
-        for (var ik = i - dim; ik < i + dim; ik++) {
-            for (var jk = j - dim; jk < j + dim; jk++) {
+        for (var ik = i - dim; ik < i+dim+1; ik++) {
+            for (var jk = j - dim; jk < j+dim+1; jk++) {
                 if (this.OnBoard(ik,jk) && (ik != i || jk != j)) {
                     this.RemoveNonPlayer(this.GetSquare(ik,jk))
                 }
