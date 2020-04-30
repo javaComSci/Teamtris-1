@@ -195,7 +195,7 @@ class GameScreen {
     };
 
     socket.onclose = event => {
-      team.score = this.totalGameScore;
+      team.score = this.gameScore;
       team.time = this.totalGameTime
       gameState = 3;
     };
