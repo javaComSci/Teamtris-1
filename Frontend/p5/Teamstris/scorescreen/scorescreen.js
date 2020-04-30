@@ -213,10 +213,12 @@ class ScoreScreen {
             this.scoreArray = e.topTeamInfos;
         };
         socketScore.onmessage = (event) => {
+            
             var e = JSON.parse(event.data);
             // console.log("SCORE SCREEN GOT SOMETHING ");
             // console.log(e);
             this.scoreArray = e.topTeamInfos;
+            console.log(e.topTeamInfos)
             this.currentTeamsRank = e.currentTeamInfo.rank;
         };
         this.scoreScreenRequest = true;
@@ -231,25 +233,101 @@ class ScoreScreen {
         // this.team.time = 30;
         this.team = team;
         if(this.team == undefined) {
+            // console.log(socketScore.readyState)
             // socket.send(JSON.stringify({"type": "7", "data": data}));
             socketScoreWithNoTeamName.send(JSON.stringify({"type": "11"}));
             /* Test */
         } else {
-            console.log("GHOING")
-            var teamMembers = [];
-            for(var i = 0; i < this.team.playersInTeam.length; i++) {
-                teamMembers.push(this.team.playersInTeam[i].username)
+            // if(scoreArray)
+            if(socketScore.readyState == 3){
+                this.scoreArray.push({
+                    "teamName": "Test1",
+                    "playerNames": ["a", "b", "c", "d"],
+                    "teamScore": 824,
+                    "timePlayed": 188,
+                    "rank": 1
+                })
+                this.scoreArray.push({
+                    "teamName": "Test2",
+                    "playerNames": ["a", "b", "c", "d"],
+                    "teamScore": 788,
+                    "timePlayed": 168,
+                    "rank": 1
+                })
+                this.scoreArray.push({
+                    "teamName": "Test3",
+                    "playerNames": ["a", "b", "c", "d"],
+                    "teamScore": 768,
+                    "timePlayed": 160,
+                    "rank": 1
+                })
+                this.scoreArray.push({
+                    "teamName": "Test4",
+                    "playerNames": ["a", "b", "c", "d"],
+                    "teamScore": 755,
+                    "timePlayed": 158,
+                    "rank": 1
+                })
+                this.scoreArray.push({
+                    "teamName": "Test5",
+                    "playerNames": ["a", "b", "c", "d"],
+                    "teamScore": 745,
+                    "timePlayed": 155,
+                    "rank": 1
+                })
+                this.scoreArray.push({
+                    "teamName": "Test6",
+                    "playerNames": ["a", "b", "c", "d"],
+                    "teamScore": 735,
+                    "timePlayed": 145,
+                    "rank": 1
+                })
+                this.scoreArray.push({
+                    "teamName": "Test7",
+                    "playerNames": ["a", "b", "c", "d"],
+                    "teamScore": 704,
+                    "timePlayed": 140,
+                    "rank": 1
+                })
+                this.scoreArray.push({
+                    "teamName": "Test8",
+                    "playerNames": ["a", "b", "c", "d"],
+                    "teamScore": 700,
+                    "timePlayed": 139,
+                    "rank": 1
+                })
+                this.scoreArray.push({
+                    "teamName": "Test9",
+                    "playerNames": ["a", "b", "c", "d"],
+                    "teamScore": 689,
+                    "timePlayed": 130,
+                    "rank": 1
+                })
+                this.scoreArray.push({
+                    "teamName": "Test10",
+                    "playerNames": ["a", "b", "c", "d"],
+                    "teamScore": 680,
+                    "timePlayed": 115,
+                    "rank": 1
+                })
+                this.currentTeamsRank = 11;
+            } else {
+                console.log("GHOING")
+                var teamMembers = [];
+                for(var i = 0; i < this.team.playersInTeam.length; i++) {
+                    teamMembers.push(this.team.playersInTeam[i].username)
+                }
+                teamMembers.sort()
+                var data = JSON.stringify({
+                    "teamName": this.team.teamName, 
+                    "playerNames": teamMembers,
+                    "teamScore": this.team.score,
+                    "timePlayed": this.team.time
+                });
+                console.log("data")
+                console.log(data);
+                socketScore.send(JSON.stringify({"type": "10", "data": data}));
             }
-            teamMembers.sort()
-            var data = JSON.stringify({
-                "teamName": this.team.teamName, 
-                "playerNames": teamMembers,
-                "teamScore": this.team.score,
-                "timePlayed": this.team.time
-            });
-            console.log("data")
-            console.log(data);
-            socketScore.send(JSON.stringify({"type": "10", "data": data}));
         }
     }
 
