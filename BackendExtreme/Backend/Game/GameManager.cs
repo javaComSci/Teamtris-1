@@ -133,8 +133,49 @@ public class GameManager
                         allBlocks[2].RemoveAt(0);
                         allBlocks[2].Add(new Block(randomPiece.GenerateRandomPiece(), 1));
 
-                        List<List<Tuple<int, int>>> allBobs = bot.GetMove(modifiedBoard, allBlocks);
-                        List<Tuple<int, int>> bob = allBobs[0];
+
+                        List<Tuple<int, int>> bob;
+                        try
+                        {
+                            SingleBot singleBot = new SingleBot();
+                            List<List<Tuple<int, int>>> allBobs = singleBot.GetMove(modifiedBoard, allBlocks);
+                            bob = allBobs[0];
+
+                            if (bot is DoubleBot || bot is TripleBot)
+                            {
+                                Console.WriteLine("I AM A DOUBLE BOT!!");
+                                int[,] newBoard = new int[modifiedBoard.board.GetLength(0), modifiedBoard.board.GetLength(1)];
+
+                                for (int i = 0; i < modifiedBoard.board.GetLength(0); i++)
+                                {
+                                    for (int j = 0; j < modifiedBoard.board.GetLength(1); j++)
+                                    {
+                                        newBoard[i, j] = modifiedBoard.board[i, j];
+                                    }
+                                }
+
+                                foreach (Tuple<int, int> dot in bob)
+                                {
+                                    newBoard[dot.Item1, dot.Item2] = 1;
+                                }
+
+                                Board nBoard = new Board(newBoard.GetLength(0), newBoard.GetLength(1));
+                                nBoard.board = newBoard;
+                                List<List<Tuple<int, int>>> newBobs = singleBot.GetMove(nBoard, allBlocks);
+                                if (newBobs != null)
+                                {
+                                    bob.AddRange(newBobs[0]);
+                                }
+                            }
+
+                        }
+                        catch (Exception e)
+                        {
+                            bob = null;
+                        }
+                        
+                        // List<List<Tuple<int, int>>> allBobs = bot.GetMove(modifiedBoard, allBlocks);
+                        // List<Tuple<int, int>> bob = allBobs[0];
                         if (bob == null)
                         {
                             Console.WriteLine("no place to place piece");
