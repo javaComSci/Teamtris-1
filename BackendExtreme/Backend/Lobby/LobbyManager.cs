@@ -313,11 +313,13 @@ public class LobbyManager : WebSocketBehavior
         if (board[i, j] == 1) // remove square
         {
             // increment score
+            lobby.game.score += 1;
             // remove
             board[i, j] = 0;
         }
         if (board[i, j] == 2) // remove column
         {
+            lobby.game.score += 5;
             board[i, j] = 0;
             // the future of single letter iterable variables
             for (int a = 0; a < board.GetLength(0); a++)
@@ -327,6 +329,7 @@ public class LobbyManager : WebSocketBehavior
         }
         if (board[i, j] == 3) // remove area
         {
+            lobby.game.score += 5;
             int dim = 2;
             board[i, j] = 0;
             for (int ik = i - dim; ik < i + dim + 1; ik++)

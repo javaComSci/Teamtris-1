@@ -21,4 +21,5 @@ public class Lobby
     public string id;
     public int maxPlayers;
     public Board board;
+    public int score = 0;
 }
