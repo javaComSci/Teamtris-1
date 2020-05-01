@@ -251,11 +251,11 @@ public class DoubleBot : Bot {
         board.FindMaxHeights();
 
         // print the information
-        Console.WriteLine("BOARD");
+        // Console.WriteLine("BOARD");
         botInfoPrinter.PrintMultiDimArr(board.board);
-        Console.WriteLine("PIECE 1 BOT 1");
+        // Console.WriteLine("PIECE 1 BOT 1");
         botInfoPrinter.PrintJaggedArr(bot1Blocks[0].data);
-        Console.WriteLine("PIECE 2 BOT 2");
+        // Console.WriteLine("PIECE 2 BOT 2");
         botInfoPrinter.PrintJaggedArr(bot2Blocks[0].data);
 
 
@@ -265,24 +265,24 @@ public class DoubleBot : Bot {
             return null;
         }
 
-        Console.WriteLine("ALL ORIENTATIONS");
+        // Console.WriteLine("ALL ORIENTATIONS");
         botInfoPrinter.PrintAllOrientationsAsList(allOrientations);
 
         // get the best fit of blocks
         List<Tuple<CompatiblePiece, CompatiblePiece>> allCompatiblePieces = GetFitBothBlocks(board, allOrientations);
         if(allCompatiblePieces == null || allCompatiblePieces.Count == 0) {
-            Console.WriteLine("I AM RETURING WITH NO PIECES");
+            // Console.WriteLine("I AM RETURING WITH NO PIECES");
             return null;
         }
         
         Tuple<CompatiblePiece, CompatiblePiece> bestPieces = GetBestFit(allCompatiblePieces);
-        Console.WriteLine("BEST FIETS " + bestPieces);
+        // Console.WriteLine("BEST FIETS " + bestPieces);
         if(bestPieces == null || bestPieces.Item1 == null || bestPieces.Item2 == null){
             return null;
         }
 
         // printing the info
-        Console.WriteLine("BEST COMPATIBLE PIECES ON BOARD");
+        // Console.WriteLine("BEST COMPATIBLE PIECES ON BOARD");
         List<Tuple<CompatiblePiece, CompatiblePiece>> bestPiecesList = new List<Tuple<CompatiblePiece, CompatiblePiece>>();
         bestPiecesList.Add(bestPieces);
         botInfoPrinter.PrintAllCompatiblePieces(board.board, bestPiecesList);

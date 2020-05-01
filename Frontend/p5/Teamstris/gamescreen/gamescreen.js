@@ -188,6 +188,8 @@ class GameScreen {
         this.GameArray.totalGameTime = this.totalGameTime
         this.UpdateGameSpeed()
       } else if (e.type == 666) {
+        team.score = this.gameScore;
+        team.time = this.totalGameTime;
         gameState = 3
       }
 
@@ -195,6 +197,8 @@ class GameScreen {
     };
 
     socket.onclose = event => {
+      team.score = this.gameScore;
+      team.time = this.totalGameTime;
       gameState = 3;
     };
   }
