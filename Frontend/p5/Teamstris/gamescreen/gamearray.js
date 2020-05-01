@@ -420,9 +420,9 @@ class GameArray {
                 var NewShape = new Shape(this.ID, null, "rand", this.totalGameTime, false)
                 this.DisplayShape = NewShape;
             }
-            for (var row of Array.from(r.values())) {
-                this.CheckAndRemoveRow(row)
-            }
+            // for (var row of Array.from(r.values())) {
+            //     this.CheckAndRemoveRow(row)
+            // }
         }   
     }
 
