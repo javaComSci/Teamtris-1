@@ -8,6 +8,7 @@ public class GameState
     public int start_time;
     public int current_time = 0;
     public int type = 100;
+    public int score = 0;
     public Dictionary<int, Player> players;
     public Bot bot;
     public Board board;
