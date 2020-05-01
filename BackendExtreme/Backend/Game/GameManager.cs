@@ -142,23 +142,24 @@ public class GameManager
                         }
                         else
                         {
+                            Console.WriteLine("bot move?!@#\n\n\n");
                             bool moveValid = true;
-                            foreach (Tuple<int, int> tup in bob)
-                            {
-                                foreach (Player player in lobby.players)
-                                {
-                                    if (player.currentBlockPosition != null)
-                                    {
-                                        for (int i = 0; i < player.currentBlockPosition.Length; i++)
-                                        {
-                                            if (tup.Item1 == player.currentBlockPosition[i][0] && tup.Item2 == player.currentBlockPosition[i][1])
-                                            {
-                                                moveValid = false;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
+                            // foreach (Tuple<int, int> tup in bob)
+                            // {
+                            //     foreach (Player player in lobby.players)
+                            //     {
+                            //         if (player.currentBlockPosition != null)
+                            //         {
+                            //             for (int i = 0; i < player.currentBlockPosition.Length; i++)
+                            //             {
+                            //                 if (tup.Item1 == player.currentBlockPosition[i][0] && tup.Item2 == player.currentBlockPosition[i][1])
+                            //                 {
+                            //                     moveValid = false;
+                            //                 }
+                            //             }
+                            //         }
+                            //     }
+                            // }
                             if (moveValid)
                             {
                                 foreach (Tuple<int, int> tup in bob)
