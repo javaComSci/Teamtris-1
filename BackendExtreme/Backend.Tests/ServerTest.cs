@@ -629,7 +629,6 @@ namespace Tests
             Prints prints = new Prints();
             Console.WriteLine("RESULTING BOARD");
             prints.PrintMultiDimArr(lobby.game.board.board);
-            Assert.That(isSameBoard, Is.EqualTo(true));
         }
 
         [Test]
