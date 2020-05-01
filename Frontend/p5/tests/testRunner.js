@@ -30,6 +30,7 @@ const lobbyScreen = require('../Teamstris/lobbyscreen/lobbyScreen.js');
 const playerCard = require('../Teamstris/lobbyscreen/playerCard.js');
 const teamasker = require('../Teamstris/lobbyscreen/teamasker.js');
 const gameScreen = require('../Teamstris/gamescreen/gamescreen.js')
+const scoreScreen = require('../Teamstris/scorescreen/scorescreen.js')
 const gameArray = require('../Teamstris/gamescreen/gamearray.js')
 const gameShape = require('../Teamstris/gamescreen/shape.js')
 const gameSquare = require('../Teamstris/gamescreen/square.js')
@@ -42,7 +43,7 @@ var mGameScreen;
 
 global.gameState = 0;
 
-var lol = false;
+var lol = true;
 var numTests = 1;
 var numFailed = 0;
 
@@ -485,6 +486,88 @@ async function testCheckTokenIsBeingDisplayed() {
  * @header async function testAddAndRemoveBotsFromLobby() |
  */
 async function testAddAndRemoveBotsFromLobby() {
+    global.mouseX = 1039;
+    global.mouseY = 1039;
+    CheckSame(mLobbyScreen.lobbyGameState,0,"haveNotYetClickedAcceptOnTeamMakerButton");
+    global.keyCode = 64;
+    var fullStr = "ABCDEFGHIJK";
+    for(var i = 0; i < 15; i++) {
+        global.keyCode++;
+        mLobbyScreen.keyPressedLobby();
+        CheckSame(mLobbyScreen.team.teamName,fullStr.substring(0, i+1),"typedKeyforTeamName" + fullStr.substring(0, i+1));
+    }
+    if(lol) await new Promise(r => setTimeout(r, 200));
+    mLobbyScreen.mouseClickedLobby();
+    CheckSame(mLobbyScreen.lobbyGameState,1,"clickedAcceptOnTeamAskerButton");
+    CheckSame(mLobbyScreen.team.teamName,fullStr,"typedKeyforTeamNameAfterAccept" + fullStr);
+    global.mouseX = 2486;
+    global.mouseY = 1353;
+    global.gameState = 1;
+    CheckSame(ClickedLoop(),"addbot","checkClickedLoop");
+    mLobbyScreen.mouseClickedLobby();
+    CheckSame(ClickedLoop(),"addbot","checkClickAddBot");
+    CheckSame(mLobbyScreen.team.playersInTeam.length,2,"checkBotAddedSuccesfully");
+    CheckSame(mLobbyScreen.playerCards.length,2,"checkBotPlayerCardAdded");
+    mLobbyScreen.mouseClickedLobby();
+    CheckSame(mLobbyScreen.team.playersInTeam.length,3,"checkBotAddedSuccesfully");
+    CheckSame(mLobbyScreen.playerCards.length,3,"checkBotPlayerCardAdded");
+    mLobbyScreen.mouseClickedLobby();
+    CheckSame(mLobbyScreen.team.playersInTeam.length,4,"checkBotAddedSuccesfully");
+    CheckSame(mLobbyScreen.playerCards.length,4,"checkBotPlayerCardAdded");
+    mLobbyScreen.mouseClickedLobby();
+    CheckSame(mLobbyScreen.team.playersInTeam.length,4,"checkBotAddedSuccesfully");
+    CheckSame(mLobbyScreen.playerCards.length,4,"checkBotPlayerCardAdded");
+    mLobbyScreen.mouseClickedLobby();
+    CheckSame(mLobbyScreen.team.playersInTeam.length,4,"checkBotAddedSuccesfully");
+    CheckSame(mLobbyScreen.playerCards.length,4,"checkBotPlayerCardAdded");
+    global.mouseX = 0;
+    global.mouseY = 0;
+    CheckSame(ClickedLoop(),undefined,"checkClickedLoopMiss");
+    if(lol) await new Promise(r => setTimeout(r, 200));
+    CheckSame(mLobbyScreen.team.playersInTeam[0].username,"Steven","checkUsernameOfTeamMember1");
+    CheckSame(mLobbyScreen.team.playersInTeam[0].owner,true,"checkOwnerOfTeamMember1");
+    CheckSame(mLobbyScreen.team.playersInTeam[1].username,"Arnold","checkUsernameOfTeamMember2");
+    CheckSame(mLobbyScreen.team.playersInTeam[1].owner,false,"checkOwnerOfTeamMember2");
+    CheckSame(mLobbyScreen.team.playersInTeam[2].username,"Steve","checkUsernameOfTeamMember3");
+    CheckSame(mLobbyScreen.team.playersInTeam[2].owner,false,"checkOwnerOfTeamMember3");
+    CheckSame(mLobbyScreen.team.playersInTeam[3].username,"John","checkUsernameOfTeamMember4");
+    CheckSame(mLobbyScreen.team.playersInTeam[3].owner,false,"checkOwnerOfTeamMember4");
+    if(lol) await new Promise(r => setTimeout(r, 200));
+    /* Remove button clicked */
+    global.mouseX = 2486;
+    global.mouseY = 1504;
+    mLobbyScreen.mouseClickedLobby();
+    CheckSame(mLobbyScreen.team.playersInTeam.length,3,"checkBotAddedSuccesfullyAfterRemove");
+    CheckSame(mLobbyScreen.playerCards.length,3,"checkBotPlayerCardAddedAfterRemove");
+    CheckSame(mLobbyScreen.team.playersInTeam[0].username,"Steven","checkUsernameOfTeamMember1AfterRemove");
+    CheckSame(mLobbyScreen.team.playersInTeam[0].owner,true,"checkOwnerOfTeamMember1AfterRemov");
+    CheckSame(mLobbyScreen.team.playersInTeam[1].username,"Arnold","checkUsernameOfTeamMember2AfterRemov");
+    CheckSame(mLobbyScreen.team.playersInTeam[1].owner,false,"checkOwnerOfTeamMember2AfterRemov");
+    CheckSame(mLobbyScreen.team.playersInTeam[2].username,"Steve","checkUsernameOfTeamMember3AfterRemov");
+    CheckSame(mLobbyScreen.team.playersInTeam[2].owner,false,"checkOwnerOfTeamMember3AfterRemov");
+
+    mLobbyScreen.mouseClickedLobby();
+    CheckSame(mLobbyScreen.team.playersInTeam.length,2,"checkBotAddedSuccesfullyAfterRemove");
+    CheckSame(mLobbyScreen.playerCards.length,2,"checkBotPlayerCardAddedAfterRemove");
+    CheckSame(mLobbyScreen.team.playersInTeam[0].username,"Steven","checkUsernameOfTeamMember1AfterRemove");
+    CheckSame(mLobbyScreen.team.playersInTeam[0].owner,true,"checkOwnerOfTeamMember1AfterRemov");
+    CheckSame(mLobbyScreen.team.playersInTeam[1].username,"Arnold","checkUsernameOfTeamMember2AfterRemov");
+    CheckSame(mLobbyScreen.team.playersInTeam[1].owner,false,"checkOwnerOfTeamMember2AfterRemov");
+    if(lol) await new Promise(r => setTimeout(r, 200));
+    mLobbyScreen.mouseClickedLobby();
+    CheckSame(mLobbyScreen.team.playersInTeam.length,1,"checkBotAddedSuccesfullyAfterRemove");
+    CheckSame(mLobbyScreen.playerCards.length,1,"checkBotPlayerCardAddedAfterRemove");
+    CheckSame(mLobbyScreen.team.playersInTeam[0].username,"Steven","checkUsernameOfTeamMember1AfterRemove");
+    CheckSame(mLobbyScreen.team.playersInTeam[0].owner,true,"checkOwnerOfTeamMember1AfterRemov");
+
+    mLobbyScreen.mouseClickedLobby();
+    CheckSame(mLobbyScreen.team.playersInTeam.length,1,"shouldNotBeAbleToRemoveLastPersonCheckPlayerInTeamsLength");
+    CheckSame(mLobbyScreen.playerCards.length,1,"shouldNotBeAbleToRemoveLastPersonCheckplayerCardsLength");
+    CheckSame(mLobbyScreen.team.playersInTeam[0].username,"Steven","checkMakeSureDataForNonRemovedPlayerIsGood");
+    CheckSame(mLobbyScreen.team.playersInTeam[0].owner,true,"checkMakeSureDataForNonRemovedPlayerIsGood");
+}
+
+async function testAddAndRemoveBotsFromLobby2() {
     global.mouseX = 1039;
     global.mouseY = 1039;
     CheckSame(mLobbyScreen.lobbyGameState,0,"haveNotYetClickedAcceptOnTeamMakerButton");
