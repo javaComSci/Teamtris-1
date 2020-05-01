@@ -113,7 +113,7 @@ class GameScreen {
     textSize(32);
     fill(0, 255, 255);
     //text("Score: " + (this.gameScore + this.GameArray.gameArrayScore), this.CustomWindowWidth*0.1, this.CustomWindowHeight*0.05);
-    text("Score: " + (this.finalScore, this.CustomWindowWidth*0.1, this.CustomWindowHeight*0.05);
+    text("Score: " + this.finalScore, this.CustomWindowWidth*0.1, this.CustomWindowHeight*0.05);
   }
 
   /**
@@ -189,7 +189,7 @@ class GameScreen {
 
         this.totalGameTime = e.current_time
         this.GameArray.totalGameTime = this.totalGameTime
-        this.finalScore = gameScore + e.score
+        this.finalScore = this.gameScore + e.score
         this.UpdateGameSpeed()
       } else if (e.type == 666) {
         team.score = this.gameScore;
