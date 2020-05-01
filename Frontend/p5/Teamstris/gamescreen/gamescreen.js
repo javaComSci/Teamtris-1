@@ -192,7 +192,7 @@ class GameScreen {
         this.finalScore = this.gameScore + e.score
         this.UpdateGameSpeed()
       } else if (e.type == 666) {
-        team.score = this.gameScore;
+        team.score = this.finalScore;
         team.time = this.totalGameTime;
         gameState = 3
       }
@@ -201,7 +201,7 @@ class GameScreen {
     };
 
     socket.onclose = event => {
-      team.score = this.gameScore;
+      team.score = this.finalScore;
       team.time = this.totalGameTime;
       gameState = 3;
     };
@@ -262,7 +262,7 @@ class GameScreen {
     } else if (realKeyCode == 32) { // SPACEBAR
       this.GameArray.HardDrop(this.PlayerID);
     } else if (realKeyCode == 73) {
-      team.score = this.gameScore;
+      team.score = this.finalScore;
       team.time = this.totalGameTime;
       gameState = 3;
     }
