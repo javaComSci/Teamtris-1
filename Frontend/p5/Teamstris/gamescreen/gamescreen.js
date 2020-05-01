@@ -257,6 +257,10 @@ class GameScreen {
       this.GameArray.MoveShape(this.PlayerID, 0, 0, 0);
     } else if (realKeyCode == 32) { // SPACEBAR
       this.GameArray.HardDrop(this.PlayerID);
+    } else if (realKeyCode == 73) {
+      team.score = this.gameScore;
+      team.time = this.totalGameTime;
+      gameState = 3;
     }
   }
 }
