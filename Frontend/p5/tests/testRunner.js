@@ -43,7 +43,7 @@ var mGameScreen;
 
 global.gameState = 0;
 
-var lol = false;
+var lol = true;
 var numTests = 1;
 var numFailed = 0;
 
